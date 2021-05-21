@@ -1,7 +1,29 @@
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { FORMS } from '../../../constants';
+import AccountForm from '../../../components/forms/AccountForm';
+import ProfileForm from '../../../components/forms/ProfileForm';
+import ContactsForm from '../../../components/forms/ContactsForm';
+import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
+
+export const FORMS = [
+  {
+    component: AccountForm,
+    slug: 'account',
+  },
+  {
+    component: ProfileForm,
+    slug: 'profile',
+  },
+  {
+    component: ContactsForm,
+    slug: 'contacts',
+  },
+  {
+    component: CapabilitiesForm,
+    slug: 'capabilities',
+  },
+];
 
 const UserFormPage = ({ isEditing }) => {
   const { path } = useRouteMatch();
@@ -10,8 +32,8 @@ const UserFormPage = ({ isEditing }) => {
       {isEditing ? 'Edit User Page' : 'New User Page'}
       <div>
         <Switch>
-          {FORMS.map(({ component: Form, route, form }) => (
-            <Route key={form} exact path={`${path}/${route}`} component={Form} />
+          {FORMS.map(({ component: Form, slug }) => (
+            <Route key={slug} exact path={`${path}/${slug}`} component={Form} />
           ))}
         </Switch>
       </div>
