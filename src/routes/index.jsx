@@ -1,30 +1,31 @@
 import React from 'react';
-import { Switch, Route, Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-import history from './history';
-import * as ROUTES from '../constants/routes';
+import { ROUTES } from '../constants';
 
-import NewUserPage from '../pages/users/NewUserPage';
+import UserFormPage from '../pages/users/UserFormPage';
 import HomePage from '../pages/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import UserPage from '../pages/users/UserPage';
 import UsersPage from '../pages/users/UsersPage';
-import EditUserPage from '../pages/users/EditUserPage';
 import MainLayout from '../components/layouts/MainLayout';
 
 const Routes = () => (
-  <Router history={history}>
+  <BrowserRouter>
     <MainLayout>
       <Switch>
-        <Route exact path={ROUTES.ROUTE_HOME} component={HomePage} />
-        <Route exact path={ROUTES.ROUTE_USER} component={UserPage} />
-        <Route exact path={ROUTES.ROUTE_USERS} component={UsersPage} />
-        <Route path={ROUTES.ROUTE_NEW_USER} component={NewUserPage} />
-        <Route path={ROUTES.ROUTE_EDIT_USER} component={EditUserPage} />
+        <Route exact path={ROUTES.home} component={HomePage} />
+        <Route exact path={ROUTES.user} component={UserPage} />
+        <Route exact path={ROUTES.users} component={UsersPage} />
+        <Route path={ROUTES.newUser} component={UserFormPage} />
+        <Route
+          path={ROUTES.editUser}
+          component={(props) => <UserFormPage isEditing {...props} />}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </MainLayout>
-  </Router>
+  </BrowserRouter>
 );
 
 export default Routes;
