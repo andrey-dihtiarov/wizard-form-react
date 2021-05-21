@@ -30,13 +30,11 @@ const UserFormPage = ({ isEditing }) => {
   return (
     <div>
       {isEditing ? 'Edit User Page' : 'New User Page'}
-      <div>
-        <Switch>
-          {FORMS.map(({ component: Form, slug }) => (
-            <Route key={slug} exact path={`${path}/${slug}`} component={Form} />
-          ))}
-        </Switch>
-      </div>
+      <Switch>
+        {FORMS.map(({ component: Form, slug }) => (
+          <Route key={slug} exact path={`${path}/${slug}`} component={Form} />
+        ))}
+      </Switch>
     </div>
   );
 };
