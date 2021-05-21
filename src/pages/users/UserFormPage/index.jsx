@@ -1,12 +1,13 @@
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { FORMS } from '../../../constants/general';
+import { FORMS } from '../../../constants';
 
-const EditUserPage = () => {
+const UserFormPage = ({ isEditing }) => {
   const { path } = useRouteMatch();
   return (
     <div>
-      Edit User Page
+      {isEditing ? 'Edit User Page' : 'New User Page'}
       <div>
         <Switch>
           {FORMS.map(({ component: Form, route, form }) => (
@@ -18,4 +19,12 @@ const EditUserPage = () => {
   );
 };
 
-export default EditUserPage;
+UserFormPage.propTypes = {
+  isEditing: PropTypes.bool,
+};
+
+UserFormPage.defaultProps = {
+  isEditing: false,
+};
+
+export default UserFormPage;
