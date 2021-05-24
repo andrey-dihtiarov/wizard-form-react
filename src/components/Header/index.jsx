@@ -21,10 +21,10 @@ const Header = () => {
           Remake
         </div>
         <div className={styles.nav}>
-          <LinkButton icon={UserIcon} onClick={onUserClick} className={styles.nav_button}>
+          <LinkButton icon={UserIcon} onClick={onUserClick} className={styles.navButton}>
             Add new user
           </LinkButton>
-          <LinkButton icon={UsersIcon} onClick={onUsersClick} className={styles.nav_button}>
+          <LinkButton icon={UsersIcon} onClick={onUsersClick} className={styles.navButton}>
             List of users
           </LinkButton>
         </div>
