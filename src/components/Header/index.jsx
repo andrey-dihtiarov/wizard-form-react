@@ -14,18 +14,16 @@ const Header = () => (
         Remake
       </Link>
       <div className={styles.nav}>
-        <Link
+        <LinkButton
           to={`${ROUTES.newUser}${ROUTES.accountForm}`}
           icon={UserIcon}
           className={styles.navButton}
-          component={LinkButton}
-        />
-        <Link
-          to={ROUTES.users}
-          icon={UsersIcon}
-          className={styles.navButton}
-          component={LinkButton}
-        />
+        >
+          Add new user
+        </LinkButton>
+        <LinkButton to={ROUTES.users} icon={UsersIcon} className={styles.navButton}>
+          List of users
+        </LinkButton>
       </div>
     </div>
   </div>
