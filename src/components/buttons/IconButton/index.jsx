@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 
 import styles from './IconButton.module.scss';
 
-const IconButton = ({ children, className, ...props }) => (
+const IconButton = ({ icon: Icon, className, children, ...props }) => (
   <button className={`${styles.button} ${className}`} {...props}>
-    {children}
+    {Icon && <Icon className={styles.buttonIcon} />} {children}
   </button>
 );
 
 IconButton.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.string,
   className: PropTypes.string,
 };
 
 IconButton.defaultProps = {
+  children: null,
   className: '',
 };
 
