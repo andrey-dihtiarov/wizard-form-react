@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { ROUTES } from '../../constants';
 
@@ -7,30 +7,28 @@ import { UserIcon, UsersIcon } from '../icons';
 
 import styles from './Header.module.scss';
 
-const Header = () => {
-  const history = useHistory();
-
-  const onUserClick = () => history.push(`${ROUTES.newUser}${ROUTES.accountForm}`);
-  const onUsersClick = () => history.push(ROUTES.users);
-  const onLogoClick = () => history.push(ROUTES.home);
-
-  return (
-    <div className={styles.header}>
-      <div className={styles.container}>
-        <div className={styles.logo} onClick={onLogoClick} role="presentation">
-          Remake
-        </div>
-        <div className={styles.nav}>
-          <LinkButton icon={UserIcon} onClick={onUserClick} className={styles.navButton}>
-            Add new user
-          </LinkButton>
-          <LinkButton icon={UsersIcon} onClick={onUsersClick} className={styles.navButton}>
-            List of users
-          </LinkButton>
-        </div>
+const Header = () => (
+  <div className={styles.header}>
+    <div className={styles.container}>
+      <Link to={ROUTES.home} className={styles.logo}>
+        Remake
+      </Link>
+      <div className={styles.nav}>
+        <Link
+          to={`${ROUTES.newUser}${ROUTES.accountForm}`}
+          icon={UserIcon}
+          className={styles.navButton}
+          component={LinkButton}
+        />
+        <Link
+          to={ROUTES.users}
+          icon={UsersIcon}
+          className={styles.navButton}
+          component={LinkButton}
+        />
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default Header;
