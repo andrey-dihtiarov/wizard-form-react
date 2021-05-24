@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { AddIcon } from '../icons';
 
-import ButtonWithIcon from '../buttons/ButtonWithIcon';
+import IconButton from '../buttons/IconButton';
 
 import styles from './ImageUploader.module.scss';
 
@@ -41,9 +41,9 @@ export function ImageUploader({ label, onChange, name, className }) {
         ref={fileInputEl}
         onChange={onFileUpload}
       />
-      <ButtonWithIcon icon={AddIcon} onClick={openFileUploadPopup}>
+      <IconButton icon={AddIcon} onClick={openFileUploadPopup}>
         {label}
-      </ButtonWithIcon>
+      </IconButton>
     </div>
   );
 }
