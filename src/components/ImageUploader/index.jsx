@@ -11,7 +11,9 @@ export function ImageUploader({ label, onChange, name, className }) {
   const fileInputEl = useRef();
 
   function openFileUploadPopup() {
-    fileInputEl?.current.click?.();
+    if (fileInputEl && fileInputEl.current && fileInputEl.current.click()) {
+      fileInputEl.current.click();
+    }
   }
 
   async function readFile(file) {
