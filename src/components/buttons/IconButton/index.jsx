@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-import classes from './IconButton.module.scss';
+import styles from './IconButton.module.scss';
 
 const IconButton = ({ children, className, ...props }) => (
-  <button className={`${classes.button} ${className}`} {...props}>
+  <button className={`${styles.button} ${className}`} {...props}>
     {children}
   </button>
 );

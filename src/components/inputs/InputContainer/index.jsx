@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
 
-import classes from './InputContainer.module.scss';
+import styles from './InputContainer.module.scss';
 
 const InputContainer = ({ field: { name }, label, children }) => (
-  <div className={classes.block}>
-    <label htmlFor={name} className={classes.label}>
+  <div className={styles.block}>
+    <label htmlFor={name} className={styles.label}>
       {label}
     </label>
     {children}
-    <div className={classes.errorMessage}>
+    <div className={styles.errorMessage}>
       <ErrorMessage name={name}>{(msg) => msg}</ErrorMessage>
     </div>
   </div>

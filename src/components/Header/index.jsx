@@ -5,7 +5,7 @@ import { ROUTES } from '../../constants';
 import LinkButton from '../buttons/LinkButton';
 import { UserIcon, UsersIcon } from '../icons';
 
-import classes from './Header.module.scss';
+import styles from './Header.module.scss';
 
 const Header = () => {
   const history = useHistory();
@@ -15,16 +15,16 @@ const Header = () => {
   const onLogoClick = () => history.push(ROUTES.home);
 
   return (
-    <div className={classes.header}>
-      <div className={classes.container}>
-        <div className={classes.logo} onClick={onLogoClick} role="presentation">
+    <div className={styles.header}>
+      <div className={styles.container}>
+        <div className={styles.logo} onClick={onLogoClick} role="presentation">
           Remake
         </div>
-        <div className={classes.nav}>
-          <LinkButton icon={UserIcon} onClick={onUserClick} className={classes.nav_button}>
+        <div className={styles.nav}>
+          <LinkButton icon={UserIcon} onClick={onUserClick} className={styles.nav_button}>
             Add new user
           </LinkButton>
-          <LinkButton icon={UsersIcon} onClick={onUsersClick} className={classes.nav_button}>
+          <LinkButton icon={UsersIcon} onClick={onUsersClick} className={styles.nav_button}>
             List of users
           </LinkButton>
         </div>

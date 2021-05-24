@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LinkButton from '../buttons/LinkButton';
 import { AddIcon } from '../icons';
 
-import classes from './ImageUploader.module.scss';
+import styles from './ImageUploader.module.scss';
 
 export function ImageUploader({ label, onChange, name, className }) {
   const fileInputEl = useRef();
@@ -32,7 +32,7 @@ export function ImageUploader({ label, onChange, name, className }) {
   return (
     <div className={className}>
       <input
-        className={classes.input}
+        className={styles.input}
         type="file"
         accept=".jpg,.jpeg,.png,.svg"
         ref={fileInputEl}

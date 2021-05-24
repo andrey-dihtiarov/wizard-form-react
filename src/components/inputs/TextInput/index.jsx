@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import InputContainer from '../InputContainer';
 
-import classes from './TextInput.module.scss';
+import styles from './TextInput.module.scss';
 
 const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
   const { name } = field;
@@ -10,7 +10,7 @@ const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
   return (
     <InputContainer label={label} field={field}>
       <input
-        className={`${classes.field} ${isError && classes.fieldError}`}
+        className={`${styles.field} ${isError && styles.fieldError}`}
         type="text"
         {...field}
         {...props}

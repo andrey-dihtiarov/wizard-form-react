@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
-import classes from './LinkButton.module.scss';
+import styles from './LinkButton.module.scss';
 
 const LinkButton = ({ icon: Icon, className, type, children, ...props }) => (
-  <button type={type} className={`${classes.button} ${className}`} {...props}>
-    {Icon && <Icon className={classes.buttonIcon} />} {children}
+  <button type={type} className={`${styles.button} ${className}`} {...props}>
+    {Icon && <Icon className={styles.buttonIcon} />} {children}
   </button>
 );
 

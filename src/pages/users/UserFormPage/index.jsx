@@ -8,7 +8,7 @@ import ProfileForm from '../../../components/forms/ProfileForm';
 import ContactsForm from '../../../components/forms/ContactsForm';
 import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
 
-import classes from './UserFormPage.module.scss';
+import styles from './UserFormPage.module.scss';
 
 export const FORMS = [
   {
@@ -44,7 +44,7 @@ const validationSchema = Yup.object().shape({
 const UserFormPage = ({ isEditing }) => {
   const { path } = useRouteMatch();
   return (
-    <div className={classes.wrapper}>
+    <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
       <Formik
         initialValues={{ userName: '', password: '', repeatPassword: '' }}
