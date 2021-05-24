@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "prettier": "prettier ./src --write '**/*.{js,jsx,md,json,css}'",
+    "prettier": "prettier ./src --write '**/*.{js,jsx,md,json,css,scss}'",
     "ci": "rm -fr node_modules && yarn install --frozen-lockfile"
   },
   "lint-staged": {
