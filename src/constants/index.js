@@ -4,4 +4,5 @@ export const ROUTES = {
   users: '/users',
   newUser: '/users/new',
   editUser: '/users/:id/edit',
+  accountForm: '/account',
 };
