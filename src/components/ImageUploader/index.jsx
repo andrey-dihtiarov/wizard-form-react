@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import LinkButton from '../buttons/LinkButton';
 import { AddIcon } from '../icons';
+
+import ButtonWithIcon from '../buttons/ButtonWithIcon';
 
 import styles from './ImageUploader.module.scss';
 
@@ -38,9 +39,9 @@ export function ImageUploader({ label, onChange, name, className }) {
         ref={fileInputEl}
         onChange={onFileUpload}
       />
-      <LinkButton icon={AddIcon} onClick={openFileUploadPopup}>
+      <ButtonWithIcon icon={AddIcon} onClick={openFileUploadPopup}>
         {label}
-      </LinkButton>
+      </ButtonWithIcon>
     </div>
   );
 }
