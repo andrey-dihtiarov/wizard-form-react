@@ -31,7 +31,13 @@ export const FORMS = [
 
 const FILE_SIZE = 1024 * 1024;
 
-const SUPPORTED_FORMATS = new Set(['image/gif', 'image/png']);
+const SUPPORTED_FORMATS = new Set([
+  'image/jpg',
+  'image/jpeg',
+  'image/svg',
+  'image/gif',
+  'image/png',
+]);
 
 const validationSchema = Yup.object().shape({
   userName: Yup.string()

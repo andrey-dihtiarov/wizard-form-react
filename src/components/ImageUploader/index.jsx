@@ -59,6 +59,7 @@ export function ImageUploader({
         className={styles.input}
         onChange={onFileChange}
         ref={fileInputEl}
+        accept=".jpg,.jpeg,.png,gif,.svg"
         value=""
       />
       <IconButton type="button" icon={<Icon icon={ICONS.add} />} onClick={onFileChangePopup}>
