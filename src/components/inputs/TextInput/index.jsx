@@ -21,6 +21,14 @@ const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
 
 TextInput.propTypes = {
   label: PropTypes.string,
+  field: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+  }).isRequired,
+  form: PropTypes.shape({
+    touched: PropTypes.object,
+    errors: PropTypes.object,
+  }).isRequired,
 };
 
 TextInput.defaultProps = {

@@ -18,6 +18,9 @@ const InputContainer = ({ field: { name }, label, children }) => (
 InputContainer.propTypes = {
   label: PropTypes.string,
   children: PropTypes.node.isRequired,
+  field: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 InputContainer.defaultProps = {

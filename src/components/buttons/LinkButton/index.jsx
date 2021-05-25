@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import styles from './LinkButton.module.scss';
 
-const LinkButton = ({ icon: Icon, className, children, to, ...props }) => (
+const LinkButton = ({ icon, className, children, to, ...props }) => (
   <Link to={to} className={`${styles.button} ${className}`} {...props}>
-    {Icon && <Icon className={styles.buttonIcon} />} {children}
+    {icon && <span className={styles.buttonIcon}>{icon}</span>} {children}
   </Link>
 );
 
@@ -13,12 +13,14 @@ LinkButton.propTypes = {
   children: PropTypes.string,
   className: PropTypes.string,
   to: PropTypes.string,
+  icon: PropTypes.node,
 };
 
 LinkButton.defaultProps = {
   children: 'Link Button',
   className: '',
   to: '',
+  icon: null,
 };
 
 export default LinkButton;

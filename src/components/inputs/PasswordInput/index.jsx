@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { ICONS } from '../../../constants';
+
 import InputContainer from '../InputContainer';
-import { EyeCrossedIcon, EyeOpenIcon } from '../../icons';
 import IconButton from '../../buttons/IconButton';
+import Icon from '../../Icon';
 
 import styles from './PasswordInput.module.scss';
 
@@ -28,7 +30,7 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
         <IconButton
           onClick={changePasswordVisibility}
           className={styles.icon}
-          icon={isPasswordShown ? EyeCrossedIcon : EyeOpenIcon}
+          icon={isPasswordShown ? <Icon icon={ICONS.eye} /> : <Icon icon={ICONS.eyeSlash} />}
         />
       </div>
     </InputContainer>
@@ -37,6 +39,14 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
 
 PasswordInput.propTypes = {
   label: PropTypes.string,
+  field: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+  }).isRequired,
+  form: PropTypes.shape({
+    touched: PropTypes.object,
+    errors: PropTypes.object,
+  }).isRequired,
 };
 
 PasswordInput.defaultProps = {
