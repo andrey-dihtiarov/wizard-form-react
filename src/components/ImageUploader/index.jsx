@@ -1,16 +1,17 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { AddIcon } from '../icons';
+import { ICONS } from '../../constants';
 
 import IconButton from '../buttons/IconButton';
+import Icon from '../Icon';
 
 import styles from './ImageUploader.module.scss';
 
 export function ImageUploader({ label, onChange, name, className }) {
   const fileInputEl = useRef();
 
-  function openFileUploadPopup() {
+  function onFileChangePopup() {
     if (fileInputEl && fileInputEl.current && fileInputEl.current.click()) {
       fileInputEl.current.click();
     }
@@ -24,7 +25,7 @@ export function ImageUploader({ label, onChange, name, className }) {
     });
   }
 
-  async function onFileUpload(e) {
+  async function onFileChange(e) {
     const file = e.target.files[0];
     if (file) {
       const img = await readFile(file);
@@ -39,9 +40,9 @@ export function ImageUploader({ label, onChange, name, className }) {
         type="file"
         accept=".jpg,.jpeg,.png,.svg"
         ref={fileInputEl}
-        onChange={onFileUpload}
+        onChange={onFileChange}
       />
-      <IconButton icon={AddIcon} onClick={openFileUploadPopup}>
+      <IconButton icon={<Icon icon={ICONS.add} />} onClick={onFileChangePopup}>
         {label}
       </IconButton>
     </div>
