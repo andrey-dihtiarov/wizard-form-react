@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { ReactComponent as UserPlaceholder } from '../../assets/icons/user-solid.svg';
 
-import styles from './Avatar.module.scss';
+import styles from './styles.module.scss';
 
 const Avatar = ({ image }) => (
   <div className={styles.avatarWrapper}>

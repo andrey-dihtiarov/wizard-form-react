@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import styles from './LinkButton.module.scss';
+import styles from './styles.module.scss';
 
 const LinkButton = ({ icon, className, children, to, ...props }) => (
   <Link to={to} className={`${styles.button} ${className}`} {...props}>

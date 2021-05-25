@@ -6,7 +6,7 @@ import { ICONS } from '../../constants';
 import IconButton from '../buttons/IconButton';
 import Icon from '../Icon';
 
-import styles from './ImageUploader.module.scss';
+import styles from './styles.module.scss';
 
 export function ImageUploader({ label, onChange, name, className }) {
   const fileInputEl = useRef();

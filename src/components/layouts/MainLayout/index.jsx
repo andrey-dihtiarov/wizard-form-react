@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import Header from '../../Header';
 
-import styles from './MainLayout.module.scss';
+import styles from './styles.module.scss';
 
 const MainLayout = ({ children }) => (
   <div className={styles.layout}>

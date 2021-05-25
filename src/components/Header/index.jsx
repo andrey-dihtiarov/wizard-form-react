@@ -5,7 +5,7 @@ import { ICONS, ROUTES } from '../../constants';
 import LinkButton from '../buttons/LinkButton';
 import Icon from '../Icon';
 
-import styles from './Header.module.scss';
+import styles from './styles.module.scss';
 
 const Header = () => (
   <div className={styles.header}>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import styles from './FlatButton.module.scss';
+import styles from './styles.module.scss';
 
 const ButtonOptions = ['primary', 'cancel', 'success'];
 

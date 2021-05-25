@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
 
-import styles from './InputContainer.module.scss';
+import styles from './styles.module.scss';
 
 const InputContainer = ({ field: { name }, label, children }) => (
   <div className={styles.block}>

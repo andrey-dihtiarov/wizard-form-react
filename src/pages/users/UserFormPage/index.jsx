@@ -8,7 +8,7 @@ import ProfileForm from '../../../components/forms/ProfileForm';
 import ContactsForm from '../../../components/forms/ContactsForm';
 import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
 
-import styles from './UserFormPage.module.scss';
+import styles from './styles.module.scss';
 
 export const FORMS = [
   {

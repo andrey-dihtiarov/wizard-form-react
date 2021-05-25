@@ -7,7 +7,7 @@ import InputContainer from '../InputContainer';
 import IconButton from '../../buttons/IconButton';
 import Icon from '../../Icon';
 
-import styles from './PasswordInput.module.scss';
+import styles from './styles.module.scss';
 
 const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) => {
   const [isPasswordShown, setPasswordShown] = useState(false);

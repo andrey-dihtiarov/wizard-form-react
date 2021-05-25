@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import InputContainer from '../InputContainer';
 
-import styles from './TextInput.module.scss';
+import styles from './styles.module.scss';
 
 const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
   const { name } = field;

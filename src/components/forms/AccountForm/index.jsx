@@ -7,7 +7,7 @@ import FlatButton from '../../buttons/FlatButton';
 import Avatar from '../../Avatar';
 import ImageUploader from '../../ImageUploader';
 
-import styles from './AccountForm.module.scss';
+import styles from './styles.module.scss';
 
 const AccountForm = () => {
   const [imageSrc, setImageSrc] = useState();
