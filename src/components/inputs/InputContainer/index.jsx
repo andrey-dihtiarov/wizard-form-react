@@ -3,8 +3,8 @@ import { ErrorMessage } from 'formik';
 
 import styles from './styles.module.scss';
 
-const InputContainer = ({ field: { name }, label, children }) => (
-  <div className={styles.block}>
+const InputContainer = ({ field: { name }, label, children, className }) => (
+  <div className={`${styles.block} ${className}`}>
     <label htmlFor={name} className={styles.label}>
       {label}
     </label>
@@ -18,6 +18,7 @@ const InputContainer = ({ field: { name }, label, children }) => (
 InputContainer.propTypes = {
   label: PropTypes.string,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
@@ -25,6 +26,7 @@ InputContainer.propTypes = {
 
 InputContainer.defaultProps = {
   label: '',
+  className: '',
 };
 
 export default InputContainer;

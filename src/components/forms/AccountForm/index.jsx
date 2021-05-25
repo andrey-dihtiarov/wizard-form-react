@@ -17,7 +17,12 @@ const AccountForm = () => {
       <div className={styles.formContainer}>
         <div className={styles.avatarContainer}>
           <Avatar image={imageSrc} />
-          <ImageUploader className={styles.avatarButton} onChange={setImageSrc} />
+          <Field
+            name="avatar"
+            className={styles.avatarButton}
+            onChange={setImageSrc}
+            component={ImageUploader}
+          />
         </div>
         <div className={styles.fieldsContainer}>
           <div>

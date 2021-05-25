@@ -29,6 +29,10 @@ export const FORMS = [
   },
 ];
 
+const FILE_SIZE = 1024 * 1024;
+
+const SUPPORTED_FORMATS = new Set(['image/gif', 'image/png']);
+
 const validationSchema = Yup.object().shape({
   userName: Yup.string()
     .min(2, 'User Name is too short')
@@ -40,14 +44,20 @@ const validationSchema = Yup.object().shape({
   repeatPassword: Yup.string()
     .required('Please, repeat entered password')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+  avatar: Yup.mixed()
+    .test('fileSize', 'File too large', (value) => (value ? value.size <= FILE_SIZE : true))
+    .test('fileFormat', 'Unsupported Format', (value) =>
+      value ? SUPPORTED_FORMATS.has(value.type) : true,
+    ),
 });
+
 const UserFormPage = ({ isEditing }) => {
   const { path } = useRouteMatch();
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
       <Formik
-        initialValues={{ userName: '', password: '', repeatPassword: '' }}
+        initialValues={{ userName: '', password: '', repeatPassword: '', avatar: null }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
       >

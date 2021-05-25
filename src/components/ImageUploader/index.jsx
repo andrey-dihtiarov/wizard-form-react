@@ -7,9 +7,18 @@ import IconButton from '../buttons/IconButton';
 import Icon from '../Icon';
 
 import styles from './styles.module.scss';
+import InputContainer from '../inputs/InputContainer';
 
-export function ImageUploader({ label, onChange, name, className }) {
+export function ImageUploader({
+  label,
+  onChange,
+  className,
+  field,
+  form: { errors, setFieldValue, setFieldTouched },
+  ...props
+}) {
   const fileInputEl = useRef();
+  const { name } = field;
 
   function onFileChangePopup() {
     if (fileInputEl && fileInputEl.current && fileInputEl.current.click()) {
@@ -20,7 +29,11 @@ export function ImageUploader({ label, onChange, name, className }) {
   async function readFile(file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result);
+      reader.onload = (e) => {
+        setFieldValue('avatar', file);
+        setFieldTouched('avatar', true, true);
+        resolve(e.target.result);
+      };
       reader.readAsDataURL(file);
     });
   }
@@ -29,23 +42,29 @@ export function ImageUploader({ label, onChange, name, className }) {
     const file = e.target.files[0];
     if (file) {
       const img = await readFile(file);
-      onChange(img, name);
+      if (errors[name]) {
+        return;
+      }
+      onChange(img);
     }
   }
 
   return (
-    <div className={className}>
+    <InputContainer className={className} field={field}>
       <input
-        className={styles.input}
+        {...field}
+        {...props}
         type="file"
-        accept=".jpg,.jpeg,.png,.svg"
-        ref={fileInputEl}
+        name={field.name}
+        className={styles.input}
         onChange={onFileChange}
+        ref={fileInputEl}
+        value=""
       />
-      <IconButton icon={<Icon icon={ICONS.add} />} onClick={onFileChangePopup}>
+      <IconButton type="button" icon={<Icon icon={ICONS.add} />} onClick={onFileChangePopup}>
         {label}
       </IconButton>
-    </div>
+    </InputContainer>
   );
 }
 
@@ -54,6 +73,15 @@ ImageUploader.prototype.propTypes = {
   onChange: PropTypes.func,
   label: PropTypes.string,
   className: PropTypes.string,
+  field: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+  }).isRequired,
+  form: PropTypes.shape({
+    errors: PropTypes.object,
+    setFieldValue: PropTypes.func.isRequired,
+    setFieldTouched: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 ImageUploader.defaultProps = {
