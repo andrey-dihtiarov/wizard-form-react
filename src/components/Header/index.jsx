@@ -1,27 +1,31 @@
 import { Link } from 'react-router-dom';
 
-import { ROUTES } from '../../constants';
+import { ICONS, ROUTES } from '../../constants';
 
 import LinkButton from '../buttons/LinkButton';
-import { UserIcon, UsersIcon } from '../icons';
+import Icon from '../Icon';
 
 import styles from './Header.module.scss';
 
 const Header = () => (
   <div className={styles.header}>
-    <div className={styles.container}>
+    <div className={styles.headerInner}>
       <Link to={ROUTES.home} className={styles.logo}>
         Remake
       </Link>
       <div className={styles.nav}>
         <LinkButton
           to={`${ROUTES.newUser}${ROUTES.accountForm}`}
-          icon={UserIcon}
+          icon={<Icon icon={ICONS.user} />}
           className={styles.navButton}
         >
           Add new user
         </LinkButton>
-        <LinkButton to={ROUTES.users} icon={UsersIcon} className={styles.navButton}>
+        <LinkButton
+          to={ROUTES.users}
+          icon={<Icon icon={ICONS.userFriends} />}
+          className={styles.navButton}
+        >
           List of users
         </LinkButton>
       </div>
