@@ -1,0 +1,15 @@
+@import '../../../assets/scss/variables';
+
+.layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layoutInner {
+  width: $container-width;
+  display: flex;
+  justify-content: center;
+}

@@ -1,6 +1,6 @@
 {
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2021,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -15,7 +15,10 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/button-has-type": "off",
+    "react/require-default-props": "off",
     "prettier/prettier": "error"
   },
   "env": {

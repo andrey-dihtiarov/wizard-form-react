@@ -1,0 +1,22 @@
+@import "../../../assets/scss/variables";
+
+.button {
+  padding: 12px 24px;
+  font-size: 14px;
+  border: none;
+  color: $white;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: $royal-blue;
+}
+
+.cancel {
+  background-color: $spindle;
+}
+
+.success {
+  background-color: $turquoise;
+}

@@ -2,19 +2,17 @@ import PropTypes from 'prop-types';
 
 import Header from '../../Header';
 
+import styles from './styles.module.scss';
+
 const MainLayout = ({ children }) => (
-  <div>
+  <div className={styles.layout}>
     <Header />
-    {children}
+    <div className={styles.layoutInner}>{children}</div>
   </div>
 );
 
 MainLayout.propTypes = {
-  children: PropTypes.any,
-};
-
-MainLayout.defaultProps = {
-  children: null,
+  children: PropTypes.node.isRequired,
 };
 
 export default MainLayout;
