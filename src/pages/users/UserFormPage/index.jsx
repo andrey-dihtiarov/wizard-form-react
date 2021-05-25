@@ -1,6 +1,7 @@
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Form as FormikForm, Formik } from 'formik';
+import { subYears } from 'date-fns';
 import * as Yup from 'yup';
 
 import AccountForm from '../../../components/forms/AccountForm';
@@ -55,6 +56,7 @@ const validationSchema = Yup.object().shape({
     .test('fileFormat', 'Unsupported Format', (value) =>
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
+  birthDate: Yup.date().max(subYears(Date.now(), 18), 'User must be older 18').required('Required'),
 });
 
 const UserFormPage = ({ isEditing }) => {
@@ -63,7 +65,13 @@ const UserFormPage = ({ isEditing }) => {
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
       <Formik
-        initialValues={{ userName: '', password: '', repeatPassword: '', avatar: null }}
+        initialValues={{
+          userName: '',
+          password: '',
+          repeatPassword: '',
+          avatar: null,
+          birthDate: '',
+        }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
       >
