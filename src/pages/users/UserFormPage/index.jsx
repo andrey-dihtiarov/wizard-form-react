@@ -40,6 +40,15 @@ const SUPPORTED_FORMATS = new Set([
   'image/png',
 ]);
 
+const initValues = {
+  userName: '',
+  password: '',
+  repeatPassword: '',
+  avatar: null,
+  birthDate: '',
+  gender: '',
+};
+
 const validationSchema = Yup.object().shape({
   userName: Yup.string()
     .min(2, 'User Name is too short')
@@ -57,6 +66,7 @@ const validationSchema = Yup.object().shape({
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
   birthDate: Yup.date().max(subYears(Date.now(), 18), 'User must be older 18').required('Required'),
+  gender: Yup.string().oneOf(['Male', 'Female']).required('Required'),
 });
 
 const UserFormPage = ({ isEditing }) => {
@@ -64,17 +74,7 @@ const UserFormPage = ({ isEditing }) => {
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <Formik
-        initialValues={{
-          userName: '',
-          password: '',
-          repeatPassword: '',
-          avatar: null,
-          birthDate: '',
-        }}
-        onSubmit={() => {}}
-        validationSchema={validationSchema}
-      >
+      <Formik initialValues={initValues} onSubmit={() => {}} validationSchema={validationSchema}>
         <FormikForm>
           <Switch>
             {FORMS.map(({ component: Form, slug }) => (
