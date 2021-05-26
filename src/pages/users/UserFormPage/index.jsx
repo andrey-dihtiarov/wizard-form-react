@@ -47,6 +47,7 @@ const initValues = {
   avatar: null,
   birthDate: '',
   gender: '',
+  address: '',
 };
 
 const validationSchema = Yup.object().shape({
