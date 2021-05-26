@@ -32,3 +32,13 @@ a {
   outline: 0;
   cursor: pointer;
 }
+
+// algolia places styles
+.ap-footer,
+.ap-input-icon {
+  display: none;
+}
+
+.algolia-places {
+  width: auto;
+}
