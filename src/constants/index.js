@@ -2,7 +2,7 @@ export const ROUTES = {
   home: '/',
   user: '/users/:id',
   users: '/users',
-  newUser: '/users/new',
+  newUser: '/users/new/:slug',
   editUser: '/users/:id/edit',
   accountForm: '/account',
 };
