@@ -3,7 +3,6 @@ import { Field } from 'formik';
 
 import TextInput from '../../inputs/TextInput';
 import PasswordInput from '../../inputs/PasswordInput';
-import FlatButton from '../../buttons/FlatButton';
 import Avatar from '../../Avatar';
 import ImageUploader from '../../ImageUploader';
 
@@ -29,9 +28,6 @@ const AccountForm = () => {
             <Field name="userName" label="User Name" component={TextInput} />
             <Field name="password" label="Password" component={PasswordInput} />
             <Field name="repeatPassword" label="Repeat Password" component={PasswordInput} />
-          </div>
-          <div className={styles.buttonContainer}>
-            <FlatButton>Forward</FlatButton>
           </div>
         </div>
       </div>
