@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Form as FormikForm, Formik } from 'formik';
 import { subYears } from 'date-fns';
 import * as Yup from 'yup';
@@ -8,10 +7,11 @@ import AccountForm from '../../../components/forms/AccountForm';
 import ProfileForm from '../../../components/forms/ProfileForm';
 import ContactsForm from '../../../components/forms/ContactsForm';
 import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
+import Wizard from '../../../components/StepWizard/Wizard';
 
 import styles from './styles.module.scss';
 
-export const FORMS = [
+export const STEPS = [
   {
     component: AccountForm,
     slug: 'account',
@@ -70,23 +70,16 @@ const validationSchema = Yup.object().shape({
   gender: Yup.string().oneOf(['Male', 'Female']).required('Required'),
 });
 
-const UserFormPage = ({ isEditing }) => {
-  const { path } = useRouteMatch();
-  return (
-    <div className={styles.wrapper}>
-      {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <Formik initialValues={initValues} onSubmit={() => {}} validationSchema={validationSchema}>
-        <FormikForm>
-          <Switch>
-            {FORMS.map(({ component: Form, slug }) => (
-              <Route key={slug} exact path={`${path}/${slug}`} component={Form} />
-            ))}
-          </Switch>
-        </FormikForm>
-      </Formik>
-    </div>
-  );
-};
+const UserFormPage = ({ isEditing }) => (
+  <div className={styles.wrapper}>
+    {isEditing ? 'Edit User Page' : 'New User Pages'}
+    <Formik initialValues={initValues} onSubmit={() => {}} validationSchema={validationSchema}>
+      <FormikForm>
+        <Wizard steps={STEPS} />
+      </FormikForm>
+    </Formik>
+  </div>
+);
 
 UserFormPage.propTypes = {
   isEditing: PropTypes.bool,
