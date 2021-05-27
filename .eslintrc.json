@@ -19,7 +19,8 @@
     "react/jsx-props-no-spreading": "off",
     "react/button-has-type": "off",
     "react/require-default-props": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "spaced-comment": "off"
   },
   "env": {
     "browser": true,
