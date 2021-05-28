@@ -15,18 +15,22 @@ export const STEPS = [
   {
     component: AccountForm,
     slug: 'account',
+    title: 'Account',
   },
   {
     component: ProfileForm,
     slug: 'profile',
+    title: 'Profile',
   },
   {
     component: ContactsForm,
     slug: 'contacts',
+    title: 'Contacts',
   },
   {
     component: CapabilitiesForm,
     slug: 'capabilities',
+    title: 'Capabilities',
   },
 ];
 
