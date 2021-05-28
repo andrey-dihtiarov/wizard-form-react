@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
 const LinkButton = ({ icon, className, children, to, ...props }) => (
-  <Link to={to} className={`${styles.button} ${className}`} {...props}>
+  <NavLink to={to} className={`${styles.button} ${className}`} {...props}>
     {icon && <span className={styles.buttonIcon}>{icon}</span>} {children}
-  </Link>
+  </NavLink>
 );
 
 LinkButton.propTypes = {
