@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { Route, useRouteMatch, useParams, Redirect } from 'react-router-dom';
 
 import Step from '../Step';
+import WizardHeader from '../WizardHeader';
 
 import styles from './styles.module.scss';
-import WizardHeader from '../WizardHeader';
 
 const Wizard = ({ steps }) => {
   const { path } = useRouteMatch();
@@ -25,7 +25,6 @@ const Wizard = ({ steps }) => {
       const props = {
         isFirst: index === 0,
         isLast: index === steps.length - 1,
-        show: slug === item.slug,
         key: item.slug,
         slugs,
       };
@@ -40,7 +39,7 @@ const Wizard = ({ steps }) => {
     return isSlugExists ? (
       <>
         <WizardHeader steps={steps} activeStep={activeStep} />
-        <div className={styles.wizardWrapper}>{mappedSteps}</div>
+        <div className={styles.wizardWrapper}>{mappedSteps[activeStep]}</div>
       </>
     ) : (
       <Redirect to={path.replace(':slug', defaultSlug)} />
@@ -53,7 +52,7 @@ const Wizard = ({ steps }) => {
 Wizard.propTypes = {
   steps: PropTypes.arrayOf(
     PropTypes.shape({
-      component: PropTypes.func.isRequired,
+      component: PropTypes.any,
       slug: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     }),
