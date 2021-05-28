@@ -4,7 +4,9 @@ export const ROUTES = {
   users: '/users',
   newUser: '/users/new/:slug',
   editUser: '/users/:id/edit',
-  accountForm: '/account',
+
+  //form slugs
+  accountForm: 'account',
 };
 
 export const ICONS = {
