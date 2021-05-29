@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { Route, useRouteMatch, useParams, Redirect } from 'react-router-dom';
+import { Route, useRouteMatch, useParams, Redirect, useHistory } from 'react-router-dom';
 
 import Step from '../Step';
 import WizardHeader from '../WizardHeader';
 
 import styles from './styles.module.scss';
 
-const Wizard = ({ steps }) => {
+const Wizard = ({ steps, onForward, onBack, onFinish }) => {
   const { path } = useRouteMatch();
   const { slug } = useParams();
   const defaultSlug = steps[0].slug;
@@ -16,9 +16,7 @@ const Wizard = ({ steps }) => {
   const renderRoute = () => {
     const slugs = steps.map((item) => item.slug);
 
-    if (!steps || !steps.length) {
-      return null;
-    }
+    if (!steps || !steps.length) return null;
 
     const mappedSteps = steps.map((item, index) => {
       const Component = item.component;
@@ -26,6 +24,9 @@ const Wizard = ({ steps }) => {
         isFirst: index === 0,
         isLast: index === steps.length - 1,
         key: item.slug,
+        onForward,
+        onBack,
+        onFinish,
         slugs,
       };
 
@@ -57,6 +58,15 @@ Wizard.propTypes = {
       title: PropTypes.string.isRequired,
     }),
   ),
+  onForward: PropTypes.func,
+  onBack: PropTypes.func,
+  onFinish: PropTypes.func,
+};
+
+Wizard.defaultProps = {
+  onForward: () => {},
+  onBack: () => {},
+  onFinish: () => {},
 };
 
 export default Wizard;
