@@ -1,4 +1,7 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { updateUser } from '../../../store/user';
 
 import AccountForm from '../../../components/forms/AccountForm';
 import ProfileForm from '../../../components/forms/ProfileForm';
@@ -7,6 +10,7 @@ import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
 import Wizard from '../../../components/StepWizard/Wizard';
 
 import styles from './styles.module.scss';
+import { setStep } from '../../../store/wizard';
 
 export const STEPS = [
   {
@@ -31,12 +35,19 @@ export const STEPS = [
   },
 ];
 
-const UserFormPage = ({ isEditing }) => (
-  <div className={styles.wrapper}>
-    {isEditing ? 'Edit User Page' : 'New User Pages'}
-    <Wizard steps={STEPS} />
-  </div>
-);
+const UserFormPage = ({ isEditing }) => {
+  const dispatch = useDispatch();
+  const onForward = (values, step) => {
+    dispatch(updateUser(values));
+    dispatch(setStep(step));
+  };
+  return (
+    <div className={styles.wrapper}>
+      {isEditing ? 'Edit User Page' : 'New User Pages'}
+      <Wizard steps={STEPS} onForward={onForward} />
+    </div>
+  );
+};
 
 UserFormPage.propTypes = {
   isEditing: PropTypes.bool,
