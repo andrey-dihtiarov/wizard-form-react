@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { Route, useRouteMatch, useParams, Redirect, useHistory } from 'react-router-dom';
 
+import { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Step from '../Step';
 import WizardHeader from '../WizardHeader';
 
@@ -9,9 +11,25 @@ import styles from './styles.module.scss';
 const Wizard = ({ steps, onForward, onBack, onFinish }) => {
   const { path } = useRouteMatch();
   const { slug } = useParams();
+  const history = useHistory();
+  const { finishedSteps } = useSelector((state) => state.wizard);
   const defaultSlug = steps[0].slug;
   const isSlugExists = steps.some((step) => step.slug === slug);
   const activeStep = steps.findIndex((step) => step.slug === slug);
+
+  const checkSlug = useCallback(() => {
+    let prevStep = '';
+    if (activeStep > 0) {
+      prevStep = steps[activeStep - 1].slug;
+    }
+    if (prevStep && !finishedSteps.includes(prevStep)) {
+      history.replace(path.replace(':slug', defaultSlug));
+    }
+  }, [activeStep, defaultSlug, finishedSteps, history, path, steps]);
+
+  useEffect(() => {
+    checkSlug();
+  }, [checkSlug]);
 
   const renderRoute = () => {
     const slugs = steps.map((item) => item.slug);
