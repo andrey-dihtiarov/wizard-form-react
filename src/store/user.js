@@ -10,7 +10,7 @@ const INIT_STATE = {
   address: '',
 };
 
-const timer = createSlice({
+const user = createSlice({
   name: 'user',
   initialState: INIT_STATE,
   reducers: {
@@ -18,6 +18,6 @@ const timer = createSlice({
   },
 });
 
-export const { updateUser } = timer.actions;
+export const { updateUser } = user.actions;
 
-export default timer.reducer;
+export default user.reducer;
