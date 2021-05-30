@@ -11,16 +11,19 @@ import styles from './styles.module.scss';
 
 const ProfileForm = () => (
   <div className={styles.form}>
-    <div className={styles.fieldsWrapper}>
-      <Field name="firstName" label="First Name" component={TextInput} />
-      <Field name="lastName" label="Last Name" component={TextInput} />
-      <Field name="birthDate" label="Birth date" component={DateInput} />
+    <div className={styles.formInner}>
+      <div className={styles.fieldsWrapper}>
+        <Field name="firstName" label="First Name" component={TextInput} />
+        <Field name="lastName" label="Last Name" component={TextInput} />
+        <Field name="birthDate" label="Birth date" component={DateInput} />
+      </div>
+      <div className={styles.fieldsWrapper}>
+        <Field name="email" label="Email" component={TextInput} />
+        <Field name="address" label="Address" component={AddressInput} />
+        <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
+      </div>
     </div>
-    <div className={styles.fieldsWrapper}>
-      <Field name="email" label="Email" component={TextInput} />
-      <Field name="address" label="Address" component={AddressInput} />
-      <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
-    </div>
+    <button type="submit">Submit</button>
   </div>
 );
 

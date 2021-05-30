@@ -1,7 +1,12 @@
 .form {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+
+  &Inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .fieldsWrapper {
