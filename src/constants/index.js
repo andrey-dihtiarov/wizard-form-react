@@ -13,4 +13,5 @@ export const ICONS = {
   user: 'user',
   add: 'add',
   userFriends: 'user-friends',
+  minus: 'minus',
 };
