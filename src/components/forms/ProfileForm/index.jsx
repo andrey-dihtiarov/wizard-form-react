@@ -23,7 +23,6 @@ const ProfileForm = () => (
         <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
       </div>
     </div>
-    <button type="submit">Submit</button>
   </div>
 );
 
