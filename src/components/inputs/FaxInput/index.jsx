@@ -16,7 +16,7 @@ const FaxInput = ({ form: { touched, errors, setFieldValue, setFieldTouched }, l
         placeholder="+38 (XXX) XXX-XX-XX"
         name={name}
         disabled={false}
-        value={value}
+        value={value || ''}
         onChange={(e) => setFieldValue(name, e.target.value)}
         onBlur={() => setFieldTouched(name, true)}
         className={`${styles.field} ${isError ? styles.fieldError : ''}`}
@@ -29,7 +29,7 @@ FaxInput.propTypes = {
   label: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
   }).isRequired,
   form: PropTypes.shape({
     errors: PropTypes.object,
