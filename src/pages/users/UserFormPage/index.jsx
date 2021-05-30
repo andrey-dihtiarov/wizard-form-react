@@ -4,6 +4,8 @@ import { Form as FormikForm, Formik } from 'formik';
 import { subYears } from 'date-fns';
 import * as Yup from 'yup';
 
+import { GENDER_INPUT_VALUES } from '../../../constants';
+
 import AccountForm from '../../../components/forms/AccountForm';
 import ProfileForm from '../../../components/forms/ProfileForm';
 import ContactsForm from '../../../components/forms/ContactsForm';
@@ -67,7 +69,7 @@ const validationSchema = Yup.object().shape({
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
   birthDate: Yup.date().max(subYears(Date.now(), 18), 'User must be older 18').required('Required'),
-  gender: Yup.string().oneOf(['Male', 'Female']).required('Required'),
+  gender: Yup.string().oneOf(GENDER_INPUT_VALUES).required('Required'),
 });
 
 const UserFormPage = ({ isEditing }) => {
