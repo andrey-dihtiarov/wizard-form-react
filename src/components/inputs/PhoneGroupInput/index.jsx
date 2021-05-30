@@ -6,7 +6,6 @@ import { ICONS } from '../../../constants';
 
 import FaxInput from '../FaxInput';
 import IconButton from '../../buttons/IconButton';
-import InputContainer from '../InputContainer';
 import Icon from '../../Icon';
 
 import styles from './styles.module.scss';
@@ -23,12 +22,12 @@ const PhoneGroupInput = ({ maxNumbers }) => {
   };
 
   return (
-    <InputContainer field={field} className={styles.wrapper}>
+    <div className={styles.wrapper}>
       {Array.from({ length: phoneNumbersCount }).map((item, index) => (
         <div key={index.toString()} className={styles.fieldWrapper}>
           <Field
             phoneNumbersCount={phoneNumbersCount}
-            name={`phoneNumbers[${index}]`}
+            name={`phoneNumbers.${index}`}
             label={`Phone #${index + 1}`}
             component={FaxInput}
           />
@@ -47,7 +46,7 @@ const PhoneGroupInput = ({ maxNumbers }) => {
           add phone number
         </IconButton>
       )}
-    </InputContainer>
+    </div>
   );
 };
 
