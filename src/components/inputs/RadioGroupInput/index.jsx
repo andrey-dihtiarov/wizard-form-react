@@ -5,7 +5,7 @@ import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
 
-const RadioGroup = ({ values, name }) => {
+const RadioGroupInput = ({ values, name }) => {
   const field = { name };
   return (
     <InputContainer field={field} label="Gender">
@@ -21,9 +21,9 @@ const RadioGroup = ({ values, name }) => {
   );
 };
 
-RadioGroup.propTypes = {
+RadioGroupInput.propTypes = {
   values: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-export default RadioGroup;
+export default RadioGroupInput;
