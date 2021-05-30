@@ -26,7 +26,6 @@ const AddressInput = ({ field, form: { touched, errors }, label, ...rest }) => {
         className={`${styles.field} ${isError && styles.fieldError}`}
         type="search"
         id="address-input"
-        placeholder="Where are we going?"
         ref={addrInputRef}
         {...rest}
       />
