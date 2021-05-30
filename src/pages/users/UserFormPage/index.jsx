@@ -29,6 +29,19 @@ export const FORMS = [
   },
 ];
 
+const initialValues = {
+  userName: '',
+  password: '',
+  repeatPassword: '',
+  avatar: null,
+  company: '',
+  githubLink: '',
+  facebookLink: '',
+  mainLanguage: '',
+  fax: '',
+  phoneNumbers: [''],
+};
+
 const FILE_SIZE = 1024 * 1024;
 
 const SUPPORTED_FORMATS = new Set([
@@ -55,6 +68,12 @@ const validationSchema = Yup.object().shape({
     .test('fileFormat', 'Unsupported Format', (value) =>
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
+  company: Yup.string().required('Required'),
+  githubLink: Yup.string().required('Required'),
+  facebookLink: Yup.string().required('Required'),
+  mainLanguage: Yup.mixed().required('Required'),
+  fax: Yup.string().required('Required'),
+  phoneNumbers: Yup.array().of(Yup.string().required('Required')).required('Required'),
 });
 
 const UserFormPage = ({ isEditing }) => {
@@ -62,11 +81,7 @@ const UserFormPage = ({ isEditing }) => {
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <Formik
-        initialValues={{ userName: '', password: '', repeatPassword: '', avatar: null }}
-        onSubmit={() => {}}
-        validationSchema={validationSchema}
-      >
+      <Formik initialValues={initialValues} onSubmit={() => {}} validationSchema={validationSchema}>
         <FormikForm>
           <Switch>
             {FORMS.map(({ component: Form, slug }) => (
