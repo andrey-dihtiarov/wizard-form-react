@@ -1,15 +1,13 @@
 import { Field } from 'formik';
 
 import DateInput from '../../inputs/DateInput';
-import RadioGroup from '../../RadioGroup';
+import RadioGroupInput from '../../inputs/RadioGroupInput';
 import AddressInput from '../../inputs/AddressInput';
-
-const GenderRadioGroupValues = ['Male', 'Female'];
 
 const ProfileForm = () => (
   <div>
     <Field name="birthDate" label="Birth date" component={DateInput} />
-    <RadioGroup values={GenderRadioGroupValues} name="gender" />
+    <RadioGroupInput values={['Male', 'Female']} name="gender" />
     <Field name="address" label="Address" component={AddressInput} />
   </div>
 );
