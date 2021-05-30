@@ -10,7 +10,7 @@ const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
   return (
     <InputContainer label={label} field={field}>
       <input
-        className={`${styles.field} ${isError && styles.fieldError}`}
+        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
         type="text"
         {...field}
         {...props}

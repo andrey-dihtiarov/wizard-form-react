@@ -23,7 +23,7 @@ const AddressInput = ({ field, form: { touched, errors }, label, ...rest }) => {
     <InputContainer field={field} label={label}>
       <input
         {...field}
-        className={`${styles.field} ${isError && styles.fieldError}`}
+        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
         type="search"
         id="address-input"
         ref={addrInputRef}

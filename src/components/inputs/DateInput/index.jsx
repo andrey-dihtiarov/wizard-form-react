@@ -24,7 +24,7 @@ const DateInput = ({
   return (
     <InputContainer label={label} field={field}>
       <DatePicker
-        className={`${styles.field} ${isError && styles.fieldError}`}
+        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
         selected={(value && new Date(value)) || null}
         onChange={onDateChange}
         placeholderText="DD/MM/YYYY"
