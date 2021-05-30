@@ -47,9 +47,12 @@ const initValues = {
   password: '',
   repeatPassword: '',
   avatar: null,
+  firstName: '',
+  lastName: '',
   birthDate: '',
-  gender: '',
+  email: '',
   address: '',
+  gender: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -68,6 +71,15 @@ const validationSchema = Yup.object().shape({
     .test('fileFormat', 'Unsupported Format', (value) =>
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
+  firstName: Yup.string()
+    .min(2, 'User Name is too short')
+    .max(70, 'User Name is too long')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'User Name Too Short')
+    .max(70, 'User Name Too Long')
+    .required('Required'),
+  email: Yup.string().email('Incorrect email format').required('Required'),
   birthDate: Yup.date().max(subYears(Date.now(), 18), 'User must be older 18').required('Required'),
   gender: Yup.string().oneOf(GENDER_INPUT_VALUES).required('Required'),
 });

@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0.3;
+}
