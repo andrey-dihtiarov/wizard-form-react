@@ -55,6 +55,8 @@ const validationSchema = Yup.object().shape({
     .test('fileFormat', 'Unsupported Format', (value) =>
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
+  skills: Yup.array().of(Yup.string().required('Required')).min(3, 'Min skills count should be 3'),
+  additionalInfo: Yup.string().max(300, 'Max length is 300'),
 });
 
 const UserFormPage = ({ isEditing }) => {
@@ -63,7 +65,15 @@ const UserFormPage = ({ isEditing }) => {
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
       <Formik
-        initialValues={{ userName: '', password: '', repeatPassword: '', avatar: null }}
+        initialValues={{
+          userName: '',
+          password: '',
+          repeatPassword: '',
+          avatar: null,
+          skills: [],
+          additionalInfo: '',
+          myHobbies: [],
+        }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
       >
