@@ -13,6 +13,7 @@ const AddressInput = ({ field, form: { touched, errors, setFieldValue }, label, 
   const { name } = field;
   const isError = !!(touched[name] && errors[name]);
 
+  // TODO destructuring current
   useEffect(() => {
     if (addrInputRef && !placesAutocomplete.current)
       placesAutocomplete.current = places({

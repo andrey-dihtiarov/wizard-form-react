@@ -5,21 +5,18 @@ import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
 
-const RadioGroupInput = ({ values, name }) => {
-  const field = { name };
-  return (
-    <InputContainer field={field} label="Gender">
-      <div className={styles.radioGroup}>
-        {values.map((value) => (
-          <label htmlFor={value} key={value}>
-            <Field type="radio" name={name} value={value} id={value} />
-            {value}
-          </label>
-        ))}
-      </div>
-    </InputContainer>
-  );
-};
+const RadioGroupInput = ({ values, name }) => (
+  <InputContainer field={name} label="Gender">
+    <div className={styles.radioGroup}>
+      {values.map((value) => (
+        <label htmlFor={value} key={value}>
+          <Field type="radio" name={name} value={value} id={value} />
+          {value}
+        </label>
+      ))}
+    </div>
+  </InputContainer>
+);
 
 RadioGroupInput.propTypes = {
   values: PropTypes.array.isRequired,
