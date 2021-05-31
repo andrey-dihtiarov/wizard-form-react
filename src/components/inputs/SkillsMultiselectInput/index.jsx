@@ -3,8 +3,9 @@ import Select from 'react-select';
 
 import { SKILLS } from '../../../constants';
 
-import styles from './styles.module.scss';
 import InputContainer from '../InputContainer';
+
+import styles from './styles.module.scss';
 
 const selectboxValues = SKILLS.map((item) => ({
   value: item,
