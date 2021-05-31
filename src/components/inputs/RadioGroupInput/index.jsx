@@ -6,7 +6,7 @@ import InputContainer from '../InputContainer';
 import styles from './styles.module.scss';
 
 const RadioGroupInput = ({ values, name }) => (
-  <InputContainer field={name} label="Gender">
+  <InputContainer field={{ name }} label="Gender">
     <div className={styles.radioGroup}>
       {values.map((value) => (
         <label htmlFor={value} key={value}>
