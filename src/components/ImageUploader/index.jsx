@@ -30,8 +30,8 @@ export function ImageUploader({
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFieldValue('avatar', file);
-        setFieldTouched('avatar', true, true);
+        setFieldValue(name, file);
+        setFieldTouched(name, true, true);
         resolve(e.target.result);
       };
       reader.readAsDataURL(file);

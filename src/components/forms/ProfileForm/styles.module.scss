@@ -1,0 +1,16 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &Inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}

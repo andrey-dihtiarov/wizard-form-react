@@ -1,7 +1,10 @@
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Form as FormikForm, Formik } from 'formik';
+import { subYears } from 'date-fns';
 import * as Yup from 'yup';
+
+import { GENDER_INPUT_VALUES } from '../../../constants';
 
 import AccountForm from '../../../components/forms/AccountForm';
 import ProfileForm from '../../../components/forms/ProfileForm';
@@ -39,6 +42,19 @@ const SUPPORTED_FORMATS = new Set([
   'image/png',
 ]);
 
+const initValues = {
+  userName: '',
+  password: '',
+  repeatPassword: '',
+  avatar: null,
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+  email: '',
+  address: '',
+  gender: '',
+};
+
 const validationSchema = Yup.object().shape({
   userName: Yup.string()
     .min(2, 'User Name is too short')
@@ -55,6 +71,19 @@ const validationSchema = Yup.object().shape({
     .test('fileFormat', 'Unsupported Format', (value) =>
       value ? SUPPORTED_FORMATS.has(value.type) : true,
     ),
+  // TODO custom validation
+  firstName: Yup.string()
+    .min(2, 'User Name is too short')
+    .max(70, 'User Name is too long')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'User Name Too Short')
+    .max(70, 'User Name Too Long')
+    .required('Required'),
+  email: Yup.string().email('Incorrect email format').required('Required'),
+  // TODO Support timezones
+  birthDate: Yup.date().max(subYears(Date.now(), 18), 'User must be older 18').required('Required'),
+  gender: Yup.string().oneOf(GENDER_INPUT_VALUES).required('Required'),
 });
 
 const UserFormPage = ({ isEditing }) => {
@@ -62,11 +91,7 @@ const UserFormPage = ({ isEditing }) => {
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <Formik
-        initialValues={{ userName: '', password: '', repeatPassword: '', avatar: null }}
-        onSubmit={() => {}}
-        validationSchema={validationSchema}
-      >
+      <Formik initialValues={initValues} onSubmit={() => {}} validationSchema={validationSchema}>
         <FormikForm>
           <Switch>
             {FORMS.map(({ component: Form, slug }) => (
