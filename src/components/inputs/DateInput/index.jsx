@@ -14,6 +14,7 @@ const DateInput = ({
   const { name, value } = field;
   const isError = !!(touched[name] && errors[name]);
 
+  // TODO remove setFieldTouched
   const onDateChange = (val) => {
     setFieldTouched(name, true, true);
     setFieldValue(name, val);
@@ -24,9 +25,13 @@ const DateInput = ({
   return (
     <InputContainer label={label} field={field}>
       <DatePicker
-        className={`${styles.field} ${isError && styles.fieldError}`}
+        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
+        wrapperClassName={styles.wrapper}
+        wrapp
+        // TODO check select prop
         selected={(value && new Date(value)) || null}
         onChange={onDateChange}
+        // TODO check format and remove placeholder
         placeholderText="DD/MM/YYYY"
         dateFormat="dd/MM/yyyy"
         name={name}
