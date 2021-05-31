@@ -31,8 +31,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileForm = ({ children, onSubmit }) => {
-  const { birthDate, gender, address } = useSelector((state) => state.user);
-  const initValues = { birthDate, gender, address };
+  const { firstName, lastName, email, birthDate, gender, address } = useSelector(
+    (state) => state.user,
+  );
+  const initValues = { firstName, lastName, email, birthDate, gender, address };
   return (
     <FormikForm initialValues={initValues} validationSchema={validationSchema} submit={onSubmit}>
       <div className={styles.form}>
