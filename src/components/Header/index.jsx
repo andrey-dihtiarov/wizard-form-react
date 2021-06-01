@@ -15,7 +15,7 @@ const Header = () => (
       </Link>
       <div className={styles.nav}>
         <LinkButton
-          to={`${ROUTES.newUser.replace(':slug', ROUTES.accountForm)}`}
+          to={`${ROUTES.newUser.replace(':slug', 'account')}`}
           icon={<Icon icon={ICONS.user} />}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}

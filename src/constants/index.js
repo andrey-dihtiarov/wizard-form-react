@@ -4,9 +4,6 @@ export const ROUTES = Object.freeze({
   users: '/users',
   newUser: '/users/new/:slug',
   editUser: '/users/:id/edit',
-
-  //form slugs
-  accountForm: 'account',
 });
 
 export const ICONS = Object.freeze({
