@@ -1,11 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import user from './user';
-import wizard from './wizard';
+import form from './form';
 
 const reducer = combineReducers({
-  user,
-  wizard,
+  form,
 });
 
 const store = configureStore({
