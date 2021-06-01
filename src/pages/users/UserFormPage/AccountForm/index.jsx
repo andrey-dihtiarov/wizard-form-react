@@ -4,15 +4,16 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import TextInput from '../../inputs/TextInput';
-import PasswordInput from '../../inputs/PasswordInput';
-import Avatar from '../../Avatar';
-import ImageUploader from '../../ImageUploader';
-import FormikForm from '../../FormikForm';
+import TextInput from '../../../../components/inputs/TextInput';
+import PasswordInput from '../../../../components/inputs/PasswordInput';
+import Avatar from '../../../../components/Avatar';
+import ImageUploader from '../../../../components/ImageUploader';
+import FormikForm from '../../../../components/FormikForm';
+import NavButtons from '../../../../components/NavButtons';
 
 import styles from './styles.module.scss';
 
-const FILE_SIZE = 1024 * 1024;
+const ONE_MEGABYTE = 1024 * 1024;
 
 const SUPPORTED_FORMATS = new Set([
   'image/jpg',
@@ -34,16 +35,29 @@ const validationSchema = Yup.object().shape({
     .required('Please, repeat entered password')
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   avatar: Yup.mixed()
-    .test('fileSize', 'File too large', (value) => (value ? value.size <= FILE_SIZE : true))
-    .test('fileFormat', 'Unsupported Format', (value) =>
-      value ? SUPPORTED_FORMATS.has(value.type) : true,
-    ),
+    .test('fileSize', 'File too large', (value) => {
+      if (value) {
+        const { size } = value;
+        return size <= ONE_MEGABYTE;
+      }
+      return true;
+    })
+    .test('fileFormat', 'Unsupported Format', (value) => {
+      if (value) {
+        const { type } = value;
+        return SUPPORTED_FORMATS.has(type);
+      }
+      return true;
+    }),
 });
 
-const AccountForm = ({ children, onSubmit }) => {
+const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
   const [imageSrc, setImageSrc] = useState();
-  const { userName, password, repeatPassword, avatar } = useSelector((state) => state.user);
+  const { userName, password, repeatPassword, avatar } = useSelector((state) => state.form);
   const initValues = { userName, password, repeatPassword, avatar };
+
+  const onSubmit = (values) => onNext(values);
+
   return (
     <FormikForm
       initialValues={initValues}
@@ -51,7 +65,7 @@ const AccountForm = ({ children, onSubmit }) => {
       submit={onSubmit}
       className={styles.form}
     >
-      <div className={styles.formContainer}>
+      <div className={styles.formInner}>
         <div className={styles.avatarContainer}>
           <Avatar image={imageSrc} />
           <Field
@@ -69,18 +83,22 @@ const AccountForm = ({ children, onSubmit }) => {
           </div>
         </div>
       </div>
-      {children}
+      <div className={styles.buttonsWrapper}>
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+      </div>
     </FormikForm>
   );
 };
 
 AccountForm.propTypes = {
-  children: PropTypes.node,
-  onSubmit: PropTypes.func,
+  onBack: PropTypes.func,
+  onNext: PropTypes.func.isRequired,
+  isFirst: PropTypes.bool.isRequired,
+  isLast: PropTypes.bool.isRequired,
 };
 
 AccountForm.defaultProps = {
-  children: null,
+  onBack: () => {},
 };
 
 export default AccountForm;
