@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { updateUser } from '../../../store/user';
+import { updateFormData } from '../../../store/form';
 
-import AccountForm from '../../../components/forms/AccountForm';
-import ProfileForm from '../../../components/forms/ProfileForm';
-import ContactsForm from '../../../components/forms/ContactsForm';
-import CapabilitiesForm from '../../../components/forms/CapabilitiesForm';
-import Wizard from '../../../components/StepWizard/Wizard';
+import AccountForm from './AccountForm';
+import ProfileForm from './ProfileForm';
+import ContactsForm from './ContactsForm';
+import CapabilitiesForm from './CapabilitiesForm';
+import StepWizard from '../../../components/StepWizard';
 
 import styles from './styles.module.scss';
-import { setStep } from '../../../store/wizard';
 
 export const STEPS = [
   {
@@ -37,14 +36,11 @@ export const STEPS = [
 
 const UserFormPage = ({ isEditing }) => {
   const dispatch = useDispatch();
-  const onForward = (values, step) => {
-    dispatch(updateUser(values));
-    dispatch(setStep(step));
-  };
+  const onForward = (values) => dispatch(updateFormData(values));
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <Wizard steps={STEPS} onForward={onForward} />
+      <StepWizard steps={STEPS} onForward={onForward} />
     </div>
   );
 };
