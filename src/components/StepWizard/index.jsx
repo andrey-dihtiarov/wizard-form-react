@@ -20,6 +20,14 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
   const isSlugExists = steps.some((step) => step.slug === slug);
   const activeStep = steps.findIndex((step) => step.slug === slug);
 
+  const stepWizardTabs = steps.map((item, index) => ({
+    title: `${index + 1}. ${item.title}`,
+    isActive: activeStep === index,
+    isDisabled: !availableSteps.includes(item.slug),
+    path: path.replace(':slug', item.slug),
+    key: item.slug,
+  }));
+
   const onBackClick = useCallback(() => {
     onBack();
     const nextSlug = steps[activeStep - 1].slug;
@@ -68,7 +76,7 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
 
   return (
     <>
-      <StepWizardHeader steps={steps} activeStep={activeStep} availableSteps={availableSteps} />
+      <StepWizardHeader steps={stepWizardTabs} />
       <div className={styles.wizardWrapper}>{mappedSteps[activeStep]}</div>
     </>
   );
