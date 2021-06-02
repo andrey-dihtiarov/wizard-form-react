@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouteMatch, useParams, useHistory } from 'react-router-dom';
 
@@ -57,27 +57,25 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
     }
   }, [availableSteps, defaultSlug, history, isSlugExists, path, slug]);
 
-  const mappedSteps = useMemo(() => {
-    if (!steps || !steps.length) return null;
-
-    return steps.map((item, index) => {
-      const Component = item.component;
-      const props = {
-        isFirst: index === 0,
-        isLast: index === steps.length - 1,
-        key: item.slug,
-        onBack: onBackClick,
-        onNext: index === steps.length - 1 ? onFinishClick : onForwardClick,
-      };
-
-      return <Component {...props} />;
-    });
-  }, [onBackClick, onFinishClick, onForwardClick, steps]);
-
   return (
     <>
       <StepWizardHeader steps={stepWizardTabs} />
-      <div className={styles.wizardWrapper}>{mappedSteps[activeStep]}</div>
+      <div className={styles.wizardWrapper}>
+        {steps &&
+          steps.length &&
+          steps.map((item, index) => {
+            const Component = item.component;
+            const props = {
+              isFirst: index === 0,
+              isLast: index === steps.length - 1,
+              key: item.slug,
+              onBack: onBackClick,
+              onNext: index === steps.length - 1 ? onFinishClick : onForwardClick,
+            };
+
+            return <Component {...props} />;
+          })[activeStep]}
+      </div>
     </>
   );
 };
