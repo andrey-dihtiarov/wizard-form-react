@@ -2,7 +2,7 @@ export const ROUTES = Object.freeze({
   home: '/',
   user: '/users/:id',
   users: '/users',
-  newUser: '/users/new/:slug',
+  newUser: '/users/new',
   editUser: '/users/:id/edit',
 });
 
