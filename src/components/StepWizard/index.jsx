@@ -7,7 +7,8 @@ import StepWizardHeader from './StepWizardHeader';
 import styles from './styles.module.scss';
 
 const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
-  const defaultSlug = steps[0].slug;
+  const [firstStep] = steps;
+  const { slug: defaultSlug } = firstStep;
 
   const [availableSteps, setAvailableSteps] = useState([defaultSlug]);
 
