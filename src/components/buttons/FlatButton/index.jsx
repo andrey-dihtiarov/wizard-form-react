@@ -12,7 +12,7 @@ const FlatButton = ({ variant, children, className, ...props }) => (
 
 FlatButton.propTypes = {
   children: PropTypes.string,
-  variant: PropTypes.oneOf([ButtonVariants]),
+  variant: PropTypes.oneOf(ButtonVariants),
   className: PropTypes.string,
 };
 
