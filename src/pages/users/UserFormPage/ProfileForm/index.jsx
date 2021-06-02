@@ -1,4 +1,4 @@
-import { Field } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import { subYears } from 'date-fns';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -10,7 +10,6 @@ import DateInput from '../../../../components/inputs/DateInput';
 import RadioGroupInput from '../../../../components/inputs/RadioGroupInput';
 import AddressInput from '../../../../components/inputs/AddressInput';
 import TextInput from '../../../../components/inputs/TextInput';
-import FormikForm from '../../../../components/FormikForm';
 import NavButtons from '../../../../components/NavButtons';
 
 import styles from './styles.module.scss';
@@ -40,28 +39,25 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
   const onSubmit = () => onNext();
 
   return (
-    <FormikForm
-      initialValues={initValues}
-      validationSchema={validationSchema}
-      submit={onSubmit}
-      className={styles.form}
-    >
-      <div className={styles.formInner}>
-        <div className={styles.fieldsWrapper}>
-          <Field name="firstName" label="First Name" component={TextInput} />
-          <Field name="lastName" label="Last Name" component={TextInput} />
-          <Field name="birthDate" label="Birth date" component={DateInput} />
+    <Formik initialValues={initValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      <Form className={styles.form}>
+        <div className={styles.formInner}>
+          <div className={styles.fieldsWrapper}>
+            <Field name="firstName" label="First Name" component={TextInput} />
+            <Field name="lastName" label="Last Name" component={TextInput} />
+            <Field name="birthDate" label="Birth date" component={DateInput} />
+          </div>
+          <div className={styles.fieldsWrapper}>
+            <Field name="email" label="Email" component={TextInput} />
+            <Field name="address" label="Address" component={AddressInput} />
+            <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
+          </div>
         </div>
-        <div className={styles.fieldsWrapper}>
-          <Field name="email" label="Email" component={TextInput} />
-          <Field name="address" label="Address" component={AddressInput} />
-          <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
+        <div className={styles.buttonsWrapper}>
+          <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
         </div>
-      </div>
-      <div className={styles.buttonsWrapper}>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
-      </div>
-    </FormikForm>
+      </Form>
+    </Formik>
   );
 };
 

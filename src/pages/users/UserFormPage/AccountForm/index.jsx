@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Field } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
@@ -8,7 +8,6 @@ import TextInput from '../../../../components/inputs/TextInput';
 import PasswordInput from '../../../../components/inputs/PasswordInput';
 import Avatar from '../../../../components/Avatar';
 import ImageUploader from '../../../../components/ImageUploader';
-import FormikForm from '../../../../components/FormikForm';
 import NavButtons from '../../../../components/NavButtons';
 
 import styles from './styles.module.scss';
@@ -59,34 +58,31 @@ const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
   const onSubmit = (values) => onNext(values);
 
   return (
-    <FormikForm
-      initialValues={initValues}
-      validationSchema={validationSchema}
-      submit={onSubmit}
-      className={styles.form}
-    >
-      <div className={styles.formInner}>
-        <div className={styles.avatarContainer}>
-          <Avatar image={imageSrc} />
-          <Field
-            name="avatar"
-            className={styles.avatarButton}
-            onChange={setImageSrc}
-            component={ImageUploader}
-          />
-        </div>
-        <div className={styles.fieldsContainer}>
-          <div>
-            <Field name="userName" label="User Name" component={TextInput} />
-            <Field name="password" label="Password" component={PasswordInput} />
-            <Field name="repeatPassword" label="Repeat Password" component={PasswordInput} />
+    <Formik initialValues={initValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      <Form className={styles.form}>
+        <div className={styles.formInner}>
+          <div className={styles.avatarContainer}>
+            <Avatar image={imageSrc} />
+            <Field
+              name="avatar"
+              className={styles.avatarButton}
+              onChange={setImageSrc}
+              component={ImageUploader}
+            />
+          </div>
+          <div className={styles.fieldsContainer}>
+            <div>
+              <Field name="userName" label="User Name" component={TextInput} />
+              <Field name="password" label="Password" component={PasswordInput} />
+              <Field name="repeatPassword" label="Repeat Password" component={PasswordInput} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.buttonsWrapper}>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
-      </div>
-    </FormikForm>
+        <div className={styles.buttonsWrapper}>
+          <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        </div>
+      </Form>
+    </Formik>
   );
 };
 
