@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
-const StepWizardTab = ({ children, className, isActive, ...rest }) => (
+const StepWizardTab = ({ className, isActive, title, ...rest }) => (
   <Link className={`${styles.tab} ${isActive ? styles.tabActive : ''} ${className}`} {...rest}>
-    {children}
+    {title}
   </Link>
 );
 
 StepWizardTab.propTypes = {
-  children: PropTypes.string,
+  title: PropTypes.string,
   className: PropTypes.string,
 };
 
 StepWizardTab.defaultProps = {
-  children: 'Tab',
+  title: '',
   className: '',
 };
 
