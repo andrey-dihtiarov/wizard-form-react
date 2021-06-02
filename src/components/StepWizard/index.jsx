@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useRouteMatch, useParams, useHistory } from 'react-router-dom';
 
 import StepWizardHeader from './StepWizardHeader';
+import withRouteSlug from '../../hocs/withRouteSlug';
 
 import styles from './styles.module.scss';
 
@@ -92,4 +93,4 @@ StepWizard.defaultProps = {
   onFinish: () => {},
 };
 
-export default StepWizard;
+export default withRouteSlug(StepWizard);
