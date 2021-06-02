@@ -19,14 +19,11 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
   const isSlugExists = steps.some((step) => step.slug === slug);
   const activeStep = steps.findIndex((step) => step.slug === slug);
 
-  const slugs = steps.map((item) => item.slug);
-
-  const currentSlugIndex = useMemo(() => slugs.findIndex((item) => item === slug), [slug, slugs]);
-
   const onBackClick = useCallback(() => {
     onBack();
-    history.push(path.replace(':slug', slugs[currentSlugIndex - 1]));
-  }, [currentSlugIndex, history, onBack, path, slugs]);
+    const nextSlug = steps[activeStep - 1].slug;
+    history.push(path.replace(':slug', nextSlug));
+  }, [activeStep, history, onBack, path, steps]);
 
   const onFinishClick = useCallback(
     (values) => {
@@ -38,10 +35,11 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
   const onForwardClick = useCallback(
     (values) => {
       onForward(values, slug);
-      setAvailableSteps([...availableSteps, steps[currentSlugIndex + 1].slug]);
-      history.push(path.replace(':slug', slugs[currentSlugIndex + 1]));
+      const nextSlug = steps[activeStep + 1].slug;
+      setAvailableSteps([...availableSteps, nextSlug]);
+      history.push(path.replace(':slug', nextSlug));
     },
-    [onForward, slug, availableSteps, steps, currentSlugIndex, history, path, slugs],
+    [onForward, slug, availableSteps, steps, activeStep, history, path],
   );
 
   useEffect(() => {
