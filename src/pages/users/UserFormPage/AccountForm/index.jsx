@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
+import { MEGABYTE } from '../../../../constants';
+
 import TextInput from '../../../../components/inputs/TextInput';
 import PasswordInput from '../../../../components/inputs/PasswordInput';
 import Avatar from '../../../../components/Avatar';
@@ -12,7 +14,7 @@ import NavButtons from '../../../../components/NavButtons';
 
 import styles from './styles.module.scss';
 
-const ONE_MEGABYTE = 1024 * 1024;
+const MAX_IMG_SIZE = MEGABYTE;
 
 const SUPPORTED_FORMATS = new Set([
   'image/jpg',
@@ -37,7 +39,7 @@ const validationSchema = Yup.object().shape({
     .test('fileSize', 'File too large', (value) => {
       if (value) {
         const { size } = value;
-        return size <= ONE_MEGABYTE;
+        return size <= MAX_IMG_SIZE;
       }
       return true;
     })

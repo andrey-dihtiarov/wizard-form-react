@@ -15,3 +15,5 @@ export const ICONS = Object.freeze({
 });
 
 export const GENDER_INPUT_VALUES = Object.freeze(['Male', 'Female']);
+
+export const MEGABYTE = 1024 * 1024;
