@@ -16,12 +16,3 @@
   flex-direction: column;
   width: 300px;
 }
-
-.buttonsWrapper {
-  display: inline-flex;
-  justify-content: flex-end;
-
-  & > * {
-    margin: 0 0 0 100px;
-  }
-}

@@ -26,12 +26,3 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
-.buttonsWrapper {
-  display: inline-flex;
-  justify-content: flex-end;
-
-  & > * {
-    margin: 0 0 0 100px;
-  }
-}

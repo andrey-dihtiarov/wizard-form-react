@@ -10,7 +10,7 @@ import TextInput from '../../../../components/inputs/TextInput';
 import PasswordInput from '../../../../components/inputs/PasswordInput';
 import Avatar from '../../../../components/Avatar';
 import ImageUploader from '../../../../components/ImageUploader';
-import NavButtons from '../../../../components/NavButtons';
+import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
@@ -80,9 +80,7 @@ const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
             </div>
           </div>
         </div>
-        <div className={styles.buttonsWrapper}>
-          <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
-        </div>
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
       </Form>
     </Formik>
   );

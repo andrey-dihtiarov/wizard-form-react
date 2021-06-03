@@ -10,7 +10,7 @@ import DateInput from '../../../../components/inputs/DateInput';
 import RadioGroupInput from '../../../../components/inputs/RadioGroupInput';
 import AddressInput from '../../../../components/inputs/AddressInput';
 import TextInput from '../../../../components/inputs/TextInput';
-import NavButtons from '../../../../components/NavButtons';
+import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
@@ -53,9 +53,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
             <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
           </div>
         </div>
-        <div className={styles.buttonsWrapper}>
-          <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
-        </div>
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
       </Form>
     </Formik>
   );
