@@ -5,19 +5,11 @@ import styles from './styles.module.scss';
 
 const NavButtons = ({ isFirst, isLast, onBack }) => (
   <div className={styles.wrapper}>
-    {!isFirst && (
-      <FlatButton type="button" variant="cancel" onClick={onBack}>
-        Back
-      </FlatButton>
-    )}
+    {!isFirst && <FlatButton type="button" variant="cancel" onClick={onBack} title="Back" />}
     {isLast ? (
-      <FlatButton variant="success" className={styles.next}>
-        Finish
-      </FlatButton>
+      <FlatButton variant="success" className={styles.next} title="Finish" />
     ) : (
-      <FlatButton variant="primary" className={styles.next}>
-        Forward
-      </FlatButton>
+      <FlatButton variant="primary" className={styles.next} title="Forward" />
     )}
   </div>
 );
