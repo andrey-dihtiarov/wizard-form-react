@@ -34,12 +34,14 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
   const { firstName, lastName, email, birthDate, gender, address } = useSelector(
     (state) => state.form,
   );
-  const initValues = { firstName, lastName, email, birthDate, gender, address };
-
   const onSubmit = () => onNext();
 
   return (
-    <Formik initialValues={initValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ firstName, lastName, email, birthDate, gender, address }}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       <Form className={styles.form}>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>

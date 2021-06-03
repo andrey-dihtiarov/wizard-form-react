@@ -55,12 +55,14 @@ const validationSchema = Yup.object().shape({
 const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
   const [imageSrc, setImageSrc] = useState();
   const { userName, password, repeatPassword, avatar } = useSelector((state) => state.form);
-  const initValues = { userName, password, repeatPassword, avatar };
-
   const onSubmit = (values) => onNext(values);
 
   return (
-    <Formik initialValues={initValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ userName, password, repeatPassword, avatar }}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       <Form className={styles.form}>
         <div className={styles.formInner}>
           <div className={styles.avatarContainer}>
