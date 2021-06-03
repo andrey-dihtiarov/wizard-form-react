@@ -4,9 +4,9 @@ import styles from './styles.module.scss';
 
 const ButtonVariants = ['primary', 'cancel', 'success'];
 
-const FlatButton = ({ variant, children, className, ...props }) => (
+const FlatButton = ({ variant, children, className, title, ...props }) => (
   <button className={`${styles.button} ${styles[variant]} ${className}`} {...props}>
-    {children}
+    {title || children}
   </button>
 );
 
@@ -14,10 +14,12 @@ FlatButton.propTypes = {
   children: PropTypes.string,
   variant: PropTypes.oneOf(ButtonVariants),
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 FlatButton.defaultProps = {
-  children: 'Flat Button',
+  children: '',
+  title: '',
   variant: 'primary',
   className: '',
 };
