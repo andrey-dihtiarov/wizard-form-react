@@ -11,11 +11,11 @@ const NavButtons = ({ isFirst, isLast, onBack }) => (
       </FlatButton>
     )}
     {isLast ? (
-      <FlatButton type="submit" variant="success" className={styles.next}>
+      <FlatButton variant="success" className={styles.next}>
         Finish
       </FlatButton>
     ) : (
-      <FlatButton type="submit" variant="primary" className={styles.next}>
+      <FlatButton variant="primary" className={styles.next}>
         Forward
       </FlatButton>
     )}
