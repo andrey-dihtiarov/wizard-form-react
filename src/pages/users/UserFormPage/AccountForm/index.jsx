@@ -37,18 +37,12 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   avatar: Yup.mixed()
     .test('fileSize', 'File too large', (value) => {
-      if (value) {
-        const { size } = value;
-        return size <= MAX_IMG_SIZE;
-      }
-      return true;
+      const { size } = value || {};
+      return size ? size <= MAX_IMG_SIZE : true;
     })
     .test('fileFormat', 'Unsupported Format', (value) => {
-      if (value) {
-        const { type } = value;
-        return SUPPORTED_FORMATS.has(type);
-      }
-      return true;
+      const { type } = value || {};
+      return type ? SUPPORTED_FORMATS.has(type) : true;
     }),
 });
 
