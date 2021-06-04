@@ -4,7 +4,6 @@ export const ROUTES = Object.freeze({
   users: '/users',
   newUser: '/users/new',
   editUser: '/users/:id/edit',
-  accountForm: '/account',
 });
 
 export const ICONS = Object.freeze({
@@ -16,3 +15,5 @@ export const ICONS = Object.freeze({
 });
 
 export const GENDER_INPUT_VALUES = Object.freeze(['Male', 'Female']);
+
+export const MEGABYTE = 1024 * 1024;

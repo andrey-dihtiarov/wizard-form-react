@@ -15,9 +15,10 @@ const Header = () => (
       </Link>
       <div className={styles.nav}>
         <LinkButton
-          to={`${ROUTES.newUser}${ROUTES.accountForm}`}
+          to={`${ROUTES.newUser.replace(':slug', 'account')}`}
           icon={<Icon icon={ICONS.user} />}
           className={styles.navButton}
+          activeClassName={styles.navButtonActive}
         >
           Add new user
         </LinkButton>
@@ -25,6 +26,8 @@ const Header = () => (
           to={ROUTES.users}
           icon={<Icon icon={ICONS.userFriends} />}
           className={styles.navButton}
+          activeClassName={styles.navButtonActive}
+          exact
         >
           List of users
         </LinkButton>
