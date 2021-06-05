@@ -13,6 +13,12 @@ const form = createSlice({
     birthDate: '',
     gender: '',
     address: '',
+    company: '',
+    githubLink: '',
+    facebookLink: '',
+    mainLanguage: '',
+    fax: '',
+    phoneNumbers: [''],
   },
   reducers: {
     updateFormData: (state, action) => ({ ...state, ...action.payload }),
