@@ -7,6 +7,9 @@ import { ReactComponent as EyeSlashSolid } from '../../assets/icons/eye-slash-so
 import { ReactComponent as UserSolid } from '../../assets/icons/user-solid.svg';
 import { ReactComponent as AddSolid } from '../../assets/icons/plus-solid.svg';
 import { ReactComponent as UserFriendsSolid } from '../../assets/icons/user-friends-solid.svg';
+import { ReactComponent as PenSolid } from '../../assets/icons/pen-solid.svg';
+import { ReactComponent as TimesSolid } from '../../assets/icons/times-solid.svg';
+import { ReactComponent as ChevronLeftSolid } from '../../assets/icons/chevron-left-solid.svg';
 
 const NAME_TO_ICON = {
   [ICONS.eye]: EyeSolid,
@@ -14,6 +17,9 @@ const NAME_TO_ICON = {
   [ICONS.user]: UserSolid,
   [ICONS.add]: AddSolid,
   [ICONS.userFriends]: UserFriendsSolid,
+  [ICONS.pen]: PenSolid,
+  [ICONS.times]: TimesSolid,
+  [ICONS.chevronLeft]: ChevronLeftSolid,
 };
 
 const Icon = (props) => {
