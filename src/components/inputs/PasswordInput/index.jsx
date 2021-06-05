@@ -21,13 +21,14 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
     <InputContainer label={label} field={field}>
       <div className={styles.wrapper}>
         <input
-          className={`${styles.field} ${isError && styles.fieldError}`}
+          className={`${styles.field} ${isError ? styles.fieldError : ''}`}
           type={isPasswordShown ? 'text' : 'password'}
           value={field.value || ''}
           {...field}
           {...props}
         />
         <IconButton
+          type="button"
           onClick={changePasswordVisibility}
           className={styles.icon}
           icon={isPasswordShown ? <Icon icon={ICONS.eye} /> : <Icon icon={ICONS.eyeSlash} />}
