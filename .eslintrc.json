@@ -19,7 +19,20 @@
     "react/jsx-props-no-spreading": "off",
     "react/button-has-type": "off",
     "react/require-default-props": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "jsx-a11y/control-has-associated-label": [ 2, {
+      "labelAttributes": ["label"],
+      "controlComponents": ["CustomComponent"],
+      "ignoreElements": [
+        "tr",
+        "th"
+      ],
+      "ignoreRoles": [
+        "radiogroup",
+        "row"
+      ],
+      "depth": 3
+    }]
   },
   "env": {
     "browser": true,
