@@ -12,14 +12,17 @@ import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
+const MIN_SKILLS_COUNT = 3;
+const MAX_ADD_INFO_LENGTH = 300;
+
 const selectboxValues = SKILLS.map((item) => ({
   value: item,
   label: item,
 }));
 
 const validationSchema = Yup.object().shape({
-  skills: Yup.array().min(3, 'Min skills count should be 3'),
-  additionalInfo: Yup.string().max(300, 'Max length is 300'),
+  skills: Yup.array().min(MIN_SKILLS_COUNT, 'Min skills count should be 3'),
+  additionalInfo: Yup.string().max(MAX_ADD_INFO_LENGTH, 'Max length is 300'),
 });
 
 const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast }) => {
