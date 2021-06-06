@@ -21,19 +21,7 @@
     "react/require-default-props": "off",
     "prettier/prettier": "error",
     "spaced-comment": "off",
-    "jsx-a11y/control-has-associated-label": [ 2, {
-      "labelAttributes": ["label"],
-      "controlComponents": ["CustomComponent"],
-      "ignoreElements": [
-        "tr",
-        "th"
-      ],
-      "ignoreRoles": [
-        "radiogroup",
-        "row"
-      ],
-      "depth": 3
-    }]
+    "jsx-a11y/control-has-associated-label": "off"
   },
   "env": {
     "browser": true,
