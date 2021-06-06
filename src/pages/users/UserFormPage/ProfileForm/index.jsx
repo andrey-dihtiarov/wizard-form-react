@@ -34,7 +34,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
   const { firstName, lastName, email, birthDate, gender, address } = useSelector(
     (state) => state.form,
   );
-  const onSubmit = () => onNext();
+  const onSubmit = (values) => onNext(values);
 
   return (
     <Formik

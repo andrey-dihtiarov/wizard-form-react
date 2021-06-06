@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ICONS, ROUTES } from '../../constants';
 
 import LinkButton from '../buttons/LinkButton';
-import Icon from '../Icon';
 
 import styles from './styles.module.scss';
 
@@ -15,8 +14,8 @@ const Header = () => (
       </Link>
       <div className={styles.nav}>
         <LinkButton
-          to={`${ROUTES.newUser.replace(':slug', 'account')}`}
-          icon={<Icon icon={ICONS.user} />}
+          to={`${ROUTES.newUser}/account`}
+          icon={ICONS.user}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}
         >
@@ -24,7 +23,7 @@ const Header = () => (
         </LinkButton>
         <LinkButton
           to={ROUTES.users}
-          icon={<Icon icon={ICONS.userFriends} />}
+          icon={ICONS.userFriends}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}
           exact
