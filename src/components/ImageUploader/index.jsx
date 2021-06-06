@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ICONS } from '../../constants';
 
 import IconButton from '../buttons/IconButton';
-import Icon from '../Icon';
 
 import styles from './styles.module.scss';
 import InputContainer from '../inputs/InputContainer';
@@ -62,7 +61,7 @@ export function ImageUploader({
         accept=".jpg,.jpeg,.png,gif,.svg"
         value=""
       />
-      <IconButton type="button" icon={<Icon icon={ICONS.add} />} onClick={onFileChangePopup}>
+      <IconButton type="button" icon={ICONS.add} onClick={onFileChangePopup}>
         {label}
       </IconButton>
     </InputContainer>

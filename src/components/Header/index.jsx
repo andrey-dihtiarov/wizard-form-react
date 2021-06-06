@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ICONS, ROUTES } from '../../constants';
 
 import LinkButton from '../buttons/LinkButton';
-import Icon from '../Icon';
 
 import styles from './styles.module.scss';
 
@@ -15,16 +14,19 @@ const Header = () => (
       </Link>
       <div className={styles.nav}>
         <LinkButton
-          to={`${ROUTES.newUser}${ROUTES.accountForm}`}
-          icon={<Icon icon={ICONS.user} />}
+          to={`${ROUTES.newUser}/account`}
+          icon={ICONS.user}
           className={styles.navButton}
+          activeClassName={styles.navButtonActive}
         >
           Add new user
         </LinkButton>
         <LinkButton
           to={ROUTES.users}
-          icon={<Icon icon={ICONS.userFriends} />}
+          icon={ICONS.userFriends}
           className={styles.navButton}
+          activeClassName={styles.navButtonActive}
+          exact
         >
           List of users
         </LinkButton>

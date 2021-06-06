@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+
+  &Inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.hobbiesWrapper {
+  display: flex;
+  justify-content: flex-end;
+}

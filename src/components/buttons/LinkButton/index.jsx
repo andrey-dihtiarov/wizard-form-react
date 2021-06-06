@@ -1,26 +1,26 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+import Icon from '../../Icon';
 
 import styles from './styles.module.scss';
 
-const LinkButton = ({ icon, className, children, to, ...props }) => (
-  <Link to={to} className={`${styles.button} ${className}`} {...props}>
-    {icon && <span className={styles.buttonIcon}>{icon}</span>} {children}
-  </Link>
+const LinkButton = ({ icon, className, children, ...rest }) => (
+  <NavLink className={`${styles.button} ${className}`} {...rest}>
+    {icon && <Icon icon={icon} className={styles.buttonIcon} />} {children}
+  </NavLink>
 );
 
 LinkButton.propTypes = {
   children: PropTypes.string,
   className: PropTypes.string,
-  to: PropTypes.string,
-  icon: PropTypes.node,
+  icon: PropTypes.string,
 };
 
 LinkButton.defaultProps = {
   children: 'Link Button',
   className: '',
-  to: '',
-  icon: null,
+  icon: '',
 };
 
 export default LinkButton;
