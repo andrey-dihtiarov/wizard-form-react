@@ -44,7 +44,7 @@ SelectboxInput.propTypes = {
   label: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.array]),
   }).isRequired,
   form: PropTypes.shape({
     touched: PropTypes.object,
@@ -53,10 +53,12 @@ SelectboxInput.propTypes = {
     setFieldTouched: PropTypes.func.isRequired,
   }).isRequired,
   isMulti: PropTypes.bool,
-  valuesList: PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.any,
-  }).isRequired,
+  valuesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.any,
+      label: PropTypes.any,
+    }),
+  ).isRequired,
 };
 
 SelectboxInput.defaultProps = {
