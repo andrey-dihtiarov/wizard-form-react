@@ -6,7 +6,6 @@ import { users } from '../../../mocks';
 import { ICONS, ROUTES } from '../../../constants';
 
 import LinkButton from '../../../components/buttons/LinkButton';
-import Icon from '../../../components/Icon';
 
 import styles from './styles.module.scss';
 
@@ -21,7 +20,9 @@ const UsersPage = () => {
           <LinkButton
             to={ROUTES.users}
             className={styles.button}
-            icon={<Icon icon={ICONS.chevronLeft} className={styles.buttonIcon} />}
+            width={24}
+            height={24}
+            icon={ICONS.chevronLeft}
           >
             User List
           </LinkButton>

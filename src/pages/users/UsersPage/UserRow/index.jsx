@@ -5,7 +5,6 @@ import { ICONS } from '../../../../constants';
 
 import Avatar from '../../../../components/Avatar';
 import IconButton from '../../../../components/buttons/IconButton';
-import Icon from '../../../../components/Icon';
 
 import styles from './styles.module.scss';
 
@@ -29,28 +28,29 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
       <td>
         <IconButton
           onClick={onUserEdit(id)}
-          icon={<Icon icon={ICONS.pen} className={styles.edit} width={12} height={12} />}
+          icon={ICONS.pen}
+          width={12}
+          height={12}
           disabled={isSelected}
+          className={styles.edit}
         />
       </td>
       <td>
         <IconButton
           onClick={onRowChange(index)}
-          icon={
-            <Icon
-              icon={ICONS.times}
-              disabled={isSelected}
-              className={styles.delete}
-              width={12}
-              height={12}
-            />
-          }
+          icon={ICONS.times}
+          disabled={isSelected}
+          className={styles.delete}
+          width={12}
+          height={12}
         />
       </td>
       {isSelected && (
         <td>
           <IconButton
-            icon={<Icon icon={ICONS.times} width={12} height={12} />}
+            icon={ICONS.times}
+            width={12}
+            height={12}
             type="button"
             className={styles.deleteConfirm}
             onClick={onUserDelete(id)}
