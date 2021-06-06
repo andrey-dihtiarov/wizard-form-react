@@ -32,8 +32,8 @@
   font-size: 24px;
   font-weight: bold;
 
-  &Icon {
-    width: 24px;
-    height: 24px;
+  & svg {
+    position: relative;
+    top: 3px;
   }
 }
