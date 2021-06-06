@@ -45,3 +45,34 @@ export const LANGUAGES_LIST = Object.freeze({
   th: 'Thai',
   ko: 'Korean',
 });
+
+export const SKILLS = Object.freeze([
+  'HTML',
+  'CSS',
+  'Javascript',
+  'React',
+  'Angular',
+  'jQuery',
+  'NodeJS',
+  'Python',
+  'PHP',
+  'Ruby On Rails',
+  'SQL',
+  'BackboneJS',
+  'Web Design',
+  'Project management',
+  'Git',
+  'Docker',
+  'AWS Lambda',
+  'Firebase',
+]);
+
+export const HOBBIES = Object.freeze([
+  'Music',
+  'Art',
+  'Traveling',
+  'Procrastinating',
+  'Sport',
+  'Driving',
+  'Singing',
+]);

@@ -1,21 +1,23 @@
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
-import { LANGUAGES_LIST } from '../../../constants';
+// import { LANGUAGES_LIST } from '../../../constants';
 
 import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
 
-const selectboxList = Object.entries(LANGUAGES_LIST).map(([key, value]) => ({
-  value: key,
-  label: value,
-}));
+// const selectboxList = Object.entries(LANGUAGES_LIST).map(([key, value]) => ({
+//   value: key,
+//   label: value,
+// }));
 
-const LanguageInput = ({
+const SelectboxInput = ({
   form: { touched, errors, setFieldValue, setFieldTouched },
   label,
   field,
+  isMulti,
+  valuesList,
 }) => {
   const { name, value } = field;
   const isError = !!(touched[name] && errors[name]);
@@ -23,7 +25,7 @@ const LanguageInput = ({
     <InputContainer field={field} label={label}>
       <Select
         label={label}
-        options={selectboxList}
+        options={valuesList}
         required
         name={name}
         {...field}
@@ -32,16 +34,17 @@ const LanguageInput = ({
         onBlur={() => setFieldTouched(name, true)}
         classNamePrefix={isError ? styles.selectError : styles.select}
         className={isError ? styles.selectError : styles.select}
+        isMulti={isMulti}
       />
     </InputContainer>
   );
 };
 
-LanguageInput.propTypes = {
+SelectboxInput.propTypes = {
   label: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.array]),
   }).isRequired,
   form: PropTypes.shape({
     touched: PropTypes.object,
@@ -49,10 +52,18 @@ LanguageInput.propTypes = {
     setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
   }).isRequired,
+  isMulti: PropTypes.bool,
+  valuesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.any,
+      label: PropTypes.any,
+    }),
+  ).isRequired,
 };
 
-LanguageInput.defaultProps = {
+SelectboxInput.defaultProps = {
   label: '',
+  isMulti: false,
 };
 
-export default LanguageInput;
+export default SelectboxInput;
