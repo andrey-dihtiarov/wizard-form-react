@@ -1,21 +1,23 @@
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
-import { SKILLS } from '../../../constants';
+// import { LANGUAGES_LIST } from '../../../constants';
 
 import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
 
-const selectboxValues = SKILLS.map((item) => ({
-  value: item,
-  label: item,
-}));
+// const selectboxList = Object.entries(LANGUAGES_LIST).map(([key, value]) => ({
+//   value: key,
+//   label: value,
+// }));
 
-const SkillsMultiselectInput = ({
+const SelectboxInput = ({
   form: { touched, errors, setFieldValue, setFieldTouched },
   label,
   field,
+  isMulti,
+  valuesList,
 }) => {
   const { name, value } = field;
   const isError = !!(touched[name] && errors[name]);
@@ -23,25 +25,26 @@ const SkillsMultiselectInput = ({
     <InputContainer field={field} label={label}>
       <Select
         label={label}
-        options={selectboxValues}
+        options={valuesList}
         required
         name={name}
         {...field}
         value={value}
-        isMulti
         onChange={(val) => setFieldValue(name, val)}
         onBlur={() => setFieldTouched(name, true)}
         classNamePrefix={isError ? styles.selectError : styles.select}
         className={isError ? styles.selectError : styles.select}
+        isMulti={isMulti}
       />
     </InputContainer>
   );
 };
 
-SkillsMultiselectInput.propTypes = {
+SelectboxInput.propTypes = {
   label: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    value: PropTypes.string,
   }).isRequired,
   form: PropTypes.shape({
     touched: PropTypes.object,
@@ -49,10 +52,16 @@ SkillsMultiselectInput.propTypes = {
     setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
   }).isRequired,
+  isMulti: PropTypes.bool,
+  valuesList: PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  }).isRequired,
 };
 
-SkillsMultiselectInput.defaultProps = {
+SelectboxInput.defaultProps = {
   label: '',
+  isMulti: false,
 };
 
-export default SkillsMultiselectInput;
+export default SelectboxInput;

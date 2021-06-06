@@ -3,12 +3,19 @@ import { Field, Form, Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import SkillsMultiselectInput from '../../../../components/inputs/SkillsMultiselectInput';
+import { SKILLS } from '../../../../constants';
+
+import SelectboxInput from '../../../../components/inputs/SelectboxInput';
 import TextAreaInput from '../../../../components/inputs/TextAreaInput';
 import HobbiesInput from '../../../../components/inputs/HobbiesInput';
+import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+
+const selectboxValues = SKILLS.map((item) => ({
+  value: item,
+  label: item,
+}));
 
 const validationSchema = Yup.object().shape({
   skills: Yup.array().min(3, 'Min skills count should be 3'),
@@ -27,7 +34,13 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast }) => {
       <Form className={styles.form}>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>
-            <Field name="skills" label="Skills" component={SkillsMultiselectInput} />
+            <Field
+              name="skills"
+              label="Skills"
+              valuesList={selectboxValues}
+              isMulti
+              component={SelectboxInput}
+            />
             <Field name="additionalInfo" label="Additional Info" component={TextAreaInput} />
           </div>
           <div className={styles.fieldsWrapper}>
