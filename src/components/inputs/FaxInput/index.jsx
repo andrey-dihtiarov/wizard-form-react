@@ -12,6 +12,7 @@ const FaxInput = ({ form: { touched, errors, setFieldValue, setFieldTouched }, l
   const isError = useMemo(() => {
     const [fieldName, index] = name.split('.');
 
+    //  TODO make it more understandable
     if (index) {
       const parsedIndex = parseInt(index, 10);
 
