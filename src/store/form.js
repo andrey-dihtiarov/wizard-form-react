@@ -19,6 +19,9 @@ const form = createSlice({
     mainLanguage: '',
     fax: '',
     phoneNumbers: [''],
+    skills: [],
+    additionalInfo: '',
+    myHobbies: [],
   },
   reducers: {
     updateFormData: (state, action) => ({ ...state, ...action.payload }),
