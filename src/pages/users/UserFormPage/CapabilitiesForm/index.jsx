@@ -3,11 +3,11 @@ import { Field, Form, Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { SKILLS } from '../../../../constants';
+import { HOBBIES, SKILLS } from '../../../../constants';
 
 import SelectboxInput from '../../../../components/inputs/SelectboxInput';
 import TextAreaInput from '../../../../components/inputs/TextAreaInput';
-import HobbiesInput from '../../../../components/inputs/HobbiesInput';
+import CheckboxGroupInput from '../../../../components/inputs/CheckboxGroupInput';
 import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
@@ -45,7 +45,12 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast }) => {
           </div>
           <div className={styles.fieldsWrapper}>
             <div className={styles.hobbiesWrapper}>
-              <Field name="myHobbies" label="My Hobbies" component={HobbiesInput} />
+              <Field
+                name="myHobbies"
+                label="My Hobbies"
+                values={HOBBIES}
+                component={CheckboxGroupInput}
+              />
             </div>
           </div>
         </div>

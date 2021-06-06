@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 
-import { HOBBIES } from '../../../constants';
-
 import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
 
-const HobbiesInput = ({ form: { setFieldValue, setFieldTouched }, label, field }) => {
+const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, field, values }) => {
   const { name, value } = field;
   const onInputChange = (e) => {
     if (e.target.checked) {
@@ -22,13 +20,13 @@ const HobbiesInput = ({ form: { setFieldValue, setFieldTouched }, label, field }
   return (
     <InputContainer field={field} label={label}>
       <ul>
-        {HOBBIES.map((item, index) => (
+        {values.map((item, index) => (
           <li key={item + index.toString()} className={styles.checkboxWrapper}>
-            <label htmlFor={`hobbies_${index}`}>
+            <label htmlFor={`${name}_${index}`}>
               <input
                 type="checkbox"
-                id={`hobbies_${index}`}
-                name={`hobbies_${index}`}
+                id={`${name}_${index}`}
+                name={`${name}_${index}`}
                 value={item}
                 onChange={onInputChange}
               />
@@ -41,7 +39,7 @@ const HobbiesInput = ({ form: { setFieldValue, setFieldTouched }, label, field }
   );
 };
 
-HobbiesInput.propTypes = {
+CheckboxGroupInput.propTypes = {
   label: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -50,10 +48,11 @@ HobbiesInput.propTypes = {
     setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
   }).isRequired,
+  values: PropTypes.array.isRequired,
 };
 
-HobbiesInput.defaultProps = {
+CheckboxGroupInput.defaultProps = {
   label: '',
 };
 
-export default HobbiesInput;
+export default CheckboxGroupInput;
