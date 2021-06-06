@@ -10,10 +10,13 @@ import NavButtons from '../../../../components/StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
+const urlRegex =
+  /((?:(?:http?|ftp)[s]*:\/\/)?[a-z0-9-%&=?.]+\.[a-z]{2,4}\/?([^\s<>#%",{}\\|^[\]`]+)?)/gi;
+
 const validationSchema = Yup.object().shape({
   company: Yup.string().required('Required'),
-  githubLink: Yup.string().required('Required'),
-  facebookLink: Yup.string().required('Required'),
+  githubLink: Yup.string().matches(urlRegex, 'Url is invalid').required('Required'),
+  facebookLink: Yup.string().matches(urlRegex, 'Url is invalid').required('Required'),
   mainLanguage: Yup.mixed().required('Required'),
   fax: Yup.string().required('Required'),
   phoneNumbers: Yup.array().of(Yup.string().required('Required')).required('Required'),
