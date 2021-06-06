@@ -6,7 +6,6 @@ import { ICONS } from '../../../constants';
 
 import FaxInput from '../FaxInput';
 import IconButton from '../../buttons/IconButton';
-import Icon from '../../Icon';
 
 import styles from './styles.module.scss';
 
@@ -34,7 +33,7 @@ const PhoneGroupInput = ({ maxNumbers }) => {
           {phoneNumbersCount > 1 && (
             <IconButton
               type="button"
-              icon={<Icon icon={ICONS.minus} />}
+              icon={ICONS.minus}
               onClick={onPhoneNumberRemove(index)}
               className={styles.minusButton}
             />
@@ -42,7 +41,7 @@ const PhoneGroupInput = ({ maxNumbers }) => {
         </div>
       ))}
       {phoneNumbersCount < maxNumbers && (
-        <IconButton type="button" icon={<Icon icon={ICONS.add} />} onClick={onPhoneNumberAdd}>
+        <IconButton type="button" icon={ICONS.add} onClick={onPhoneNumberAdd}>
           add phone number
         </IconButton>
       )}

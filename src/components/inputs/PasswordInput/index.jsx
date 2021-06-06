@@ -5,7 +5,6 @@ import { ICONS } from '../../../constants';
 
 import InputContainer from '../InputContainer';
 import IconButton from '../../buttons/IconButton';
-import Icon from '../../Icon';
 
 import styles from './styles.module.scss';
 
@@ -31,7 +30,7 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
           type="button"
           onClick={changePasswordVisibility}
           className={styles.icon}
-          icon={isPasswordShown ? <Icon icon={ICONS.eye} /> : <Icon icon={ICONS.eyeSlash} />}
+          icon={isPasswordShown ? ICONS.eye : ICONS.eyeSlash}
         />
       </div>
     </InputContainer>
