@@ -20,7 +20,7 @@
     "react/button-has-type": "off",
     "react/require-default-props": "off",
     "prettier/prettier": "error",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
     "jsx-a11y/control-has-associated-label": [ 2, {
       "labelAttributes": ["label"],
       "controlComponents": ["CustomComponent"],
