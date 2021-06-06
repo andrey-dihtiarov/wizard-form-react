@@ -21,7 +21,7 @@ const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, f
     <InputContainer field={field} label={label}>
       <ul>
         {values.map((item, index) => (
-          <li key={item + index.toString()} className={styles.checkboxWrapper}>
+          <li key={item} className={styles.checkboxWrapper}>
             <label htmlFor={`${name}_${index}`}>
               <input
                 type="checkbox"
