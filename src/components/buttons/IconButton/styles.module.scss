@@ -1,7 +1,7 @@
 @import '../../../assets/scss/variables';
 
 .button {
-  padding: 12px 12px;
+  padding: 8px 8px;
   font-size: 14px;
   border: none;
   color: $spindle;
@@ -9,14 +9,13 @@
   cursor: pointer;
   position: relative;
   background-color: transparent;
-  border-radius: 50px;
+  border-radius: 50%;
+  display: flex;
 
   &Icon {
-    position: relative;
-    top: 3px;
-    left: -6px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    margin-right: 5px;
   }
 }
