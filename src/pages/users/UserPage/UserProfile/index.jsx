@@ -40,7 +40,7 @@ const UserProfile = ({ user }) => {
         <CategoryBlock title="Personal">
           <CategoryItem title="First name" value={firstName} />
           <CategoryItem title="Last name" value={lastName} />
-          <CategoryItem title="Birth date" value={format(birthDate, 'dd/MM/yyyy')} />
+          <CategoryItem title="Birth date" value={format(Date.parse(birthDate), 'dd/MM/yyyy')} />
           <CategoryItem title="Email" value={email} />
           <CategoryItem title="Address" value={address} />
           <CategoryItem title="Gender" value={gender} />
@@ -76,14 +76,14 @@ UserProfile.propTypes = {
     company: PropTypes.string.isRequired,
     phoneNumbers: PropTypes.array,
     email: PropTypes.string.isRequired,
-    birthDate: PropTypes.instanceOf(Date).isRequired,
+    birthDate: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
     address: PropTypes.string.isRequired,
     fax: PropTypes.string.isRequired,
     facebookLink: PropTypes.string.isRequired,
-    skills: PropTypes.array.isRequired,
-    myHobbies: PropTypes.array,
     githubLink: PropTypes.string.isRequired,
     gender: PropTypes.string.isRequired,
+    myHobbies: PropTypes.array,
+    skills: PropTypes.array.isRequired,
     mainLanguage: PropTypes.string.isRequired,
   }),
 };
