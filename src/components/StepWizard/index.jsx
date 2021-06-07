@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useRouteMatch, useParams, useHistory } from 'react-router-dom';
+import { useRouteMatch, useParams, useHistory, Route } from 'react-router-dom';
+
+import { ROUTES } from '../../constants';
 
 import StepWizardHeader from './StepWizardHeader';
 import withRouteSlug from '../../hocs/withRouteSlug';
@@ -59,6 +61,18 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
     }
   }, [availableSteps, defaultSlug, history, isEditing, isSlugExists, path, slug]);
 
+  useEffect(() => {
+    if (isEditing && !isSlugExists) {
+      history.replace(path.replace(':slug', defaultSlug).replace(':id', id));
+    }
+  }, [defaultSlug, history, id, isEditing, isSlugExists, path]);
+
+  useEffect(() => {
+    if (path === ROUTES.newUser) {
+      history.push(`${path}/${defaultSlug}`);
+    }
+  }, [defaultSlug, history, path]);
+
   return (
     <>
       <StepWizardHeader steps={stepWizardTabs} />
@@ -75,8 +89,13 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
               isEditing,
               data,
             };
-
-            return <Component {...props} />;
+            return (
+              <Route
+                key={item.slug}
+                path={path.replace(':slug', item.slug)}
+                render={(routeProps) => <Component {...props} {...routeProps} />}
+              />
+            );
           })[activeStep]
         }
       </div>

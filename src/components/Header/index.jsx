@@ -14,7 +14,7 @@ const Header = () => (
       </Link>
       <div className={styles.nav}>
         <LinkButton
-          to={`${ROUTES.newUser}/account`}
+          to={ROUTES.newUser}
           icon={ICONS.user}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}
