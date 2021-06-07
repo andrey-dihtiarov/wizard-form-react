@@ -29,8 +29,6 @@ export function ImageUploader({
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFieldValue(name, file);
-        setFieldTouched(name, true, true);
         resolve(e.target.result);
       };
       reader.readAsDataURL(file);
@@ -41,6 +39,8 @@ export function ImageUploader({
     const file = e.target.files[0];
     if (file) {
       const img = await readFile(file);
+      setFieldValue(name, img);
+      setFieldTouched(name, true, true);
       if (errors[name]) {
         return;
       }
