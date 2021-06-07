@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { fetchFormData, updateFormData } from '../../../store/form';
-import { addUser } from '../../../store/user';
+import { addUser, updateUser, fetchUser } from '../../../store/user';
 import { ROUTES } from '../../../constants';
 
 import AccountForm from './AccountForm';
@@ -41,23 +41,50 @@ export const STEPS = [
 const UserFormPage = ({ isEditing }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams();
+
+  const user = useSelector((state) => (isEditing ? state.user.user : state.form.user));
 
   const onForward = (values) => dispatch(updateFormData(values));
 
   const onFinish = (values) => {
+    if (isEditing) {
+      return dispatch(updateUser(values, id));
+    }
     dispatch(addUser(values));
-    history.push(ROUTES.users);
+    return history.push(ROUTES.users);
   };
 
-  useEffect(() => {
+  const [contentLoaded, setContentLoaded] = useState(false);
+
+  const loadData = useCallback(async () => {
+    if (isEditing) {
+      await Promise.all([dispatch(fetchFormData()), dispatch(fetchUser(id))]);
+      return setContentLoaded(true);
+    }
     dispatch(fetchFormData());
-  }, [dispatch]);
+    return setContentLoaded(true);
+  }, [dispatch, id, isEditing]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   return (
-    <div className={styles.wrapper}>
-      {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <StepWizard steps={STEPS} onForward={onForward} onFinish={onFinish} />
-    </div>
+    <>
+      {contentLoaded && (
+        <div className={styles.wrapper}>
+          {isEditing ? 'Edit User Page' : 'New User Pages'}
+          <StepWizard
+            data={contentLoaded && user}
+            steps={STEPS}
+            onForward={onForward}
+            onFinish={onFinish}
+            isEditing={isEditing}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
