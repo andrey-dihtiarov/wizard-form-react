@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { updateFormData } from '../../../store/form';
+import { fetchFormData, updateFormData } from '../../../store/form';
+import { addUser } from '../../../store/user';
+import { ROUTES } from '../../../constants';
 
 import AccountForm from './AccountForm';
 import ProfileForm from './ProfileForm';
@@ -36,11 +40,23 @@ export const STEPS = [
 
 const UserFormPage = ({ isEditing }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const onForward = (values) => dispatch(updateFormData(values));
+
+  const onFinish = (values) => {
+    dispatch(addUser(values));
+    history.push(ROUTES.users);
+  };
+
+  useEffect(() => {
+    dispatch(fetchFormData());
+  }, [dispatch]);
+
   return (
     <div className={styles.wrapper}>
       {isEditing ? 'Edit User Page' : 'New User Pages'}
-      <StepWizard steps={STEPS} onForward={onForward} />
+      <StepWizard steps={STEPS} onForward={onForward} onFinish={onFinish} />
     </div>
   );
 };
