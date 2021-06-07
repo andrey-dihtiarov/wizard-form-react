@@ -61,10 +61,9 @@ const UserProfile = ({ user }) => {
           <CategoryItem title="Facebook Link" value={facebookLink} />
           <CategoryItem title="Main Language" value={mainLanguage} />
           <CategoryItem title="Fax" value={fax} />
-          {phoneNumbers.length &&
-            phoneNumbers.map((phone, index) => (
-              <CategoryItem key={index.toString()} title={`Phone #${index + 1}`} value={phone} />
-            ))}
+          {phoneNumbers.map((phone, index) => (
+            <CategoryItem key={index.toString()} title={`Phone #${index + 1}`} value={phone} />
+          ))}
         </CategoryBlock>
 
         <CategoryBlock title="Capabilities" onTitleClick={onTitleClick('capabilities')}>

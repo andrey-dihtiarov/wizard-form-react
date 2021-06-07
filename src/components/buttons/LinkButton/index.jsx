@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 const LinkButton = ({ icon, className, children, width, height, ...rest }) => (
   <NavLink className={`${styles.button} ${className}`} {...rest}>
-    {icon && <Icon icon={icon} className={styles.buttonIcon} width={width} height={height} />}{' '}
+    {icon && <Icon icon={icon} className={styles.buttonIcon} width={width} height={height} />}
     {children}
   </NavLink>
 );
