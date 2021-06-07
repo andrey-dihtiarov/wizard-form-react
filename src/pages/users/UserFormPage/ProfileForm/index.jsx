@@ -31,16 +31,17 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { firstName, lastName, email, birthDate, gender, address } = useSelector(
-    (state) => state.form,
+  const { firstName, lastName, email, birthDate, gender, address, ...rest } = useSelector(
+    (state) => state.form.user,
   );
-  const onSubmit = (values) => onNext(values);
+  const onSubmit = (values) => onNext({ ...values, ...rest });
 
   return (
     <Formik
       initialValues={{ firstName, lastName, email, birthDate, gender, address }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>

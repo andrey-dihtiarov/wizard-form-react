@@ -30,15 +30,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const ContactsForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers } = useSelector(
-    (state) => state.form,
-  );
-  const onSubmit = (values) => onNext(values);
+  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers, ...rest } =
+    useSelector((state) => state.form.user);
+  const onSubmit = (values) => onNext({ ...values, ...rest });
   return (
     <Formik
       initialValues={{ company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>
