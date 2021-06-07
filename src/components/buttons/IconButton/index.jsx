@@ -4,9 +4,10 @@ import Icon from '../../Icon';
 
 import styles from './styles.module.scss';
 
-const IconButton = ({ icon, className, children, ...props }) => (
-  <button className={`${styles.button} ${className}`} {...props}>
-    {icon && <Icon icon={icon} className={styles.buttonIcon} />}
+// TODO make button rounded
+const IconButton = ({ icon, className, children, width, height, ...rest }) => (
+  <button className={`${styles.button} ${className}`} {...rest}>
+    {icon && <Icon icon={icon} className={styles.buttonIcon} width={width} height={height} />}
     {children}
   </button>
 );

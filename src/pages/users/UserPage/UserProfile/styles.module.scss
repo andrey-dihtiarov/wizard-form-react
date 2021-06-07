@@ -1,0 +1,17 @@
+@import '../../../../assets/scss/variables';
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  padding: 60px;
+  background-color: $ghost-white;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 80px;
+}

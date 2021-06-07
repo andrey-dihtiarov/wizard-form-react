@@ -13,6 +13,9 @@ export const ICONS = Object.freeze({
   add: 'add',
   userFriends: 'user-friends',
   minus: 'minus',
+  pen: 'pen',
+  times: 'times',
+  chevronLeft: 'chevron-left',
 });
 
 export const GENDER_INPUT_VALUES = Object.freeze(['Male', 'Female']);

@@ -4,8 +4,8 @@ import { ReactComponent as UserPlaceholder } from '../../assets/icons/user-solid
 
 import styles from './styles.module.scss';
 
-const Avatar = ({ image }) => (
-  <div className={styles.avatarWrapper}>
+const Avatar = ({ image, className }) => (
+  <div className={`${styles.avatarWrapper} ${className}`}>
     {image ? (
       <img className={styles.avatar} src={image} alt="avatar" />
     ) : (
@@ -18,10 +18,12 @@ const Avatar = ({ image }) => (
 
 Avatar.propTypes = {
   image: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Avatar.defaultProps = {
   image: null,
+  className: '',
 };
 
 export default Avatar;
