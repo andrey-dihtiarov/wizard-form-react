@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 const dbName = 'wizard_form';
 const dbVersion = 1;
-const tempFormDataIndex = 1;
+const tempFormDataIndex = '';
 
 const db = new Dexie(dbName);
-db.version(dbVersion).stores({ tempFormData: '++id', users: 'userId' });
+db.version(dbVersion).stores({ tempFormData: tempFormDataIndex, users: 'userId' });
 
 /* eslint-disable no-return-await */
 
@@ -33,4 +33,24 @@ const addUser = async (user) => {
   return await getUserById(user.userId);
 };
 
-export { getFormData, updateFormData, getUserById, getUsers, addUser, clearFormData };
+const updateUser = async (user) => {
+  const { userId } = user;
+  await db.users.put({ ...user, lastUpdate: new Date().toISOString() }, userId);
+  return await getUserById(userId);
+};
+
+const deleteUser = async (id) => {
+  await db.users.delete(id);
+  return await getUsers();
+};
+
+export {
+  getFormData,
+  updateFormData,
+  getUserById,
+  getUsers,
+  addUser,
+  clearFormData,
+  updateUser,
+  deleteUser,
+};
