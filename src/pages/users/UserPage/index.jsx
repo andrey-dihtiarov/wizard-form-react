@@ -1,38 +1,49 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import UserProfile from './UserProfile';
+import { fetchUser } from '../../../store/user';
 
-import { users } from '../../../mocks';
 import { ICONS, ROUTES } from '../../../constants';
 
+import UserProfile from './UserProfile';
 import LinkButton from '../../../components/buttons/LinkButton';
 
 import styles from './styles.module.scss';
 
 const UsersPage = () => {
   const { id } = useParams();
-  // TODO remove mocks
-  const user = users.find((u) => u.id === id);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser(id));
+  }, [dispatch, id]);
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.inner}>
-        <div className={styles.buttonWrapper}>
-          <LinkButton
-            to={ROUTES.users}
-            className={styles.button}
-            width={24}
-            height={24}
-            icon={ICONS.chevronLeft}
-          >
-            User List
-          </LinkButton>
+    <>
+      {user && (
+        <div className={styles.wrapper}>
+          <div className={styles.inner}>
+            <div className={styles.buttonWrapper}>
+              <LinkButton
+                to={ROUTES.users}
+                className={styles.button}
+                width={24}
+                height={24}
+                icon={ICONS.chevronLeft}
+              >
+                User List
+              </LinkButton>
+            </div>
+            <div className={styles.titleWrapper}>
+              <div className={styles.title}>{user.userName}</div>
+            </div>
+          </div>
+          <UserProfile user={user} />
         </div>
-        <div className={styles.titleWrapper}>
-          <div className={styles.title}>{user.userName}</div>
-        </div>
-      </div>
-      <UserProfile user={user} />
-    </div>
+      )}
+    </>
   );
 };
 
