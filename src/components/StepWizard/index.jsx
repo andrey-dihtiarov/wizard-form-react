@@ -7,14 +7,14 @@ import withRouteSlug from '../../hocs/withRouteSlug';
 
 import styles from './styles.module.scss';
 
-const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
+const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => {
   const [firstStep] = steps;
   const { slug: defaultSlug } = firstStep;
 
   const [availableSteps, setAvailableSteps] = useState([defaultSlug]);
 
   const { path } = useRouteMatch();
-  const { slug } = useParams();
+  const { slug, id } = useParams();
   const history = useHistory();
 
   const isSlugExists = steps.some((step) => step.slug === slug);
@@ -23,8 +23,10 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
   const stepWizardTabs = steps.map((item, index) => ({
     title: `${index + 1}. ${item.title}`,
     isActive: activeStep === index,
-    isDisabled: !availableSteps.includes(item.slug),
-    path: path.replace(':slug', item.slug),
+    isDisabled: !isEditing && !availableSteps.includes(item.slug),
+    path: isEditing
+      ? path.replace(':slug', item.slug).replace(':id', id)
+      : path.replace(':slug', item.slug),
     key: item.slug,
   }));
 
@@ -52,10 +54,10 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
   );
 
   useEffect(() => {
-    if (!availableSteps.includes(slug) || !isSlugExists) {
+    if ((!isEditing && !availableSteps.includes(slug)) || !isSlugExists) {
       history.replace(path.replace(':slug', defaultSlug));
     }
-  }, [availableSteps, defaultSlug, history, isSlugExists, path, slug]);
+  }, [availableSteps, defaultSlug, history, isEditing, isSlugExists, path, slug]);
 
   return (
     <>
@@ -70,7 +72,9 @@ const StepWizard = ({ steps, onForward, onBack, onFinish }) => {
               isLast: index === steps.length - 1,
               key: item.slug,
               onBack: onBackClick,
-              onNext: index === steps.length - 1 ? onFinishClick : onForwardClick,
+              onNext: index === steps.length - 1 || isEditing ? onFinishClick : onForwardClick,
+              isEditing,
+              data,
             };
 
             return <Component {...props} />;
@@ -91,12 +95,16 @@ StepWizard.propTypes = {
   onForward: PropTypes.func,
   onBack: PropTypes.func,
   onFinish: PropTypes.func,
+  isEditing: PropTypes.bool,
+  data: PropTypes.any,
 };
 
 StepWizard.defaultProps = {
   onForward: () => {},
   onBack: () => {},
   onFinish: () => {},
+  isEditing: false,
+  data: null,
 };
 
 export default withRouteSlug(StepWizard);
