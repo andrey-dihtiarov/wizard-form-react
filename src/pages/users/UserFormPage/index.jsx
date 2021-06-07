@@ -38,6 +38,7 @@ export const STEPS = [
   },
 ];
 
+// TODO rename component to UserStepWizard
 const UserFormPage = ({ isEditing }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -70,6 +71,7 @@ const UserFormPage = ({ isEditing }) => {
     loadData();
   }, [loadData]);
 
+  // TODO show StepWizard till loading and block interaction on page loading
   return (
     <>
       {contentLoaded && (

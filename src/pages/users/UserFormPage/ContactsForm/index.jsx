@@ -26,6 +26,7 @@ const validationSchema = Yup.object().shape({
   facebookLink: Yup.string().matches(urlRegex, 'Url is invalid').required('Required'),
   mainLanguage: Yup.mixed().required('Required'),
   fax: Yup.string().required('Required'),
+  // TODO add phone length validation and check if phones are save
   phoneNumbers: Yup.array().of(Yup.string().required('Required')).required('Required'),
 });
 

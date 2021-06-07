@@ -63,8 +63,7 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
     <>
       <StepWizardHeader steps={stepWizardTabs} />
       <div className={styles.wizardWrapper}>
-        {steps &&
-          steps.length &&
+        {
           steps.map((item, index) => {
             const Component = item.component;
             const props = {
@@ -78,7 +77,8 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
             };
 
             return <Component {...props} />;
-          })[activeStep]}
+          })[activeStep]
+        }
       </div>
     </>
   );
