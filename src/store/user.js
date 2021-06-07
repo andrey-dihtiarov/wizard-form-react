@@ -1,10 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addUser as dbAddUser, getUsers, getUserById, clearFormData } from '../db';
+import {
+  addUser as dbAddUser,
+  updateUser as dbUpdateUser,
+  deleteUser as dbDeleteUser,
+  getUsers,
+  getUserById,
+  clearFormData,
+} from '../db';
 
 export const addUser = createAsyncThunk('user/addUser', async (user) => {
-  const data = await dbAddUser(user);
+  const addedUser = await dbAddUser(user);
   await clearFormData();
-  return data;
+  const users = await getUsers();
+  return { user: addedUser, users };
 });
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
@@ -17,22 +25,40 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   return data;
 });
 
+export const updateUser = createAsyncThunk('user/updateUser', async (user) => {
+  const data = await dbUpdateUser(user);
+  return data;
+});
+
+export const deleteUser = createAsyncThunk('user/deleteUser', async (userId) => {
+  const data = await dbDeleteUser(userId);
+  return { data, userId };
+});
+
 const user = createSlice({
   name: 'user',
   initialState: {
     users: [],
     user: null,
   },
-  // reducers: {
-  //   addUser: (state, action) => ({ ...state, users: [...state.users, action.payload] }),
-  // },
   extraReducers: {
-    [addUser.fulfilled]: (state, action) => ({ ...state, users: [...state.users, action.payload] }),
+    [addUser.fulfilled]: (state, action) => {
+      const { users } = action.payload;
+      return { ...state, users: [...users] };
+    },
     [fetchUsers.fulfilled]: (state, action) => ({ ...state, users: action.payload }),
     [fetchUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
+    [updateUser.fulfilled]: (state, action) => {
+      const { userId } = action.payload;
+      const newUsers = [...state.users].map((u) => (u.userId === userId ? action.payload : user));
+      return { ...state, user: action.payload, users: newUsers };
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      const { userId: id, data } = action.payload;
+      const { userId } = state.user || {};
+      return { ...state, user: userId === id ? null : state.user, users: data };
+    },
   },
 });
-
-// export const { addUser } = user.actions;
 
 export default user.reducer;
