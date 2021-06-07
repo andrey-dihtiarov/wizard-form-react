@@ -19,10 +19,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
 
   const onUserRemove = (id) => () => {
     setSelectedRow(null);
-    onUserDelete();
-    // TODO remove mocks
-    // eslint-disable-next-line no-param-reassign
-    users = users.filter((user) => user.id !== id);
+    onUserDelete(id);
   };
 
   return (
@@ -40,10 +37,10 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
       </thead>
       <tbody className={styles.body}>
         {users &&
-          users.length &&
+          !!users.length &&
           users.map((user, index) => (
             <UserRow
-              key={user.id || user.email}
+              key={user.userId || user.email}
               user={user}
               index={index}
               onUserDelete={onUserRemove}
@@ -67,7 +64,8 @@ UsersTable.propTypes = {
       company: PropTypes.string.isRequired,
       phoneNumbers: PropTypes.array,
       email: PropTypes.string.isRequired,
-      birthDate: PropTypes.instanceOf(Date).isRequired,
+      birthDate: PropTypes.oneOfType([PropTypes.instanceOf(Date).isRequired, PropTypes.string])
+        .isRequired,
       address: PropTypes.string.isRequired,
       fax: PropTypes.string.isRequired,
       facebookLink: PropTypes.string.isRequired,
