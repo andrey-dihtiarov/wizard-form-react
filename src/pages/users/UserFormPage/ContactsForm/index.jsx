@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
-import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import { LANGUAGES_LIST } from '../../../../constants';
@@ -29,9 +29,8 @@ const validationSchema = Yup.object().shape({
   phoneNumbers: Yup.array().of(Yup.string().required('Required')).required('Required'),
 });
 
-const ContactsForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers, ...rest } =
-    useSelector((state) => state.form.user);
+const ContactsForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers, ...rest } = data;
   const onSubmit = (values) => onNext({ ...values, ...rest });
   return (
     <Formik
@@ -68,9 +67,24 @@ const ContactsForm = ({ onBack, onNext, isFirst, isLast }) => {
             <PhoneGroupInput />
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
 };
+
+ContactsForm.propTypes = {
+  onBack: PropTypes.func,
+  onNext: PropTypes.func.isRequired,
+  isFirst: PropTypes.bool.isRequired,
+  isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
+};
+
+ContactsForm.defaultProps = {
+  onBack: () => {},
+};
+
 export default ContactsForm;

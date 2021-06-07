@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Field, Formik, Form } from 'formik';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
@@ -46,12 +45,16 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { userName, password, repeatPassword, avatar, ...rest } = useSelector(
-    (state) => state.form.user,
-  );
+const AccountForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { userName, password, repeatPassword, avatar, ...rest } = data;
   const [imageSrc, setImageSrc] = useState(avatar);
   const onSubmit = (values) => onNext({ ...values, ...rest });
+
+  useEffect(() => {
+    if (avatar) {
+      setImageSrc(avatar);
+    }
+  }, [avatar]);
 
   return (
     <Formik
@@ -79,7 +82,7 @@ const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
             </div>
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
@@ -90,6 +93,9 @@ AccountForm.propTypes = {
   onNext: PropTypes.func.isRequired,
   isFirst: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
 };
 
 AccountForm.defaultProps = {
