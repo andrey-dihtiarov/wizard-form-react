@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import { useHistory } from 'react-router-dom';
+
+import { ROUTES } from '../../../../constants';
 
 import Avatar from '../../../../components/Avatar';
 import CategoryBlock from '../CategoryBlock';
@@ -9,6 +12,7 @@ import styles from './styles.module.scss';
 
 const UserProfile = ({ user }) => {
   const {
+    userId,
     avatar,
     userName,
     firstName,
@@ -26,18 +30,23 @@ const UserProfile = ({ user }) => {
     gender,
     mainLanguage,
   } = user;
+  const history = useHistory();
+
+  const onTitleClick = (slug) => () =>
+    history.push(`${ROUTES.editUser.replace(':id', userId)}/${slug}`);
+
   return (
     <div className={styles.wrapper}>
       <div>
         <Avatar image={avatar} />
       </div>
       <div className={styles.inner}>
-        <CategoryBlock title="Account">
+        <CategoryBlock title="Account" onTitleClick={onTitleClick('account')}>
           <CategoryItem title="User name" value={userName} />
           <CategoryItem title="Password" value="" />
         </CategoryBlock>
 
-        <CategoryBlock title="Personal">
+        <CategoryBlock title="Profile" onTitleClick={onTitleClick('profile')}>
           <CategoryItem title="First name" value={firstName} />
           <CategoryItem title="Last name" value={lastName} />
           <CategoryItem title="Birth date" value={format(Date.parse(birthDate), 'dd/MM/yyyy')} />
@@ -46,7 +55,7 @@ const UserProfile = ({ user }) => {
           <CategoryItem title="Gender" value={gender} />
         </CategoryBlock>
 
-        <CategoryBlock title="Contacts">
+        <CategoryBlock title="Contacts" onTitleClick={onTitleClick('contacts')}>
           <CategoryItem title="Company" value={company} />
           <CategoryItem title="Github Link" value={githubLink} />
           <CategoryItem title="Facebook Link" value={facebookLink} />
@@ -58,7 +67,7 @@ const UserProfile = ({ user }) => {
             ))}
         </CategoryBlock>
 
-        <CategoryBlock title="Capabilities">
+        <CategoryBlock title="Capabilities" onTitleClick={onTitleClick('capabilities')}>
           <CategoryItem title="Skills" value={skills.join(', ')} />
           <CategoryItem title="Hobbies" value={myHobbies.join(', ')} />
         </CategoryBlock>
@@ -69,6 +78,7 @@ const UserProfile = ({ user }) => {
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
