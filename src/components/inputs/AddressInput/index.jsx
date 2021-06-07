@@ -21,7 +21,7 @@ const AddressInput = ({ field, form: { touched, errors, setFieldValue }, label, 
       });
   }, [addrInputRef, placesAutocomplete]);
 
-  if (placesAutocomplete.current && placesAutocomplete.current.on) {
+  if (placesAutocomplete.current && placesAutocomplete.current.once) {
     placesAutocomplete.current.once('change', (e) => setFieldValue(name, e.suggestion.value));
   }
 
