@@ -40,9 +40,6 @@ const form = createSlice({
       myHobbies: [],
     },
   },
-  // reducers: {
-  //   updateFormData: (state, action) => ({ ...state, ...action.payload }),
-  // },
   extraReducers: {
     [updateFormData.fulfilled]: (state, action) => ({
       ...state,
@@ -54,7 +51,5 @@ const form = createSlice({
     }),
   },
 });
-
-// export const { updateFormData } = form.actions;
 
 export default form.reducer;
