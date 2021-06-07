@@ -1,24 +1,11 @@
 import { useEffect } from 'react';
 
-export function useOnClickOutside(refs, handler) {
+export function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = (event) => {
-      let containsTarget = false;
-
-      if (Array.isArray(refs)) {
-        refs.forEach((r) => {
-          if (!r.current || r.current.contains(event.target)) {
-            containsTarget = true;
-          }
-        });
-      } else if (!refs.current || refs.current.contains(event.target)) {
-        containsTarget = true;
-      }
-
-      if (containsTarget) {
+      if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
-
       handler(event);
     };
 
@@ -29,5 +16,5 @@ export function useOnClickOutside(refs, handler) {
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener);
     };
-  }, [refs, handler]);
+  }, [ref, handler]);
 }
