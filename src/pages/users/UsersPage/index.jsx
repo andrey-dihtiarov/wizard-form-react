@@ -7,8 +7,7 @@ import { ROUTES } from '../../../constants';
 import { deleteUser, fetchUsers } from '../../../store/user';
 
 import UsersTable from './UsersTable';
-
-import styles from './styles.module.scss';
+import PageLayout from '../../../components/layouts/PageLayout';
 
 const UsersPage = () => {
   const history = useHistory();
@@ -28,10 +27,9 @@ const UsersPage = () => {
   }, [dispatch, users.length]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.title}>List Of Users</div>
+    <PageLayout title="List of users">
       <UsersTable users={users} onUserEdit={onUserEdit} onUserDelete={onUserDelete} />
-    </div>
+    </PageLayout>
   );
 };
 

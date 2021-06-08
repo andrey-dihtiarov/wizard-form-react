@@ -1,3 +1,5 @@
-const NotFoundPage = () => <div>Not Found Page</div>;
+import PageLayout from '../../components/layouts/PageLayout';
+
+const NotFoundPage = () => <PageLayout title="Not Found Page" />;
 
 export default NotFoundPage;

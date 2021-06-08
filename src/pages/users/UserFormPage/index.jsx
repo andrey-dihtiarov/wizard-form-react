@@ -12,8 +12,7 @@ import ProfileForm from './ProfileForm';
 import ContactsForm from './ContactsForm';
 import CapabilitiesForm from './CapabilitiesForm';
 import StepWizard from '../../../components/StepWizard';
-
-import styles from './styles.module.scss';
+import PageLayout from '../../../components/layouts/PageLayout';
 
 export const STEPS = [
   {
@@ -73,20 +72,15 @@ const UserFormPage = ({ isEditing }) => {
 
   // TODO show StepWizard till loading and block interaction on page loading
   return (
-    <>
-      {contentLoaded && (
-        <div className={styles.wrapper}>
-          {isEditing ? 'Edit User Page' : 'New User Pages'}
-          <StepWizard
-            data={contentLoaded && user}
-            steps={STEPS}
-            onForward={onForward}
-            onFinish={onFinish}
-            isEditing={isEditing}
-          />
-        </div>
-      )}
-    </>
+    <PageLayout title="New User Page">
+      <StepWizard
+        data={contentLoaded && user}
+        steps={STEPS}
+        onForward={onForward}
+        onFinish={onFinish}
+        isEditing={isEditing}
+      />
+    </PageLayout>
   );
 };
 
