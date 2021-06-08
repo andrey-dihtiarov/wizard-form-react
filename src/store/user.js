@@ -5,12 +5,10 @@ import {
   deleteUser as dbDeleteUser,
   getUsers,
   getUserById,
-  clearFormData,
 } from '../db';
 
 export const addUser = createAsyncThunk('user/addUser', async (user) => {
   const addedUser = await dbAddUser(user);
-  await clearFormData();
   const users = await getUsers();
   return { user: addedUser, users };
 });
