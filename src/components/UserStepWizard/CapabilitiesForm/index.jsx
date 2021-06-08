@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { HOBBIES, SKILLS } from '../../../../constants';
+import { HOBBIES, SKILLS } from '../../../constants';
 
-import SelectboxInput from '../../../../components/inputs/SelectboxInput';
-import TextAreaInput from '../../../../components/inputs/TextAreaInput';
-import CheckboxGroupInput from '../../../../components/inputs/CheckboxGroupInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+import SelectboxInput from '../../inputs/SelectboxInput';
+import TextAreaInput from '../../inputs/TextAreaInput';
+import CheckboxGroupInput from '../../inputs/CheckboxGroupInput';
+import NavButtons from '../../StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 

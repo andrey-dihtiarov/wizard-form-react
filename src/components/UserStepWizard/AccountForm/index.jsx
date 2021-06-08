@@ -3,13 +3,13 @@ import { Field, Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import { MEGABYTE } from '../../../../constants';
+import { MEGABYTE } from '../../../constants';
 
-import TextInput from '../../../../components/inputs/TextInput';
-import PasswordInput from '../../../../components/inputs/PasswordInput';
-import Avatar from '../../../../components/Avatar';
-import ImageUploader from '../../../../components/ImageUploader';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+import TextInput from '../../inputs/TextInput';
+import PasswordInput from '../../inputs/PasswordInput';
+import Avatar from '../../Avatar';
+import ImageUploader from '../../ImageUploader';
+import NavButtons from '../../StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 

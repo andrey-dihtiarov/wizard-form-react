@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { LANGUAGES_LIST } from '../../../../constants';
+import { LANGUAGES_LIST } from '../../../constants';
 
-import TextInput from '../../../../components/inputs/TextInput';
-import FaxInput from '../../../../components/inputs/FaxInput';
-import PhoneGroupInput from '../../../../components/inputs/PhoneGroupInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
-import SelectboxInput from '../../../../components/inputs/SelectboxInput';
+import TextInput from '../../inputs/TextInput';
+import FaxInput from '../../inputs/FaxInput';
+import PhoneGroupInput from '../../inputs/PhoneGroupInput';
+import NavButtons from '../../StepWizard/NavButtons';
+import SelectboxInput from '../../inputs/SelectboxInput';
 
 import styles from './styles.module.scss';
 
