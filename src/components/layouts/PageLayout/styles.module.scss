@@ -1,0 +1,23 @@
+@import '../../../assets/scss/variables';
+
+.wrapper {
+  width: $container-width;
+  display: flex;
+  flex-direction: column;
+  //margin: 0 auto;
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: 24px;
+  color: $san-juan;
+}
+
+.content {
+  min-width: 120px;
+  background-color: $ghost-white;
+}
