@@ -2,7 +2,13 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { clearFormData, fetchFormData, updateFormData } from '../../../store/form';
+import {
+  checkFormDataStep,
+  clearFormData,
+  fetchFormData,
+  setHasUnsavedData,
+  updateFormData,
+} from '../../../store/form';
 import { addUser } from '../../../store/user';
 import { ROUTES } from '../../../constants';
 
@@ -13,7 +19,7 @@ const NewUserPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const user = useSelector((state) => state.form.user);
+  const { user, hasUnsavedData } = useSelector((state) => state.form);
 
   const onForward = (values) => dispatch(updateFormData(values));
 
@@ -23,17 +29,33 @@ const NewUserPage = () => {
     history.push(ROUTES.users);
   };
 
-  const loadData = useCallback(async () => {
+  const loadData = useCallback(() => {
     dispatch(fetchFormData());
+    dispatch(setHasUnsavedData(false));
+  }, [dispatch]);
+
+  const clearData = useCallback(() => {
+    dispatch(clearFormData());
+  }, [dispatch]);
+
+  const checkFormData = useCallback(() => {
+    dispatch(checkFormDataStep());
   }, [dispatch]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    checkFormData();
+  }, [checkFormData]);
 
   return (
     <PageLayout title="New User Page">
-      <UserStepWizard data={user} onForward={onForward} onFinish={onFinish} />
+      <UserStepWizard
+        data={user}
+        onForward={onForward}
+        onFinish={onFinish}
+        hasUnsavedData={hasUnsavedData}
+        onLoadData={loadData}
+        onClearData={clearData}
+      />
     </PageLayout>
   );
 };
