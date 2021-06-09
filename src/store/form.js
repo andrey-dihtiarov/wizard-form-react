@@ -26,6 +26,7 @@ const initialUserData = {
   skills: [],
   additionalInfo: '',
   myHobbies: [],
+  lastStep: '',
 };
 
 export const updateFormData = createAsyncThunk('form/updateFormData', async (form) => {
@@ -45,10 +46,19 @@ export const clearFormData = createAsyncThunk('form/clearFormData', async () => 
   await dbClearFormData();
 });
 
+export const checkFormDataStep = createAsyncThunk('form/checkFormDataStep', async () => {
+  const { lastStep } = await getFormData();
+  return lastStep;
+});
+
 const form = createSlice({
   name: 'form',
   initialState: {
     user: initialUserData,
+    hasUnsavedData: false,
+  },
+  reducers: {
+    setHasUnsavedData: (state, action) => ({ ...state, hasUnsavedData: action.payload }),
   },
   extraReducers: {
     [updateFormData.fulfilled]: (state, action) => ({
@@ -62,8 +72,16 @@ const form = createSlice({
     [clearFormData.fulfilled]: (state) => ({
       ...state,
       user: initialUserData,
+      hasUnsavedData: false,
+    }),
+    [checkFormDataStep.fulfilled]: (state, action) => ({
+      ...state,
+      user: { ...state.user, lastStep: action.payload },
+      hasUnsavedData: !!action.payload,
     }),
   },
 });
+
+export const { setHasUnsavedData } = form.actions;
 
 export default form.reducer;
