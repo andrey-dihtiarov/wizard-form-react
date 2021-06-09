@@ -29,13 +29,24 @@ export const STEPS = [
   },
 ];
 
-const UserStepWizard = ({ data, onForward, onFinish, isEditing }) => (
+const UserStepWizard = ({
+  data,
+  onForward,
+  onFinish,
+  isEditing,
+  hasUnsavedData,
+  onLoadData,
+  onClearData,
+}) => (
   <StepWizard
     data={data}
     steps={STEPS}
     onForward={onForward}
     onFinish={onFinish}
     isEditing={isEditing}
+    hasUnsavedData={hasUnsavedData}
+    onLoadData={onLoadData}
+    onClearData={onClearData}
   />
 );
 
@@ -44,6 +55,9 @@ UserStepWizard.propTypes = {
   onFinish: PropTypes.func,
   isEditing: PropTypes.bool,
   data: PropTypes.any,
+  hasUnsavedData: PropTypes.bool,
+  onLoadData: PropTypes.func,
+  onClearData: PropTypes.func,
 };
 
 UserStepWizard.defaultProps = {
@@ -51,6 +65,9 @@ UserStepWizard.defaultProps = {
   onFinish: () => {},
   isEditing: false,
   data: null,
+  hasUnsavedData: false,
+  onLoadData: () => {},
+  onClearData: () => {},
 };
 
 export default UserStepWizard;
