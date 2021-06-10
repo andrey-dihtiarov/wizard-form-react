@@ -1,24 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getFormData, updateFormData as dbUpdateFormData } from '../db';
+import TempDB from '../db/TempDB';
 
 export const updateFormData = createAsyncThunk('form/updateFormData', async (form) => {
-  const data = await dbUpdateFormData(form);
+  const data = await TempDB.updateFormData(form);
   return data;
 });
 
 export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => {
-  const data = await getFormData();
+  const data = await TempDB.getFormData();
   if (data) {
     return data;
   }
   return null;
 });
 
+export const clearFormData = createAsyncThunk('form/clearFormData', async () => {
+  await TempDB.clearFormData();
+});
+
 const form = createSlice({
   name: 'form',
   initialState: {
     user: {
-      userId: '',
+      id: '',
       userName: '',
       password: '',
       repeatPassword: '',
@@ -51,5 +55,4 @@ const form = createSlice({
     }),
   },
 });
-
 export default form.reducer;
