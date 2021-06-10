@@ -1,8 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { fetchFormData } from '../../../store/form';
 import { updateUser, fetchUser } from '../../../store/user';
 
 import PageLayout from '../../../components/layouts/PageLayout';
@@ -16,13 +15,9 @@ const EditUserPage = () => {
 
   const onFinish = (values) => dispatch(updateUser(values, id));
 
-  const loadData = useCallback(async () => {
-    await Promise.all([dispatch(fetchFormData()), dispatch(fetchUser(id))]);
-  }, [dispatch, id]);
-
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    dispatch(fetchUser(id));
+  }, [dispatch, id]);
 
   return (
     <PageLayout title="Edit User Page">
