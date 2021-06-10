@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 
 const UserProfile = ({ user }) => {
   const {
-    userId,
+    id,
     avatar,
     userName,
     firstName,
@@ -33,7 +33,7 @@ const UserProfile = ({ user }) => {
   const history = useHistory();
 
   const onTitleClick = (slug) => () =>
-    history.push(`${ROUTES.editUser.replace(':id', userId)}/${slug}`);
+    history.push(`${ROUTES.editUser.replace(':id', id)}/${slug}`);
 
   return (
     <div className={styles.wrapper}>
@@ -77,7 +77,7 @@ const UserProfile = ({ user }) => {
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
-    userId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,

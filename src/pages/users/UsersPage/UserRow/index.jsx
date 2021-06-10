@@ -10,17 +10,8 @@ import styles from './styles.module.scss';
 
 const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDelete }) => {
   const isSelected = index === selectedRow;
-  const {
-    userId,
-    avatar,
-    firstName,
-    lastName,
-    userName,
-    company,
-    phoneNumbers,
-    email,
-    lastUpdate,
-  } = user;
+  const { id, avatar, firstName, lastName, userName, company, phoneNumbers, email, lastUpdate } =
+    user;
   const [firstPhone] = phoneNumbers;
   return (
     <tr className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
@@ -36,7 +27,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
       <td>{formatDistanceToNow(Date.parse(lastUpdate))} ago</td>
       <td>
         <IconButton
-          onClick={onUserEdit(userId)}
+          onClick={onUserEdit(id)}
           icon={ICONS.pen}
           width={12}
           height={12}
@@ -62,7 +53,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
             height={12}
             type="button"
             className={styles.deleteConfirm}
-            onClick={onUserDelete(userId)}
+            onClick={onUserDelete(id)}
           >
             delete
           </IconButton>
@@ -74,7 +65,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
 
 UserRow.propTypes = {
   user: PropTypes.shape({
-    userId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
