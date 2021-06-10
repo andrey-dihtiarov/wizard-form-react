@@ -10,8 +10,17 @@ import styles from './styles.module.scss';
 
 const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDelete }) => {
   const isSelected = index === selectedRow;
-  const { id, avatar, firstName, lastName, userName, company, phoneNumbers, email, lastUpdate } =
-    user;
+  const {
+    userId,
+    avatar,
+    firstName,
+    lastName,
+    userName,
+    company,
+    phoneNumbers,
+    email,
+    lastUpdate,
+  } = user;
   const [firstPhone] = phoneNumbers;
   return (
     <tr className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
@@ -24,10 +33,10 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
       </td>
       <td>{company}</td>
       <td>{firstPhone || email}</td>
-      <td>{formatDistanceToNow(lastUpdate)} ago</td>
+      <td>{formatDistanceToNow(Date.parse(lastUpdate))} ago</td>
       <td>
         <IconButton
-          onClick={onUserEdit(id)}
+          onClick={onUserEdit(userId)}
           icon={ICONS.pen}
           width={12}
           height={12}
@@ -53,7 +62,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
             height={12}
             type="button"
             className={styles.deleteConfirm}
-            onClick={onUserDelete(id)}
+            onClick={onUserDelete(userId)}
           >
             delete
           </IconButton>
@@ -65,7 +74,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
 
 UserRow.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
@@ -73,7 +82,7 @@ UserRow.propTypes = {
     company: PropTypes.string.isRequired,
     phoneNumbers: PropTypes.array,
     email: PropTypes.string.isRequired,
-    lastUpdate: PropTypes.instanceOf(Date).isRequired,
+    lastUpdate: PropTypes.oneOfType([PropTypes.instanceOf(Date).isRequired, PropTypes.string]),
   }),
   onUserDelete: PropTypes.func,
   onUserEdit: PropTypes.func,

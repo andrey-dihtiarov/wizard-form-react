@@ -1,16 +1,15 @@
 import { Field, Formik, Form } from 'formik';
 import { subYears } from 'date-fns';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import { GENDER_INPUT_VALUES } from '../../../../constants';
+import { GENDER_INPUT_VALUES } from '../../../constants';
 
-import DateInput from '../../../../components/inputs/DateInput';
-import RadioGroupInput from '../../../../components/inputs/RadioGroupInput';
-import AddressInput from '../../../../components/inputs/AddressInput';
-import TextInput from '../../../../components/inputs/TextInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+import DateInput from '../../inputs/DateInput';
+import RadioGroupInput from '../../inputs/RadioGroupInput';
+import AddressInput from '../../inputs/AddressInput';
+import TextInput from '../../inputs/TextInput';
+import NavButtons from '../../StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
@@ -30,17 +29,16 @@ const validationSchema = Yup.object().shape({
   gender: Yup.string().oneOf(GENDER_INPUT_VALUES).required('Required'),
 });
 
-const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { firstName, lastName, email, birthDate, gender, address } = useSelector(
-    (state) => state.form,
-  );
-  const onSubmit = (values) => onNext(values);
+const ProfileForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { firstName, lastName, email, birthDate, gender, address, ...rest } = data;
+  const onSubmit = (values) => onNext({ ...values, ...rest });
 
   return (
     <Formik
       initialValues={{ firstName, lastName, email, birthDate, gender, address }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>
@@ -55,7 +53,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast }) => {
             <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
@@ -66,6 +64,9 @@ ProfileForm.propTypes = {
   onNext: PropTypes.func.isRequired,
   isFirst: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
 };
 
 ProfileForm.defaultProps = {

@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
-import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { HOBBIES, SKILLS } from '../../../../constants';
+import { HOBBIES, SKILLS } from '../../../constants';
 
-import SelectboxInput from '../../../../components/inputs/SelectboxInput';
-import TextAreaInput from '../../../../components/inputs/TextAreaInput';
-import CheckboxGroupInput from '../../../../components/inputs/CheckboxGroupInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+import SelectboxInput from '../../inputs/SelectboxInput';
+import TextAreaInput from '../../inputs/TextAreaInput';
+import CheckboxGroupInput from '../../inputs/CheckboxGroupInput';
+import NavButtons from '../../StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
@@ -25,14 +24,16 @@ const validationSchema = Yup.object().shape({
   additionalInfo: Yup.string().max(MAX_ADD_INFO_LENGTH, 'Max length is 300'),
 });
 
-const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { skills, additionalInfo, myHobbies } = useSelector((state) => state.form);
-  const onSubmit = (values) => onNext(values);
+const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { skills, additionalInfo, myHobbies, ...rest } = data;
+  const onSubmit = (values) => onNext({ ...values, ...rest });
+
   return (
     <Formik
       initialValues={{ skills, additionalInfo, myHobbies }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>
@@ -57,7 +58,7 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast }) => {
             </div>
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
@@ -68,6 +69,9 @@ CapabilitiesForm.propTypes = {
   onNext: PropTypes.func.isRequired,
   isFirst: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
 };
 
 CapabilitiesForm.defaultProps = {

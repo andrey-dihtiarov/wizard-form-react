@@ -1,14 +1,14 @@
+import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
-import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
-import { LANGUAGES_LIST } from '../../../../constants';
+import { LANGUAGES_LIST } from '../../../constants';
 
-import TextInput from '../../../../components/inputs/TextInput';
-import FaxInput from '../../../../components/inputs/FaxInput';
-import PhoneGroupInput from '../../../../components/inputs/PhoneGroupInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
-import SelectboxInput from '../../../../components/inputs/SelectboxInput';
+import TextInput from '../../inputs/TextInput';
+import FaxInput from '../../inputs/FaxInput';
+import PhoneGroupInput from '../../inputs/PhoneGroupInput';
+import NavButtons from '../../StepWizard/NavButtons';
+import SelectboxInput from '../../inputs/SelectboxInput';
 
 import styles from './styles.module.scss';
 
@@ -26,19 +26,19 @@ const validationSchema = Yup.object().shape({
   facebookLink: Yup.string().matches(urlRegex, 'Url is invalid').required('Required'),
   mainLanguage: Yup.mixed().required('Required'),
   fax: Yup.string().required('Required'),
+  // TODO add phone length validation and check if phones are save
   phoneNumbers: Yup.array().of(Yup.string().required('Required')).required('Required'),
 });
 
-const ContactsForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers } = useSelector(
-    (state) => state.form,
-  );
-  const onSubmit = (values) => onNext(values);
+const ContactsForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers, ...rest } = data;
+  const onSubmit = (values) => onNext({ ...values, ...rest });
   return (
     <Formik
       initialValues={{ company, githubLink, facebookLink, mainLanguage, fax, phoneNumbers }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>
@@ -68,9 +68,24 @@ const ContactsForm = ({ onBack, onNext, isFirst, isLast }) => {
             <PhoneGroupInput />
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
 };
+
+ContactsForm.propTypes = {
+  onBack: PropTypes.func,
+  onNext: PropTypes.func.isRequired,
+  isFirst: PropTypes.bool.isRequired,
+  isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
+};
+
+ContactsForm.defaultProps = {
+  onBack: () => {},
+};
+
 export default ContactsForm;

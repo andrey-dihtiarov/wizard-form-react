@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Field, Formik, Form } from 'formik';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import { MEGABYTE } from '../../../../constants';
+import { MEGABYTE } from '../../../constants';
 
-import TextInput from '../../../../components/inputs/TextInput';
-import PasswordInput from '../../../../components/inputs/PasswordInput';
-import Avatar from '../../../../components/Avatar';
-import ImageUploader from '../../../../components/ImageUploader';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
+import TextInput from '../../inputs/TextInput';
+import PasswordInput from '../../inputs/PasswordInput';
+import Avatar from '../../Avatar';
+import ImageUploader from '../../ImageUploader';
+import NavButtons from '../../StepWizard/NavButtons';
 
 import styles from './styles.module.scss';
 
@@ -46,16 +45,23 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
-  const [imageSrc, setImageSrc] = useState();
-  const { userName, password, repeatPassword, avatar } = useSelector((state) => state.form);
-  const onSubmit = (values) => onNext(values);
+const AccountForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
+  const { userName, password, repeatPassword, avatar, ...rest } = data;
+  const [imageSrc, setImageSrc] = useState(avatar);
+  const onSubmit = (values) => onNext({ ...values, ...rest });
+
+  useEffect(() => {
+    if (avatar) {
+      setImageSrc(avatar);
+    }
+  }, [avatar]);
 
   return (
     <Formik
       initialValues={{ userName, password, repeatPassword, avatar }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
     >
       <Form className={styles.form}>
         <div className={styles.formInner}>
@@ -76,7 +82,7 @@ const AccountForm = ({ onBack, onNext, isFirst, isLast }) => {
             </div>
           </div>
         </div>
-        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} />
+        <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
       </Form>
     </Formik>
   );
@@ -87,6 +93,9 @@ AccountForm.propTypes = {
   onNext: PropTypes.func.isRequired,
   isFirst: PropTypes.bool.isRequired,
   isLast: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  // TODO describe data properly
+  data: PropTypes.any.isRequired,
 };
 
 AccountForm.defaultProps = {

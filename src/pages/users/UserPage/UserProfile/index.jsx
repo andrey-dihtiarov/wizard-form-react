@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import { useHistory } from 'react-router-dom';
+
+import { ROUTES } from '../../../../constants';
 
 import Avatar from '../../../../components/Avatar';
 import CategoryBlock from '../CategoryBlock';
@@ -9,6 +12,7 @@ import styles from './styles.module.scss';
 
 const UserProfile = ({ user }) => {
   const {
+    userId,
     avatar,
     userName,
     firstName,
@@ -26,27 +30,32 @@ const UserProfile = ({ user }) => {
     gender,
     mainLanguage,
   } = user;
+  const history = useHistory();
+
+  const onTitleClick = (slug) => () =>
+    history.push(`${ROUTES.editUser.replace(':id', userId)}/${slug}`);
+
   return (
     <div className={styles.wrapper}>
       <div>
         <Avatar image={avatar} />
       </div>
       <div className={styles.inner}>
-        <CategoryBlock title="Account">
+        <CategoryBlock title="Account" onTitleClick={onTitleClick('account')}>
           <CategoryItem title="User name" value={userName} />
           <CategoryItem title="Password" value="" />
         </CategoryBlock>
 
-        <CategoryBlock title="Personal">
+        <CategoryBlock title="Profile" onTitleClick={onTitleClick('profile')}>
           <CategoryItem title="First name" value={firstName} />
           <CategoryItem title="Last name" value={lastName} />
-          <CategoryItem title="Birth date" value={format(birthDate, 'dd/MM/yyyy')} />
+          <CategoryItem title="Birth date" value={format(Date.parse(birthDate), 'dd/MM/yyyy')} />
           <CategoryItem title="Email" value={email} />
           <CategoryItem title="Address" value={address} />
           <CategoryItem title="Gender" value={gender} />
         </CategoryBlock>
 
-        <CategoryBlock title="Contacts">
+        <CategoryBlock title="Contacts" onTitleClick={onTitleClick('contacts')}>
           <CategoryItem title="Company" value={company} />
           <CategoryItem title="Github Link" value={githubLink} />
           <CategoryItem title="Facebook Link" value={facebookLink} />
@@ -57,7 +66,7 @@ const UserProfile = ({ user }) => {
           ))}
         </CategoryBlock>
 
-        <CategoryBlock title="Capabilities">
+        <CategoryBlock title="Capabilities" onTitleClick={onTitleClick('capabilities')}>
           <CategoryItem title="Skills" value={skills.join(', ')} />
           <CategoryItem title="Hobbies" value={myHobbies.join(', ')} />
         </CategoryBlock>
@@ -68,6 +77,7 @@ const UserProfile = ({ user }) => {
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
@@ -75,14 +85,14 @@ UserProfile.propTypes = {
     company: PropTypes.string.isRequired,
     phoneNumbers: PropTypes.array,
     email: PropTypes.string.isRequired,
-    birthDate: PropTypes.instanceOf(Date).isRequired,
+    birthDate: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
     address: PropTypes.string.isRequired,
     fax: PropTypes.string.isRequired,
     facebookLink: PropTypes.string.isRequired,
-    skills: PropTypes.array.isRequired,
-    myHobbies: PropTypes.array,
     githubLink: PropTypes.string.isRequired,
     gender: PropTypes.string.isRequired,
+    myHobbies: PropTypes.array,
+    skills: PropTypes.array.isRequired,
     mainLanguage: PropTypes.string.isRequired,
   }),
 };

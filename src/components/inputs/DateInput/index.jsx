@@ -17,7 +17,7 @@ const DateInput = ({
   // TODO remove setFieldTouched
   const onDateChange = (val) => {
     setFieldTouched(name, true, true);
-    setFieldValue(name, val);
+    setFieldValue(name, val && val.toISOString());
   };
 
   const onDateBlur = () => setFieldTouched(name, true, true);

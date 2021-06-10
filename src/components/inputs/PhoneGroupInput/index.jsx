@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 const PhoneGroupInput = ({ maxNumbers }) => {
   const [field, , helpers] = useField('phoneNumbers');
-  const [phoneNumbersCount, setPhoneNumbersCount] = useState(field.value.length);
+  const [phoneNumbersCount, setPhoneNumbersCount] = useState(1);
 
   const onPhoneNumberAdd = () => setPhoneNumbersCount(phoneNumbersCount + 1);
 

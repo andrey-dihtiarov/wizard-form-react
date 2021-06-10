@@ -4317,6 +4317,16 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+dexie-react-hooks@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/dexie-react-hooks/-/dexie-react-hooks-1.0.6.tgz#a21d116addb2bb785507bf924cc6e963d858d5d5"
+  integrity sha512-OFoOBC4BQzkVGicuWl/cIMtlPp0wTAnUXwUJzq+l/zp0XVGmwEWkemRFq7JbudJLT0DINFVVzgVhGV7KOUK7uA==
+
+dexie@^3.1.0-beta.12:
+  version "3.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/dexie/-/dexie-3.1.0-beta.12.tgz#4173703aea25b7b55135fe488db0b8277100a869"
+  integrity sha512-jn/SeSdcWWJQkh1wdvfv+hvXmzQBybPXTI5Xkyah9EfKesq9g4AcvIzXR+60InG24GKBb67XWe1C7YDNydWabg==
+
 diff-sequences@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.6.2.tgz#48ba99157de1923412eed41db6b6d4aa9ca7c0b1"
@@ -12135,7 +12145,7 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.3.0:
+uuid@^8.3.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
