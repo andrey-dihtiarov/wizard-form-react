@@ -1,17 +1,30 @@
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useRouteMatch, useParams, useHistory } from 'react-router-dom';
+import { useRouteMatch, useParams, useHistory, Route } from 'react-router-dom';
+
+import { ROUTES } from '../../constants';
 
 import StepWizardHeader from './StepWizardHeader';
 import withRouteSlug from '../../hocs/withRouteSlug';
 
 import styles from './styles.module.scss';
+import StepWizardNotification from './StepWizardNotification';
 
-const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => {
+const StepWizard = ({
+  steps,
+  onForward,
+  onBack,
+  onFinish,
+  isEditing,
+  data,
+  hasUnsavedData,
+  onLoadData,
+  onClearData,
+}) => {
   const [firstStep] = steps;
   const { slug: defaultSlug } = firstStep;
 
-  const [availableSteps, setAvailableSteps] = useState([defaultSlug]);
+  const [lastStep, setLastStep] = useState(defaultSlug);
 
   const { path } = useRouteMatch();
   const { slug, id } = useParams();
@@ -20,10 +33,12 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
   const isSlugExists = steps.some((step) => step.slug === slug);
   const activeStep = steps.findIndex((step) => step.slug === slug);
 
+  const lastStepIndex = steps.findIndex((step) => step.slug === lastStep);
+
   const stepWizardTabs = steps.map((item, index) => ({
     title: `${index + 1}. ${item.title}`,
     isActive: activeStep === index,
-    isDisabled: !isEditing && !availableSteps.includes(item.slug),
+    isDisabled: !isEditing && index > lastStepIndex,
     path: isEditing
       ? path.replace(':slug', item.slug).replace(':id', id)
       : path.replace(':slug', item.slug),
@@ -45,26 +60,50 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
 
   const onForwardClick = useCallback(
     (values) => {
-      onForward(values, slug)
-        .then(() => {
-          const nextSlug = steps[activeStep + 1].slug;
-          setAvailableSteps([...availableSteps, nextSlug]);
-          history.push(path.replace(':slug', nextSlug));
-        })
-        .catch(() => {});
+      const nextSlug = steps[activeStep + 1].slug;
+      onForward({ ...values, lastStep: nextSlug })
+          .then(() => history.push(path.replace(':slug', nextSlug));)
+          .catch(() => {});;
     },
-    [onForward, slug, availableSteps, steps, activeStep, history, path],
+    [onForward, steps, activeStep, history, path],
   );
 
+  const onLoadDataClick = useCallback(() => {
+    onLoadData();
+    history.push(path.replace(':slug', lastStep));
+  }, [history, lastStep, onLoadData, path]);
+
   useEffect(() => {
-    if ((!isEditing && !availableSteps.includes(slug)) || !isSlugExists) {
+    if ((!isEditing && activeStep > lastStepIndex) || !isSlugExists) {
       history.replace(path.replace(':slug', defaultSlug));
     }
-  }, [availableSteps, defaultSlug, history, isEditing, isSlugExists, path, slug]);
+  }, [activeStep, defaultSlug, history, isEditing, isSlugExists, lastStepIndex, path, slug]);
+
+  useEffect(() => {
+    if (isEditing && !isSlugExists) {
+      history.replace(path.replace(':slug', defaultSlug).replace(':id', id));
+    }
+  }, [defaultSlug, history, id, isEditing, isSlugExists, path]);
+
+  useEffect(() => {
+    if (path === ROUTES.newUser) {
+      history.push(`${path}/${defaultSlug}`);
+    }
+  }, [defaultSlug, history, path]);
+
+  useEffect(() => {
+    const { lastStep: dataLastStep } = data;
+    if (dataLastStep) {
+      setLastStep(dataLastStep);
+    }
+  }, [data]);
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <StepWizardHeader steps={stepWizardTabs} />
+      {hasUnsavedData && (
+        <StepWizardNotification onLoadData={onLoadDataClick} onClearData={onClearData} />
+      )}
       <div className={styles.wizardWrapper}>
         {
           steps.map((item, index) => {
@@ -78,12 +117,17 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
               isEditing,
               data,
             };
-
-            return <Component {...props} />;
+            return (
+              <Route
+                key={item.slug}
+                path={path.replace(':slug', item.slug)}
+                render={(routeProps) => <Component {...props} {...routeProps} />}
+              />
+            );
           })[activeStep]
         }
       </div>
-    </>
+    </div>
   );
 };
 
@@ -100,6 +144,9 @@ StepWizard.propTypes = {
   onFinish: PropTypes.func,
   isEditing: PropTypes.bool,
   data: PropTypes.any,
+  hasUnsavedData: PropTypes.bool,
+  onLoadData: PropTypes.func,
+  onClearData: PropTypes.func,
 };
 
 StepWizard.defaultProps = {
@@ -108,6 +155,9 @@ StepWizard.defaultProps = {
   onFinish: () => {},
   isEditing: false,
   data: null,
+  hasUnsavedData: false,
+  onLoadData: () => {},
+  onClearData: () => {},
 };
 
 export default withRouteSlug(StepWizard);

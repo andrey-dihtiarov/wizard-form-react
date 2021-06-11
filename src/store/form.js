@@ -40,6 +40,11 @@ export const clearFormData = createAsyncThunk('form/clearFormData', async () => 
   await TempDB.clearFormData();
 });
 
+export const checkFormDataStep = createAsyncThunk('form/checkFormDataStep', async () => {
+  const { lastStep } = await TempDB.getFormData();
+  return lastStep;
+});
+
 const form = createSlice({
   name: 'form',
   initialState: {
@@ -64,6 +69,7 @@ const form = createSlice({
       skills: [],
       additionalInfo: '',
       myHobbies: [],
+      lastStep: '',
     },
     error: null,
   },
@@ -85,9 +91,19 @@ const form = createSlice({
       ...state,
       user: { ...state.user, ...action.payload },
     }),
+    [clearFormData.fulfilled]: (state) => ({
+      ...state,
+      user: initialUserData,
+      hasUnsavedData: false,
+    }),
+    [checkFormDataStep.fulfilled]: (state, action) => ({
+      ...state,
+      user: { ...state.user, lastStep: action.payload },
+      hasUnsavedData: !!action.payload,
+    }),
   },
 });
 
-export const { setError } = form.actions;
+export const { setError, setHasUnsavedData } = form.actions;
 
 export default form.reducer;

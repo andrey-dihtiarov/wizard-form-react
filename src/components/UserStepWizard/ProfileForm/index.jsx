@@ -3,14 +3,14 @@ import { subYears } from 'date-fns';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 
-import { GENDER_INPUT_VALUES } from '../../../../constants';
+import { GENDER_INPUT_VALUES } from '../../../constants';
 
-import DateInput from '../../../../components/inputs/DateInput';
-import RadioGroupInput from '../../../../components/inputs/RadioGroupInput';
-import AddressInput from '../../../../components/inputs/AddressInput';
-import TextInput from '../../../../components/inputs/TextInput';
-import NavButtons from '../../../../components/StepWizard/NavButtons';
-import FormikForm from '../../../../components/FormikForm';
+import DateInput from '../../inputs/DateInput';
+import RadioGroupInput from '../../inputs/RadioGroupInput';
+import AddressInput from '../../inputs/AddressInput';
+import TextInput from '../../inputs/TextInput';
+import NavButtons from '../../StepWizard/NavButtons';
+import FormikForm from '../../components/FormikForm';
 
 import styles from './styles.module.scss';
 

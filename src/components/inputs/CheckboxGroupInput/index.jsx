@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 
 const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, field, values }) => {
   const { name, value } = field;
+
   const onInputChange = (e) => {
     if (e.target.checked) {
       setFieldValue(name, [...value, e.target.value]);
@@ -27,6 +28,7 @@ const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, f
                 type="checkbox"
                 id={`${name}_${index}`}
                 name={`${name}_${index}`}
+                checked={field.value.includes(item)}
                 value={item}
                 onChange={onInputChange}
               />

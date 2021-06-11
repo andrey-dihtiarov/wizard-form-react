@@ -110,4 +110,5 @@ const user = createSlice({
     },
   },
 });
+
 export default user.reducer;
