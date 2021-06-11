@@ -1,10 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import TempDB from '../db/TempDB';
+import { toast } from 'react-toastify';
 
-export const updateFormData = createAsyncThunk('form/updateFormData', async (form) => {
-  const data = await TempDB.updateFormData(form);
-  return data;
-});
+import TempDB from '../db/TempDB';
+import UserDB from '../db/UserDB';
+
+export const updateFormData = createAsyncThunk(
+  'form/updateFormData',
+  async (form, { rejectWithValue }) => {
+    const { userName, email } = form;
+
+    if (userName) {
+      const isUserNameExists = await UserDB.getByUserName(userName);
+      if (isUserNameExists) {
+        return rejectWithValue({ field: 'userName', message: 'User Name should be unique' });
+      }
+    }
+
+    if (email) {
+      const isEmailExists = await UserDB.getByEmail(email);
+      if (isEmailExists) {
+        return rejectWithValue({ field: 'email', message: 'Email should be unique' });
+      }
+    }
+
+    const data = await TempDB.updateFormData(form);
+    return data;
+  },
+);
 
 export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => {
   const data = await TempDB.getFormData();
@@ -43,16 +65,29 @@ const form = createSlice({
       additionalInfo: '',
       myHobbies: [],
     },
+    error: null,
+  },
+  reducers: {
+    setError: (state, action) => ({ ...state, error: action.payload }),
+    resetError: (state) => ({ ...state, error: null }),
   },
   extraReducers: {
     [updateFormData.fulfilled]: (state, action) => ({
       ...state,
       user: { ...state.user, ...action.payload },
     }),
+    [updateFormData.rejected]: (state, action) => {
+      const { message } = action.payload;
+      toast.error(message);
+      return { ...state, error: action.payload };
+    },
     [fetchFormData.fulfilled]: (state, action) => ({
       ...state,
       user: { ...state.user, ...action.payload },
     }),
   },
 });
+
+export const { setError } = form.actions;
+
 export default form.reducer;
