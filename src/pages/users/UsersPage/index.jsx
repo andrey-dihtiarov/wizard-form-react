@@ -22,10 +22,8 @@ const UsersPage = () => {
   };
 
   useEffect(() => {
-    if (!users.length) {
-      dispatch(fetchUsers());
-    }
-  }, [dispatch, users.length]);
+    dispatch(fetchUsers());
+  }, [dispatch, users]);
 
   return (
     <div className={styles.wrapper}>
