@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import { fetchFormData, updateFormData } from '../../../store/form';
 import { addUser, updateUser, fetchUser } from '../../../store/user';
@@ -46,7 +47,7 @@ const UserFormPage = ({ isEditing }) => {
 
   const user = useSelector((state) => (isEditing ? state.user.user : state.form.user));
 
-  const onForward = (values) => dispatch(updateFormData(values));
+  const onForward = (values) => dispatch(updateFormData(values)).then(unwrapResult);
 
   const onFinish = (values) => {
     if (isEditing) {
