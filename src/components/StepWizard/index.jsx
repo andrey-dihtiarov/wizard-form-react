@@ -45,10 +45,13 @@ const StepWizard = ({ steps, onForward, onBack, onFinish, isEditing, data }) => 
 
   const onForwardClick = useCallback(
     (values) => {
-      onForward(values, slug);
-      const nextSlug = steps[activeStep + 1].slug;
-      setAvailableSteps([...availableSteps, nextSlug]);
-      history.push(path.replace(':slug', nextSlug));
+      onForward(values, slug)
+        .then(() => {
+          const nextSlug = steps[activeStep + 1].slug;
+          setAvailableSteps([...availableSteps, nextSlug]);
+          history.push(path.replace(':slug', nextSlug));
+        })
+        .catch(() => {});
     },
     [onForward, slug, availableSteps, steps, activeStep, history, path],
   );
