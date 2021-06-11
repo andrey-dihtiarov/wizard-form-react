@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { HOBBIES, SKILLS } from '../../../../constants';
@@ -8,6 +8,7 @@ import SelectboxInput from '../../../../components/inputs/SelectboxInput';
 import TextAreaInput from '../../../../components/inputs/TextAreaInput';
 import CheckboxGroupInput from '../../../../components/inputs/CheckboxGroupInput';
 import NavButtons from '../../../../components/StepWizard/NavButtons';
+import FormikForm from '../../../../components/FormikForm';
 
 import styles from './styles.module.scss';
 
@@ -35,7 +36,7 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) 
       onSubmit={onSubmit}
       enableReinitialize
     >
-      <Form className={styles.form}>
+      <FormikForm className={styles.form}>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>
             <Field
@@ -59,7 +60,7 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) 
           </div>
         </div>
         <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
-      </Form>
+      </FormikForm>
     </Formik>
   );
 };

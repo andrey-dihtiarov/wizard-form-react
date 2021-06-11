@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { LANGUAGES_LIST } from '../../../../constants';
@@ -9,6 +9,7 @@ import FaxInput from '../../../../components/inputs/FaxInput';
 import PhoneGroupInput from '../../../../components/inputs/PhoneGroupInput';
 import NavButtons from '../../../../components/StepWizard/NavButtons';
 import SelectboxInput from '../../../../components/inputs/SelectboxInput';
+import FormikForm from '../../../../components/FormikForm';
 
 import styles from './styles.module.scss';
 
@@ -40,7 +41,7 @@ const ContactsForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
       onSubmit={onSubmit}
       enableReinitialize
     >
-      <Form className={styles.form}>
+      <FormikForm className={styles.form}>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>
             <Field name="company" label="Company" component={TextInput} />
@@ -69,7 +70,7 @@ const ContactsForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
           </div>
         </div>
         <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
-      </Form>
+      </FormikForm>
     </Formik>
   );
 };
