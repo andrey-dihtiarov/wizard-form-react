@@ -9,7 +9,7 @@ import FaxInput from '../../inputs/FaxInput';
 import PhoneGroupInput from '../../inputs/PhoneGroupInput';
 import NavButtons from '../../StepWizard/NavButtons';
 import SelectboxInput from '../../inputs/SelectboxInput';
-import FormikForm from '../../components/FormikForm';
+import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 

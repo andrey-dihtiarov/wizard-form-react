@@ -4,6 +4,30 @@ import { toast } from 'react-toastify';
 import TempDB from '../db/TempDB';
 import UserDB from '../db/UserDB';
 
+const initialUserData = {
+  id: '',
+  userName: '',
+  password: '',
+  repeatPassword: '',
+  avatar: null,
+  firstName: '',
+  lastName: '',
+  email: '',
+  birthDate: '',
+  gender: '',
+  address: '',
+  company: '',
+  githubLink: '',
+  facebookLink: '',
+  mainLanguage: '',
+  fax: '',
+  phoneNumbers: [''],
+  skills: [],
+  additionalInfo: '',
+  myHobbies: [],
+  lastStep: '',
+};
+
 export const updateFormData = createAsyncThunk(
   'form/updateFormData',
   async (form, { rejectWithValue }) => {
@@ -48,34 +72,14 @@ export const checkFormDataStep = createAsyncThunk('form/checkFormDataStep', asyn
 const form = createSlice({
   name: 'form',
   initialState: {
-    user: {
-      id: '',
-      userName: '',
-      password: '',
-      repeatPassword: '',
-      avatar: null,
-      firstName: '',
-      lastName: '',
-      email: '',
-      birthDate: '',
-      gender: '',
-      address: '',
-      company: '',
-      githubLink: '',
-      facebookLink: '',
-      mainLanguage: '',
-      fax: '',
-      phoneNumbers: [''],
-      skills: [],
-      additionalInfo: '',
-      myHobbies: [],
-      lastStep: '',
-    },
+    user: initialUserData,
+    hasUnsavedData: false,
     error: null,
   },
   reducers: {
     setError: (state, action) => ({ ...state, error: action.payload }),
     resetError: (state) => ({ ...state, error: null }),
+    setHasUnsavedData: (state, action) => ({ ...state, hasUnsavedData: action.payload }),
   },
   extraReducers: {
     [updateFormData.fulfilled]: (state, action) => ({

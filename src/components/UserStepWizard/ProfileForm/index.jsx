@@ -10,7 +10,7 @@ import RadioGroupInput from '../../inputs/RadioGroupInput';
 import AddressInput from '../../inputs/AddressInput';
 import TextInput from '../../inputs/TextInput';
 import NavButtons from '../../StepWizard/NavButtons';
-import FormikForm from '../../components/FormikForm';
+import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 

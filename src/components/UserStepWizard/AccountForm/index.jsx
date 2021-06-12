@@ -10,7 +10,7 @@ import PasswordInput from '../../inputs/PasswordInput';
 import Avatar from '../../Avatar';
 import ImageUploader from '../../ImageUploader';
 import NavButtons from '../../StepWizard/NavButtons';
-import FormikForm from '../../components/FormikForm';
+import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 

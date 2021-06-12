@@ -8,7 +8,7 @@ import SelectboxInput from '../../inputs/SelectboxInput';
 import TextAreaInput from '../../inputs/TextAreaInput';
 import CheckboxGroupInput from '../../inputs/CheckboxGroupInput';
 import NavButtons from '../../StepWizard/NavButtons';
-import FormikForm from '../../components/FormikForm';
+import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 

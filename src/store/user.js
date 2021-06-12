@@ -60,7 +60,7 @@ export const updateUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id, { rejectWithValue }) => {
   try {
     const data = await UserDB.deleteUser(id);
-    const { error } = data;
+    const { error } = data || {};
     if (error) {
       return rejectWithValue(error);
     }
@@ -105,7 +105,7 @@ const user = createSlice({
     },
     [deleteUser.rejected]: (state, action) => {
       const { message } = action.payload;
-      toast.error(message);
+      toast.error(message || 'Something went wrong');
       return { ...state };
     },
   },
