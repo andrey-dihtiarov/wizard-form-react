@@ -79,8 +79,32 @@ class UserDB extends Database {
       .catch((e) => ({ error: { field: 'id', message: e.message } }));
   }
 
-  getUsers() {
-    return this.getAll();
+  // getUsers() {
+  //   return this.getAll();
+  // }
+
+  getUsers(skip, limit, query) {
+    if (!skip && !limit) {
+      return this.getAll();
+    }
+    if (query) {
+      const lcQuery = query.toLowerCase();
+      const testRegex = new RegExp(lcQuery, 'i');
+      return Promise.all([
+        this.db[this.table]
+          .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+          .offset(skip)
+          .limit(limit)
+          .toArray(),
+        this.db[this.table]
+          .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+          .count(),
+      ]);
+    }
+    return Promise.all([
+      this.db[this.table].offset(skip).limit(limit).toArray(),
+      this.db[this.table].count(),
+    ]);
   }
 
   insertUsers(data) {
