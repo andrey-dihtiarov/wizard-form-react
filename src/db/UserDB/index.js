@@ -90,5 +90,13 @@ class UserDB extends Database {
   clearUsersTable() {
     return this.clearTable();
   }
+
+  getUsersByQuery(query) {
+    const lcQuery = query.toLowerCase();
+    const testRegex = new RegExp(lcQuery, 'i');
+    return this.db[this.table]
+      .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+      .toArray();
+  }
 }
 export default new UserDB();
