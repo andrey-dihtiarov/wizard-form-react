@@ -82,5 +82,13 @@ class UserDB extends Database {
   getUsers() {
     return this.getAll();
   }
+
+  insertUsers(data) {
+    return this.insert(data);
+  }
+
+  clearUsersTable() {
+    return this.clearTable();
+  }
 }
 export default new UserDB();
