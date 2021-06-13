@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import useDebounce from '../../hooks/useDebounce';
 
 import styles from './styles.module.scss';
 
-const Search = ({ onSearch, className, ...rest }) => {
-  const [query, setQuery] = useState('');
+const Search = ({ className, searchQuery, ...rest }) => {
+  const [query, setQuery] = useState(searchQuery);
+  const history = useHistory();
 
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
-    onSearch(debouncedQuery);
-  }, [debouncedQuery, onSearch]);
+    const params = new URLSearchParams();
+    if (query) {
+      params.append('search', query);
+    } else {
+      params.delete('search');
+    }
+    history.push({ search: params.toString() });
+  }, [debouncedQuery, history, query]);
 
   const onChange = (event) => {
     const {
@@ -29,12 +37,10 @@ const Search = ({ onSearch, className, ...rest }) => {
 };
 
 Search.propTypes = {
-  onSearch: PropTypes.func,
-  className: PropTypes.func,
+  className: PropTypes.string,
 };
 
 Search.defaultProps = {
-  onSearch: () => {},
   className: '',
 };
 
