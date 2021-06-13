@@ -4,10 +4,13 @@ import { useHistory } from 'react-router-dom';
 
 import { ROUTES } from '../../../constants';
 
-import { deleteUser, fetchUsers } from '../../../store/user';
+import { deleteUser, fetchUsers, generateUsers } from '../../../store/user';
+
+import styles from './styles.module.scss';
 
 import UsersTable from './UsersTable';
 import PageLayout from '../../../components/layouts/PageLayout';
+import FlatButton from '../../../components/buttons/FlatButton';
 
 const UsersPage = () => {
   const history = useHistory();
@@ -20,6 +23,10 @@ const UsersPage = () => {
     dispatch(deleteUser(id));
   };
 
+  const onGenerateClick = () => {
+    dispatch(generateUsers());
+  };
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch, users]);
@@ -27,6 +34,9 @@ const UsersPage = () => {
   return (
     <PageLayout title="List of users">
       <UsersTable users={users} onUserEdit={onUserEdit} onUserDelete={onUserDelete} />
+      <div className={styles.buttonWrapper}>
+        <FlatButton onClick={onGenerateClick}>Generate Users</FlatButton>
+      </div>
     </PageLayout>
   );
 };
