@@ -48,6 +48,10 @@ class Database {
     this.db[this.table].delete(id);
   }
 
+  insert(data) {
+    this.db[this.table].bulkAdd(data);
+  }
+
   clearTable() {
     return this.db[this.table].clear();
   }
