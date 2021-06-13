@@ -22,9 +22,9 @@ export const addUser = createAsyncThunk(
   },
 );
 
-export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
-  const data = await UserDB.getUsers();
-  return data;
+export const fetchUsers = createAsyncThunk('user/fetchUsers', async ({ skip, limit, query }) => {
+  const [data, total] = await UserDB.getUsers(skip, limit, query);
+  return { data, total };
 });
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (id, { rejectWithValue }) => {
@@ -87,10 +87,14 @@ const user = createSlice({
   initialState: {
     users: [],
     user: null,
+    totalUsers: 0,
   },
   extraReducers: {
     [addUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
-    [fetchUsers.fulfilled]: (state, action) => ({ ...state, users: action.payload }),
+    [fetchUsers.fulfilled]: (state, action) => {
+      const { data, total } = action.payload;
+      return { ...state, users: data, totalUsers: parseInt(total, 10) };
+    },
     [fetchUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
     [fetchUser.rejected]: (state, action) => {
       const { message } = action.payload;
