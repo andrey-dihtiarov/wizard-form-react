@@ -77,6 +77,11 @@ export const generateUsers = createAsyncThunk('user/generateUsers', async () => 
   await UserDB.insertUsers(users);
 });
 
+export const searchUsers = createAsyncThunk('user/searchUsers', async (query) => {
+  const users = await UserDB.getUsersByQuery(query);
+  return users;
+});
+
 const user = createSlice({
   name: 'user',
   initialState: {
@@ -104,7 +109,7 @@ const user = createSlice({
       return { ...state };
     },
     [deleteUser.fulfilled]: (state, action) => {
-      const { id } = action.payload;
+      const id = action.payload;
       const { id: userId } = state.user || {};
       const filteredUsers = state.users.filter((u) => u.id !== id);
       toast.success('User deleted successfully');
@@ -115,6 +120,7 @@ const user = createSlice({
       toast.error(message || 'Something went wrong');
       return { ...state };
     },
+    [searchUsers.fulfilled]: (state, action) => ({ ...state, users: action.payload }),
   },
 });
 
