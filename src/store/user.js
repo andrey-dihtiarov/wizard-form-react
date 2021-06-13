@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import UserDB from '../db/UserDB';
 import { setError } from './form';
+import { generateFakeUsers } from '../utils/accountGenerator';
 
 export const addUser = createAsyncThunk(
   'user/addUser',
@@ -68,6 +69,12 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id, { rejec
   } catch (e) {
     return rejectWithValue(e);
   }
+});
+
+export const generateUsers = createAsyncThunk('user/generateUsers', async () => {
+  await UserDB.clearUsersTable();
+  const users = await generateFakeUsers();
+  await UserDB.insertUsers(users);
 });
 
 const user = createSlice({
