@@ -6,7 +6,7 @@ import Pagination from '../../../components/Pagination';
 
 import { ROUTES } from '../../../constants';
 
-import { deleteUser, generateUsers, fetchUsers, searchUsers } from '../../../store/user';
+import { deleteUser, generateUsers, fetchUsers } from '../../../store/user';
 
 import UsersTable from './UsersTable';
 import PageLayout from '../../../components/layouts/PageLayout';
@@ -14,6 +14,9 @@ import FlatButton from '../../../components/buttons/FlatButton';
 import Search from '../../../components/Search';
 
 import styles from './styles.module.scss';
+
+const SKIP = 0;
+const LIMIT = 5;
 
 const UsersPage = () => {
   const { users, totalUsers } = useSelector((state) => state.user);
@@ -29,15 +32,8 @@ const UsersPage = () => {
   };
 
   const onGenerateClick = () => {
-    dispatch(generateUsers());
+    dispatch(generateUsers({ skip: SKIP, limit: LIMIT }));
   };
-
-  const onSearch = useCallback(
-    (q) => {
-      dispatch(searchUsers(q));
-    },
-    [dispatch],
-  );
 
   const onNavigation = useCallback(
     (skip, limit) => {
@@ -49,7 +45,6 @@ const UsersPage = () => {
   return (
     <PageLayout title="List of users">
       <Search
-        onSearch={onSearch}
         className={styles.search}
         searchQuery={searchQuery}
         placeholder="Search users by first name or last name"
@@ -57,7 +52,7 @@ const UsersPage = () => {
       <UsersTable users={users} onUserEdit={onUserEdit} onUserDelete={onUserDelete} />
       <div className={styles.buttonWrapper}>
         <FlatButton onClick={onGenerateClick}>Generate Users</FlatButton>
-        <Pagination request={onNavigation} total={totalUsers} />
+        <Pagination request={onNavigation} total={totalUsers} skip={SKIP} limit={LIMIT} />
       </div>
     </PageLayout>
   );
