@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
-import UserDB from '../db/UserDB';
 import { setError } from './form';
+
+import UsersTable from '../db/UsersTable';
 
 export const addUser = createAsyncThunk(
   'user/addUser',
   async (user, { rejectWithValue, dispatch }) => {
     try {
-      const data = await UserDB.addUser(user);
+      const data = await UsersTable.addUser(user);
       const { error } = data;
       if (error) {
         dispatch(setError(error));
@@ -22,13 +23,13 @@ export const addUser = createAsyncThunk(
 );
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
-  const data = await UserDB.getUsers();
+  const data = await UsersTable.getUsers();
   return data;
 });
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (id, { rejectWithValue }) => {
   try {
-    const data = await UserDB.getUser(id);
+    const data = await UsersTable.getUser(id);
     const { error } = data;
     if (error) {
       return rejectWithValue(error);
@@ -44,7 +45,7 @@ export const updateUser = createAsyncThunk(
   async (user, { rejectWithValue, dispatch }) => {
     const { id } = user;
     try {
-      const data = await UserDB.updateUser(user, id);
+      const data = await UsersTable.updateUser(user, id);
       const { error } = data;
       if (error) {
         dispatch(setError(error));
@@ -59,7 +60,7 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id, { rejectWithValue }) => {
   try {
-    const data = await UserDB.deleteUser(id);
+    const data = await UsersTable.deleteUser(id);
     const { error } = data || {};
     if (error) {
       return rejectWithValue(error);

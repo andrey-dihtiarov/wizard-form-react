@@ -1,6 +1,6 @@
 import Database from '../index';
 
-class UserTable extends Database {
+class UsersTable extends Database {
   constructor() {
     super('users');
   }
@@ -26,8 +26,8 @@ class UserTable extends Database {
 
   isUserNameExists(user) {
     return new Promise((resolve, reject) => {
-      this.getByUserName(user.userName).then(({ id }) => {
-        if (id && id !== user.id) {
+      this.getByUserName(user.userName).then((data) => {
+        if (data && data.id !== user.id) {
           reject(new Error('User Name should be unique'));
         }
         resolve();
@@ -83,4 +83,4 @@ class UserTable extends Database {
     return this.getAll();
   }
 }
-export default new UserTable();
+export default new UsersTable();
