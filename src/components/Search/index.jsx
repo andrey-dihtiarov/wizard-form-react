@@ -14,13 +14,13 @@ const Search = ({ className, searchQuery, ...rest }) => {
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (query) {
-      params.append('search', query);
+    if (debouncedQuery) {
+      params.append('search', debouncedQuery);
     } else {
       params.delete('search');
     }
     history.push({ search: params.toString() });
-  }, [debouncedQuery, history, query]);
+  }, [debouncedQuery, history]);
 
   const onChange = (event) => {
     const {
