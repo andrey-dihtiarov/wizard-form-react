@@ -52,7 +52,7 @@ const UsersPage = () => {
       <UsersTable users={users} onUserEdit={onUserEdit} onUserDelete={onUserDelete} />
       <div className={styles.buttonWrapper}>
         <FlatButton onClick={onGenerateClick}>Generate Users</FlatButton>
-        <Pagination request={onNavigation} total={totalUsers} skip={SKIP} limit={LIMIT} />
+        <Pagination onNavigation={onNavigation} total={totalUsers} skip={SKIP} limit={LIMIT} />
       </div>
     </PageLayout>
   );
