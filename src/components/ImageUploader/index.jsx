@@ -36,9 +36,7 @@ export function ImageUploader({
   async function readFile(file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onloadend = (e) => {
-        resolve(e.target.result);
-      };
+      reader.onloadend = (e) => resolve(e.target.result);
       reader.readAsDataURL(file);
     });
   }
