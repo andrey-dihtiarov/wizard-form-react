@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
-import TempDB from '../db/TempDB';
-import UserDB from '../db/UserDB';
+import NewUserTable from '../db/NewUserTable';
+import UsersTable from '../db/UsersTable';
 
 const initialUserData = {
   id: '',
@@ -34,26 +34,26 @@ export const updateFormData = createAsyncThunk(
     const { userName, email } = form;
 
     if (userName) {
-      const isUserNameExists = await UserDB.getByUserName(userName);
+      const isUserNameExists = await UsersTable.getByUserName(userName);
       if (isUserNameExists) {
         return rejectWithValue({ field: 'userName', message: 'User Name should be unique' });
       }
     }
 
     if (email) {
-      const isEmailExists = await UserDB.getByEmail(email);
+      const isEmailExists = await UsersTable.getByEmail(email);
       if (isEmailExists) {
         return rejectWithValue({ field: 'email', message: 'Email should be unique' });
       }
     }
 
-    const data = await TempDB.updateFormData(form);
+    const data = await NewUserTable.updateFormData(form);
     return data;
   },
 );
 
 export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => {
-  const data = await TempDB.getFormData();
+  const data = await NewUserTable.getFormData();
   if (data) {
     return data;
   }
@@ -61,11 +61,11 @@ export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => 
 });
 
 export const clearFormData = createAsyncThunk('form/clearFormData', async () => {
-  await TempDB.clearFormData();
+  await NewUserTable.clearFormData();
 });
 
 export const checkFormDataStep = createAsyncThunk('form/checkFormDataStep', async () => {
-  const { lastStep } = await TempDB.getFormData();
+  const { lastStep } = await NewUserTable.getFormData();
   return lastStep;
 });
 

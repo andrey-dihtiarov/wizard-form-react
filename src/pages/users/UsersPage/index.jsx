@@ -25,7 +25,7 @@ const UsersPage = () => {
   const query = useQuery();
   const searchQuery = query.get('search') || '';
 
-  const onUserEdit = (id) => () => history.push(ROUTES.user.replace(':id', id));
+  const onUserEdit = (id) => () => history.push(ROUTES.user(id));
 
   const onUserDelete = (id) => {
     dispatch(deleteUser(id));

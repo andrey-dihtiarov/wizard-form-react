@@ -32,8 +32,7 @@ const UserProfile = ({ user }) => {
   } = user;
   const history = useHistory();
 
-  const onTitleClick = (slug) => () =>
-    history.push(`${ROUTES.editUser.replace(':id', id)}/${slug}`);
+  const onTitleClick = (slug) => () => history.push(`${ROUTES.editUser(id)}/${slug}`);
 
   return (
     <div className={styles.wrapper}>

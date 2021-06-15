@@ -17,9 +17,9 @@ const Routes = () => (
       <Switch>
         <Route exact path={ROUTES.home} component={HomePage} />
         <Route path={ROUTES.newUser} component={NewUserPage} />Z
-        <Route exact path={ROUTES.user} component={UserPage} />
+        <Route exact path={ROUTES.user()} component={UserPage} />
         <Route exact path={ROUTES.users} component={UsersPage} />
-        <Route path={ROUTES.editUser} component={EditUserPage} />
+        <Route path={ROUTES.editUser()} component={EditUserPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </MainLayout>
