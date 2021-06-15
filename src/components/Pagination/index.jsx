@@ -22,8 +22,10 @@ const Pagination = ({ onNavigation, total, skip, limit }) => {
   }, [skipState, limitState, onNavigation, total]);
 
   useEffect(() => {
-    setSkipState(0);
-  }, [total]);
+    if (!(total % limitState) && total < skipState + limitState) {
+      setSkipState(skipState - limitState);
+    }
+  }, [limitState, skipState, total]);
 
   return (
     <div className={styles.wrapper}>

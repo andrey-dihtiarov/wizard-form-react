@@ -127,7 +127,12 @@ const user = createSlice({
       const { id: userId } = state.user || {};
       const filteredUsers = state.users.filter((u) => u.id !== id);
       toast.success('User deleted successfully');
-      return { ...state, user: userId === id ? null : state.user, users: filteredUsers };
+      return {
+        ...state,
+        user: userId === id ? null : state.user,
+        users: filteredUsers,
+        totalUsers: state.totalUsers - 1,
+      };
     },
     [deleteUser.rejected]: (state, action) => {
       const { message } = action.payload;
