@@ -85,13 +85,15 @@ class UsersTable extends Database {
 
   getUsers(skip, limit, query) {
     if (!skip && !limit) {
-      return this.getAll();
+      return this.db[this.table].orderBy('lastUpdate').reverse().toArray();
     }
     if (query) {
       const lcQuery = query.toLowerCase();
       const testRegex = new RegExp(lcQuery, 'i');
       return Promise.all([
         this.db[this.table]
+          .orderBy('lastUpdate')
+          .reverse()
           .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
           .offset(skip)
           .limit(limit)
@@ -102,7 +104,7 @@ class UsersTable extends Database {
       ]);
     }
     return Promise.all([
-      this.db[this.table].offset(skip).limit(limit).toArray(),
+      this.db[this.table].orderBy('lastUpdate').reverse().offset(skip).limit(limit).toArray(),
       this.db[this.table].count(),
     ]);
   }
