@@ -86,19 +86,30 @@ const user = createSlice({
     users: [],
     user: null,
     totalUsers: 0,
+    isLoading: false,
   },
   extraReducers: {
     [addUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
+
+    [fetchUsers.pending]: (state) => ({ ...state, isLoading: true }),
     [fetchUsers.fulfilled]: (state, action) => {
       const { data, total } = action.payload;
-      return { ...state, users: data, totalUsers: parseInt(total, 10) };
+      return { ...state, users: data, totalUsers: parseInt(total, 10), isLoading: false };
     },
-    [fetchUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
+    [fetchUsers.rejected]: (state) => ({ ...state, isLoading: false }),
+
+    [fetchUser.pending]: (state) => ({ ...state, isLoading: true }),
+    [fetchUser.fulfilled]: (state, action) => ({
+      ...state,
+      user: action.payload,
+      isLoading: false,
+    }),
     [fetchUser.rejected]: (state, action) => {
       const { message } = action.payload;
       toast.error(message);
-      return { ...state };
+      return { ...state, isLoading: false };
     },
+
     [updateUser.fulfilled]: (state, action) => {
       const { id } = action.payload;
       const newUsers = [...state.users].map((u) => (u.id === id ? action.payload : user));
@@ -110,6 +121,7 @@ const user = createSlice({
       toast.error(message);
       return { ...state };
     },
+
     [deleteUser.fulfilled]: (state, action) => {
       const id = action.payload;
       const { id: userId } = state.user || {};
