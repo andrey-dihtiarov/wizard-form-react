@@ -44,9 +44,7 @@ const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
   return (
     <div className={`${styles.cropWrapper} ${isVisible ? styles.cropWrapperVisible : ''}`}>
       <div className={styles.buttonWrapper}>
-        <FlatButton type="button" onClick={onCropSubmit}>
-          Crop
-        </FlatButton>
+        <FlatButton type="button" onClick={onCropSubmit} title="Crop" />
       </div>
       <canvas
         ref={canvasRef}
