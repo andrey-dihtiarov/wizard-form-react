@@ -37,9 +37,7 @@ const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
 
   const onCropSubmit = useCallback(() => {
     if (canvasRef.current) {
-      canvasRef.current.toBlob((file) => {
-        updateImageFile(file);
-      }, 'image/jpg');
+      canvasRef.current.toBlob((file) => updateImageFile(file));
     }
   }, [updateImageFile]);
 
