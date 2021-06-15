@@ -36,7 +36,7 @@ const CapabilitiesForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) 
       onSubmit={onSubmit}
       enableReinitialize
     >
-      <FormikForm className={styles.form}>
+      <FormikForm>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>
             <Field
