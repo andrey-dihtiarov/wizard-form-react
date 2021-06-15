@@ -11,10 +11,11 @@ import LinkButton from '../../../components/buttons/LinkButton';
 import PageLayout from '../../../components/layouts/PageLayout';
 
 import styles from './styles.module.scss';
+import Loader from '../../../components/Loader';
 
 const UsersPage = () => {
   const { id } = useParams();
-  const { user } = useSelector((state) => state.user);
+  const { user, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { userName } = user || {};
 
@@ -23,7 +24,8 @@ const UsersPage = () => {
   }, [dispatch, id]);
 
   return (
-    <PageLayout title={userName || 'UserName'}>
+    <PageLayout title={userName || ''}>
+      {isLoading && <Loader />}
       {user && (
         <>
           <LinkButton
