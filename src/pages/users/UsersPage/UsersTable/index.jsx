@@ -36,19 +36,17 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
         </tr>
       </thead>
       <tbody className={styles.body}>
-        {users &&
-          !!users.length &&
-          users.map((user, index) => (
-            <UserRow
-              key={user.userId || user.email}
-              user={user}
-              index={index}
-              onUserDelete={onUserRemove}
-              onRowChange={onRowChange}
-              selectedRow={selectedRow}
-              onUserEdit={onUserEdit}
-            />
-          ))}
+        {users.map((user, index) => (
+          <UserRow
+            key={user.id}
+            user={user}
+            index={index}
+            onUserDelete={onUserRemove}
+            onRowChange={onRowChange}
+            selectedRow={selectedRow}
+            onUserEdit={onUserEdit}
+          />
+        ))}
       </tbody>
     </table>
   );

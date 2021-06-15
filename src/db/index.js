@@ -6,51 +6,50 @@ const dbVersion = 1;
 const tempFormDataIndex = '';
 
 const db = new Dexie(dbName);
-db.version(dbVersion).stores({ tempFormData: tempFormDataIndex, users: 'userId' });
 
-/* eslint-disable no-return-await */
+db.version(dbVersion).stores({ tempFormData: tempFormDataIndex, users: 'id, email, userName' });
 
-// tempFormData
-const getFormData = async () => await db.tempFormData.get(tempFormDataIndex);
+class Database {
+  constructor(table) {
+    this.db = db;
+    this.table = table;
+  }
 
-const updateFormData = async (formData) => {
-  await db.tempFormData.put(
-    { ...formData, userId: !formData.userId ? uuidv4() : formData.userId },
-    tempFormDataIndex,
-  );
-  return await getFormData();
-};
+  now() {
+    return new Date().toISOString();
+  }
 
-const clearFormData = async () => await db.tempFormData.clear();
+  uuid() {
+    return uuidv4();
+  }
 
-// users
-const getUserById = async (id) => await db.users.get(id);
+  getByID(id) {
+    return this.db[this.table].get(id);
+  }
 
-const getUsers = async () => await db.users.toArray();
+  getAll() {
+    return this.db[this.table].toArray();
+  }
 
-const addUser = async (user) => {
-  await db.users.add({ ...user, lastUpdate: new Date().toISOString() });
-  return await getUserById(user.userId);
-};
+  add(data) {
+    const id = this.uuid();
+    const lastUpdate = this.now();
+    this.db[this.table].add({ ...data, id, lastUpdate });
+    return this.getByID(id);
+  }
 
-const updateUser = async (user) => {
-  const { userId } = user;
-  await db.users.put({ ...user, lastUpdate: new Date().toISOString() }, userId);
-  return await getUserById(userId);
-};
+  put(data, id) {
+    const lastUpdate = this.now();
+    this.db[this.table].put({ ...data, lastUpdate }, id);
+    return this.getByID(id);
+  }
 
-const deleteUser = async (id) => {
-  await db.users.delete(id);
-  return await getUsers();
-};
+  delete(id) {
+    this.db[this.table].delete(id);
+  }
 
-export {
-  getFormData,
-  updateFormData,
-  getUserById,
-  getUsers,
-  addUser,
-  clearFormData,
-  updateUser,
-  deleteUser,
-};
+  clearTable() {
+    return this.db[this.table].clear();
+  }
+}
+export default Database;

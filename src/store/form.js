@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  getFormData,
-  updateFormData as dbUpdateFormData,
-  clearFormData as dbClearFormData,
-} from '../db';
+import { toast } from 'react-toastify';
+
+import NewUserTable from '../db/NewUserTable';
+import UsersTable from '../db/UsersTable';
 
 const initialUserData = {
-  userId: '',
+  id: '',
   userName: '',
   password: '',
   repeatPassword: '',
@@ -29,13 +28,32 @@ const initialUserData = {
   lastStep: '',
 };
 
-export const updateFormData = createAsyncThunk('form/updateFormData', async (form) => {
-  const data = await dbUpdateFormData(form);
-  return data;
-});
+export const updateFormData = createAsyncThunk(
+  'form/updateFormData',
+  async (form, { rejectWithValue }) => {
+    const { userName, email } = form;
+
+    if (userName) {
+      const isUserNameExists = await UsersTable.getByUserName(userName);
+      if (isUserNameExists) {
+        return rejectWithValue({ field: 'userName', message: 'User Name should be unique' });
+      }
+    }
+
+    if (email) {
+      const isEmailExists = await UsersTable.getByEmail(email);
+      if (isEmailExists) {
+        return rejectWithValue({ field: 'email', message: 'Email should be unique' });
+      }
+    }
+
+    const data = await NewUserTable.updateFormData(form);
+    return data;
+  },
+);
 
 export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => {
-  const data = await getFormData();
+  const data = await NewUserTable.getFormData();
   if (data) {
     return data;
   }
@@ -43,11 +61,11 @@ export const fetchFormData = createAsyncThunk('form/fetchFormData', async () => 
 });
 
 export const clearFormData = createAsyncThunk('form/clearFormData', async () => {
-  await dbClearFormData();
+  await NewUserTable.clearFormData();
 });
 
 export const checkFormDataStep = createAsyncThunk('form/checkFormDataStep', async () => {
-  const { lastStep } = await getFormData();
+  const { lastStep } = await NewUserTable.getFormData();
   return lastStep;
 });
 
@@ -56,8 +74,11 @@ const form = createSlice({
   initialState: {
     user: initialUserData,
     hasUnsavedData: false,
+    error: null,
   },
   reducers: {
+    setError: (state, action) => ({ ...state, error: action.payload }),
+    resetError: (state) => ({ ...state, error: null }),
     setHasUnsavedData: (state, action) => ({ ...state, hasUnsavedData: action.payload }),
   },
   extraReducers: {
@@ -65,6 +86,11 @@ const form = createSlice({
       ...state,
       user: { ...state.user, ...action.payload },
     }),
+    [updateFormData.rejected]: (state, action) => {
+      const { message } = action.payload;
+      toast.error(message);
+      return { ...state, error: action.payload };
+    },
     [fetchFormData.fulfilled]: (state, action) => ({
       ...state,
       user: { ...state.user, ...action.payload },
@@ -82,6 +108,6 @@ const form = createSlice({
   },
 });
 
-export const { setHasUnsavedData } = form.actions;
+export const { setError, setHasUnsavedData } = form.actions;
 
 export default form.reducer;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import {
   checkFormDataStep,
@@ -21,7 +22,7 @@ const NewUserPage = () => {
 
   const { user, hasUnsavedData } = useSelector((state) => state.form);
 
-  const onForward = (values) => dispatch(updateFormData(values));
+  const onForward = (values) => dispatch(updateFormData(values)).then(unwrapResult);
 
   const onFinish = (values) => {
     dispatch(addUser(values));

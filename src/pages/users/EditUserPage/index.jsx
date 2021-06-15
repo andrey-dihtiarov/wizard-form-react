@@ -21,7 +21,7 @@ const EditUserPage = () => {
 
   return (
     <PageLayout title="Edit User Page">
-      <UserStepWizard data={user} onFinish={onFinish} isEditing />
+      {user && <UserStepWizard data={user} onFinish={onFinish} isEditing />}
     </PageLayout>
   );
 };

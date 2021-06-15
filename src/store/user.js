@@ -1,36 +1,74 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  addUser as dbAddUser,
-  updateUser as dbUpdateUser,
-  deleteUser as dbDeleteUser,
-  getUsers,
-  getUserById,
-} from '../db';
+import { toast } from 'react-toastify';
 
-export const addUser = createAsyncThunk('user/addUser', async (user) => {
-  const addedUser = await dbAddUser(user);
-  const users = await getUsers();
-  return { user: addedUser, users };
-});
+import { setError } from './form';
+
+import UsersTable from '../db/UsersTable';
+
+export const addUser = createAsyncThunk(
+  'user/addUser',
+  async (user, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await UsersTable.addUser(user);
+      const { error } = data;
+      if (error) {
+        dispatch(setError(error));
+        return rejectWithValue(error);
+      }
+      return data;
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
-  const data = await getUsers();
+  const data = await UsersTable.getUsers();
   return data;
 });
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
-  const data = await getUserById(userId);
-  return data;
+export const fetchUser = createAsyncThunk('user/fetchUser', async (id, { rejectWithValue }) => {
+  try {
+    const data = await UsersTable.getUser(id);
+    const { error } = data;
+    if (error) {
+      return rejectWithValue(error);
+    }
+    return data;
+  } catch (e) {
+    return rejectWithValue(e);
+  }
 });
 
-export const updateUser = createAsyncThunk('user/updateUser', async (user) => {
-  const data = await dbUpdateUser(user);
-  return data;
-});
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user, { rejectWithValue, dispatch }) => {
+    const { id } = user;
+    try {
+      const data = await UsersTable.updateUser(user, id);
+      const { error } = data;
+      if (error) {
+        dispatch(setError(error));
+        return rejectWithValue(error);
+      }
+      return data;
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  },
+);
 
-export const deleteUser = createAsyncThunk('user/deleteUser', async (userId) => {
-  const data = await dbDeleteUser(userId);
-  return { data, userId };
+export const deleteUser = createAsyncThunk('user/deleteUser', async (id, { rejectWithValue }) => {
+  try {
+    const data = await UsersTable.deleteUser(id);
+    const { error } = data || {};
+    if (error) {
+      return rejectWithValue(error);
+    }
+    return id;
+  } catch (e) {
+    return rejectWithValue(e);
+  }
 });
 
 const user = createSlice({
@@ -40,21 +78,36 @@ const user = createSlice({
     user: null,
   },
   extraReducers: {
-    [addUser.fulfilled]: (state, action) => {
-      const { users } = action.payload;
-      return { ...state, users: [...users] };
-    },
+    [addUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
     [fetchUsers.fulfilled]: (state, action) => ({ ...state, users: action.payload }),
     [fetchUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
+    [fetchUser.rejected]: (state, action) => {
+      const { message } = action.payload;
+      toast.error(message);
+      return { ...state };
+    },
     [updateUser.fulfilled]: (state, action) => {
-      const { userId } = action.payload;
-      const newUsers = [...state.users].map((u) => (u.userId === userId ? action.payload : user));
+      const { id } = action.payload;
+      const newUsers = [...state.users].map((u) => (u.id === id ? action.payload : user));
+      toast.success('User is updated successfully');
       return { ...state, user: action.payload, users: newUsers };
     },
+    [updateUser.rejected]: (state, action) => {
+      const { message } = action.payload;
+      toast.error(message);
+      return { ...state };
+    },
     [deleteUser.fulfilled]: (state, action) => {
-      const { userId: id, data } = action.payload;
-      const { userId } = state.user || {};
-      return { ...state, user: userId === id ? null : state.user, users: data };
+      const { id } = action.payload;
+      const { id: userId } = state.user || {};
+      const filteredUsers = state.users.filter((u) => u.id !== id);
+      toast.success('User deleted successfully');
+      return { ...state, user: userId === id ? null : state.user, users: filteredUsers };
+    },
+    [deleteUser.rejected]: (state, action) => {
+      const { message } = action.payload;
+      toast.error(message || 'Something went wrong');
+      return { ...state };
     },
   },
 });

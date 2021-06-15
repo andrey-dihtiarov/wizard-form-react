@@ -14,17 +14,15 @@ const UsersPage = () => {
   const { users } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const onUserEdit = (id) => () => history.push(ROUTES.user.replace(':id', id));
+  const onUserEdit = (id) => () => history.push(ROUTES.user(id));
 
   const onUserDelete = (id) => {
     dispatch(deleteUser(id));
   };
 
   useEffect(() => {
-    if (!users.length) {
-      dispatch(fetchUsers());
-    }
-  }, [dispatch, users.length]);
+    dispatch(fetchUsers());
+  }, [dispatch, users]);
 
   return (
     <PageLayout title="List of users">

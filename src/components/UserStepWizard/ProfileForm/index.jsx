@@ -1,4 +1,4 @@
-import { Field, Formik, Form } from 'formik';
+import { Field, Formik } from 'formik';
 import { subYears } from 'date-fns';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
@@ -10,6 +10,7 @@ import RadioGroupInput from '../../inputs/RadioGroupInput';
 import AddressInput from '../../inputs/AddressInput';
 import TextInput from '../../inputs/TextInput';
 import NavButtons from '../../StepWizard/NavButtons';
+import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 
@@ -40,7 +41,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
       onSubmit={onSubmit}
       enableReinitialize
     >
-      <Form className={styles.form}>
+      <FormikForm>
         <div className={styles.formInner}>
           <div className={styles.fieldsWrapper}>
             <Field name="firstName" label="First Name" component={TextInput} />
@@ -54,7 +55,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
           </div>
         </div>
         <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />
-      </Form>
+      </FormikForm>
     </Formik>
   );
 };
