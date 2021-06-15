@@ -21,23 +21,15 @@ const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
       if (image) {
         setCroppedAreaPixelsState(croppedAreaPixels);
 
+        const { x, y, width: cropWidth, height: cropHeight } = croppedAreaPixels;
+
         const {
           current: { width, height },
         } = canvasRef;
 
         ctx.clearRect(0, 0, width || 0, height || 0);
 
-        ctx.drawImage(
-          image,
-          croppedAreaPixels.x,
-          croppedAreaPixels.y,
-          croppedAreaPixels.width,
-          croppedAreaPixels.height,
-          0,
-          0,
-          croppedAreaPixels.width,
-          croppedAreaPixels.height,
-        );
+        ctx.drawImage(image, x, y, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
       }
     },
     [ctx, image],
