@@ -18,11 +18,11 @@ class Database {
     this.table = table;
   }
 
-  updatedAt() {
+  now() {
     return new Date().toISOString();
   }
 
-  generateUuid() {
+  uuid() {
     return uuidv4();
   }
 
@@ -35,14 +35,14 @@ class Database {
   }
 
   add(data) {
-    const id = this.generateUuid();
-    const lastUpdate = this.updatedAt();
+    const id = this.uuid();
+    const lastUpdate = this.now();
     this.db[this.table].add({ ...data, id, lastUpdate });
     return this.getByID(id);
   }
 
   put(data, id) {
-    const lastUpdate = this.updatedAt();
+    const lastUpdate = this.now();
     this.db[this.table].put({ ...data, lastUpdate }, id);
     return this.getByID(id);
   }

@@ -1,6 +1,6 @@
 import Database from '../index';
 
-class TempDB extends Database {
+class NewUserTable extends Database {
   constructor() {
     super('tempFormData');
     this.formDataIndex = '';
@@ -18,4 +18,4 @@ class TempDB extends Database {
     return this.clearTable();
   }
 }
-export default new TempDB();
+export default new NewUserTable();

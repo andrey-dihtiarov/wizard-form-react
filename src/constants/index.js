@@ -1,9 +1,15 @@
 export const ROUTES = Object.freeze({
   home: '/',
-  user: '/users/:id',
   users: '/users',
   newUser: '/users/new',
-  editUser: '/users/:id/edit',
+  user: (id) => {
+    const route = '/users/:id';
+    return id ? route.replace(':id', id) : route;
+  },
+  editUser: (id) => {
+    const route = '/users/:id/edit';
+    return id ? route.replace(':id', id) : route;
+  },
 });
 
 export const ICONS = Object.freeze({

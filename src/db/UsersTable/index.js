@@ -1,6 +1,6 @@
 import Database from '../index';
 
-class UserDB extends Database {
+class UsersTable extends Database {
   constructor() {
     super('users');
   }
@@ -123,4 +123,4 @@ class UserDB extends Database {
       .toArray();
   }
 }
-export default new UserDB();
+export default new UsersTable();
