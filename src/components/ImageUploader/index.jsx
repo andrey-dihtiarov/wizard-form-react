@@ -44,18 +44,18 @@ export function ImageUploader({
   const onFileChange = useCallback(
     (event) => {
       event.preventDefault();
-      const [file] = event.target.files;
+      const [firstFile] = event.target.files;
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setPhoto(file);
+        setPhoto(firstFile);
         setPhotoBase64(reader.result);
-        setFieldValue(name, file);
+        setFieldValue(name, firstFile);
         setFieldTouched(name, true, true);
         setIsCropperVisible(true);
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(firstFile);
     },
     [name, setFieldTouched, setFieldValue],
   );
