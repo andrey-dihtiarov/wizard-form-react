@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 import UserRow from '../UserRow';
 
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
+import Loader from '../../../../components/Loader';
 
 import styles from './styles.module.scss';
-import Loader from '../../../../components/Loader';
 
 const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
   const [selectedRow, setSelectedRow] = useState(null);
