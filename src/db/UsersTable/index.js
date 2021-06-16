@@ -86,23 +86,29 @@ class UsersTable extends Database {
     }
     if (query) {
       const testRegex = new RegExp(query, 'i');
-      return Promise.all([
-        this.db[this.table]
-          .orderBy('lastUpdate')
-          .reverse()
-          .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
-          .offset(skip)
-          .limit(limit)
-          .toArray(),
-        this.db[this.table]
-          .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
-          .count(),
-      ]);
+
+      return this.db[this.table]
+        .orderBy('lastUpdate')
+        .reverse()
+        .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+        .offset(skip)
+        .limit(limit)
+        .toArray()
+        .then((users) =>
+          this.db[this.table]
+            .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+            .count()
+            .then((total) => [users, total]),
+        );
     }
-    return Promise.all([
-      this.db[this.table].orderBy('lastUpdate').reverse().offset(skip).limit(limit).toArray(),
-      this.db[this.table].count(),
-    ]);
+
+    return this.db[this.table]
+      .orderBy('lastUpdate')
+      .reverse()
+      .offset(skip)
+      .limit(limit)
+      .toArray()
+      .then((users) => this.db[this.table].count().then((total) => [users, total]));
   }
 
   insertUsers(data) {
