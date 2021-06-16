@@ -84,8 +84,7 @@ class UsersTable extends Database {
       return this.db[this.table].orderBy('lastUpdate').reverse().toArray();
     }
     if (query) {
-      const lcQuery = query.toLowerCase();
-      const testRegex = new RegExp(lcQuery, 'i');
+      const testRegex = new RegExp(query, 'i');
       return Promise.all([
         this.db[this.table]
           .orderBy('lastUpdate')
