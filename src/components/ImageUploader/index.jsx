@@ -18,8 +18,6 @@ export function ImageUploader({
   form: { errors, setFieldValue, setFieldTouched },
   ...props
 }) {
-  const [photo, setPhoto] = useState(null);
-  const [photoBase64, setPhotoBase64] = useState(null);
   const [image, setImage] = useState();
 
   const [isCropperVisible, setIsCropperVisible] = useState(false);
@@ -28,12 +26,13 @@ export function ImageUploader({
   const { name } = field;
 
   function onFileChangePopup() {
-    if (fileInputEl && fileInputEl.current && fileInputEl.current.click()) {
-      fileInputEl.current.click();
+    const { current } = fileInputEl;
+    if (current && current.click()) {
+      current.click();
     }
   }
 
-  async function readFile(file) {
+  async function toBase64(file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onloadend = (e) => resolve(e.target.result);
@@ -43,13 +42,11 @@ export function ImageUploader({
 
   const onFileChange = useCallback(
     (event) => {
-      event.preventDefault();
       const [firstFile] = event.target.files;
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setPhoto(firstFile);
-        setPhotoBase64(reader.result);
+        toBase64(firstFile).then((img) => setImage(img));
         setFieldValue(name, firstFile);
         setFieldTouched(name, true, true);
         setIsCropperVisible(true);
@@ -61,30 +58,20 @@ export function ImageUploader({
   );
 
   const updateCroppedImageFile = useCallback(
-    async (file) => {
+    (file) => {
       if (errors[name]) {
         setIsCropperVisible(false);
         return;
       }
-      setPhoto(file);
-      const img = await readFile(file);
-      setFieldValue(name, img);
+      setFieldValue(name, file);
       setIsCropperVisible(false);
-      onChange(img);
+      onChange(file);
     },
     [errors, name, onChange, setFieldValue],
   );
 
   return (
     <InputContainer className={className} field={field}>
-      <div className={styles.imageWrapper}>
-        <img
-          ref={(imageRef) => setImage(imageRef)}
-          src={photo && URL.createObjectURL(photo)}
-          alt={photo}
-          className={styles.image}
-        />
-      </div>
       <input
         {...field}
         {...props}
@@ -106,7 +93,6 @@ export function ImageUploader({
       </IconButton>
       <CropModal
         image={image}
-        imageBase64={photoBase64}
         updateImageFile={updateCroppedImageFile}
         isVisible={isCropperVisible}
       />

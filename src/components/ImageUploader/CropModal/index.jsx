@@ -5,7 +5,7 @@ import FlatButton from '../../buttons/FlatButton';
 
 import styles from './styles.module.scss';
 
-const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
+const CropModal = ({ updateImageFile, image, isVisible }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixelsState, setCroppedAreaPixelsState] = useState({
@@ -16,30 +16,30 @@ const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
   const canvasRef = useRef(null);
   const ctx = canvasRef.current ? canvasRef.current.getContext('2d') : null;
 
-  const onCropComplete = useCallback(
-    (croppedArea, croppedAreaPixels) => {
-      if (image) {
-        setCroppedAreaPixelsState(croppedAreaPixels);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixelsState(croppedAreaPixels);
+  }, []);
 
-        const { x, y, width: cropWidth, height: cropHeight } = croppedAreaPixels;
+  const getCroppedImage = useCallback(() => {
+    const { x, y, width: cropWidth, height: cropHeight } = croppedAreaPixelsState;
 
-        const {
-          current: { width, height },
-        } = canvasRef;
+    const {
+      current: { width, height },
+    } = canvasRef;
 
-        ctx.clearRect(0, 0, width || 0, height || 0);
+    const img = new Image();
+    img.src = image;
 
-        ctx.drawImage(image, x, y, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-      }
-    },
-    [ctx, image],
-  );
+    ctx.clearRect(0, 0, width || 0, height || 0);
+    ctx.drawImage(img, x, y, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+    return canvasRef.current.toDataURL('image/jpeg');
+  }, [image, croppedAreaPixelsState, ctx]);
 
   const onCropSubmit = useCallback(() => {
-    if (canvasRef.current) {
-      canvasRef.current.toBlob((file) => updateImageFile(file));
-    }
-  }, [updateImageFile]);
+    const croppedImg = getCroppedImage();
+    updateImageFile(croppedImg);
+  }, [getCroppedImage, updateImageFile]);
 
   return (
     <div className={`${styles.cropWrapper} ${isVisible ? styles.cropWrapperVisible : ''}`}>
@@ -52,7 +52,7 @@ const CropModal = ({ updateImageFile, image, imageBase64, isVisible }) => {
         height={croppedAreaPixelsState.height}
       />
       <Cropper
-        image={imageBase64}
+        image={image}
         crop={crop}
         zoom={zoom}
         aspect={1}
