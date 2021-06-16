@@ -5,38 +5,37 @@ import FlatButton from '../buttons/FlatButton';
 
 import styles from './styles.module.scss';
 
-const Pagination = ({ onNavigation, total, skip, limit, query }) => {
-  const [limitState] = useState(limit);
-  const [skipState, setSkipState] = useState(skip);
+const Pagination = ({ onNavigation, total, skip, limit: limitByPage, query }) => {
+  const [numberOfEntriesToSkip, setNumberOfEntriesToSkip] = useState(skip);
 
   const nextPage = () => {
-    setSkipState((data) => data + limitState);
+    setNumberOfEntriesToSkip((data) => data + limitByPage);
   };
 
   const previousPage = () => {
-    setSkipState((data) => data - limitState);
+    setNumberOfEntriesToSkip((data) => data - limitByPage);
   };
 
   useEffect(() => {
-    onNavigation(skipState, limitState);
-  }, [skipState, limitState, onNavigation, total]);
+    onNavigation(numberOfEntriesToSkip, limitByPage);
+  }, [numberOfEntriesToSkip, limitByPage, onNavigation, total]);
 
   useEffect(() => {
-    if (!(total % limitState) && total < skipState + limitState) {
-      setSkipState(skipState - limitState);
+    if (!(total % limitByPage) && total < numberOfEntriesToSkip + limitByPage) {
+      setNumberOfEntriesToSkip(numberOfEntriesToSkip - limitByPage);
     }
-  }, [limitState, skipState, total]);
+  }, [limitByPage, numberOfEntriesToSkip, total]);
 
   useEffect(() => {
-    setSkipState(0);
+    setNumberOfEntriesToSkip(0);
   }, [query]);
 
   return (
     <div className={styles.wrapper}>
-      <FlatButton onClick={previousPage} disabled={!skipState}>
+      <FlatButton onClick={previousPage} disabled={!numberOfEntriesToSkip}>
         Previous Page
       </FlatButton>
-      <FlatButton onClick={nextPage} disabled={skipState + limitState >= total}>
+      <FlatButton onClick={nextPage} disabled={numberOfEntriesToSkip + limitByPage >= total}>
         Next Page
       </FlatButton>
     </div>
