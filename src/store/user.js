@@ -139,10 +139,13 @@ const user = createSlice({
       toast.error(message || 'Something went wrong');
       return { ...state };
     },
+
+    [generateUsers.pending]: (state) => ({ ...state, isLoading: true }),
     [generateUsers.fulfilled]: (state, action) => {
       const { data, total } = action.payload;
-      return { ...state, users: data, totalUsers: parseInt(total, 10) };
+      return { ...state, users: data, totalUsers: parseInt(total, 10), isLoading: false };
     },
+    [generateUsers.rejected]: (state) => ({ ...state, isLoading: false }),
   },
 });
 

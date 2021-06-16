@@ -2,18 +2,10 @@ import faker from 'faker';
 
 import { HOBBIES, LANGUAGES_LIST, SKILLS } from '../constants';
 
-import avatar from '../assets/mockImages/avatar.jpg';
-import avatar2 from '../assets/mockImages/avatar2.jpg';
-import avatar3 from '../assets/mockImages/avatar3.jpg';
-
 const getRandomDate = (start, end) =>
   new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 
-const getRandomNumber = (max = 3) => Math.floor(Math.random() * max);
-
 export const getListValues = (list) => Object.entries(list).map(([, value]) => value);
-
-export const imagePathToBlob = (imgSrc) => fetch(imgSrc).then((image) => image.blob());
 
 const getBase64 = (file) =>
   new Promise((resolve) => {
@@ -22,10 +14,17 @@ const getBase64 = (file) =>
     reader.onloadend = () => resolve(reader.result);
   });
 
-export const getAvatar = () => {
-  const avatarsArray = [avatar, avatar2, avatar3];
-  return imagePathToBlob(avatarsArray[getRandomNumber(3)]).then((imgBlob) => getBase64(imgBlob));
-};
+export const imagePathToBlob = (imgSrc) =>
+  fetch(imgSrc).then((image) =>
+    image.blob().then((img) => getBase64(img).then((base64) => base64)),
+  );
+
+export const getAvatar = () =>
+  new Promise((resolve, reject) => {
+    imagePathToBlob('https://picsum.photos/300')
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
 
 const getPhoneNumber = () => `+38 ${faker.phone.phoneNumber().replace(/-/g, ' ')}`;
 
