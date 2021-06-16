@@ -15,8 +15,7 @@ import Search from '../../../components/Search';
 
 import styles from './styles.module.scss';
 
-const SKIP = 0;
-const LIMIT = 5;
+const LIMIT_USERS_ON_PAGE = 5;
 
 const UsersPage = () => {
   const { users, totalUsers } = useSelector((state) => state.user);
@@ -32,7 +31,7 @@ const UsersPage = () => {
   };
 
   const onGenerateClick = () => {
-    dispatch(generateUsers({ skip: SKIP, limit: LIMIT }));
+    dispatch(generateUsers({ skip: 0, limit: LIMIT_USERS_ON_PAGE }));
   };
 
   const onNavigation = useCallback(
@@ -55,8 +54,8 @@ const UsersPage = () => {
         <Pagination
           onNavigation={onNavigation}
           total={totalUsers}
-          skip={SKIP}
-          limit={LIMIT}
+          skip={0}
+          limit={LIMIT_USERS_ON_PAGE}
           query={searchQuery}
         />
       </div>
