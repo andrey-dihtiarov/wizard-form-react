@@ -24,7 +24,7 @@ export const addUser = createAsyncThunk(
 );
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', async ({ skip, limit, query }) => {
-  const [data, total] = await UsersTable.getUsers(skip, limit, query);
+  const [data, total] = await UsersTable.getUsers({ skip, limit, query });
   return { data, total };
 });
 
@@ -76,7 +76,7 @@ export const generateUsers = createAsyncThunk('user/generateUsers', async ({ ski
   await UsersTable.clearUsersTable();
   const users = await generateFakeUsers();
   await UsersTable.insertUsers(users);
-  const [data, total] = await UsersTable.getUsers(skip, limit);
+  const [data, total] = await UsersTable.getUsers({ skip, limit });
   return { data, total };
 });
 
