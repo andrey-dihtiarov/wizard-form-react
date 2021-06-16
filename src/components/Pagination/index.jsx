@@ -5,7 +5,7 @@ import FlatButton from '../buttons/FlatButton';
 
 import styles from './styles.module.scss';
 
-const Pagination = ({ onNavigation, total, skip, limit }) => {
+const Pagination = ({ onNavigation, total, skip, limit, query }) => {
   const [limitState] = useState(limit);
   const [skipState, setSkipState] = useState(skip);
 
@@ -27,6 +27,10 @@ const Pagination = ({ onNavigation, total, skip, limit }) => {
     }
   }, [limitState, skipState, total]);
 
+  useEffect(() => {
+    setSkipState(0);
+  }, [query]);
+
   return (
     <div className={styles.wrapper}>
       <FlatButton onClick={previousPage} disabled={!skipState}>
@@ -44,11 +48,13 @@ Pagination.propTypes = {
   total: PropTypes.number.isRequired,
   skip: PropTypes.number,
   limit: PropTypes.number,
+  query: PropTypes.string,
 };
 
 Pagination.defaultProps = {
   skip: 0,
   limit: 5,
+  query: '',
 };
 
 export default Pagination;
