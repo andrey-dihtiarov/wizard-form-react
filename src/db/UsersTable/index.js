@@ -79,10 +79,6 @@ class UsersTable extends Database {
       .catch((e) => ({ error: { field: 'id', message: e.message } }));
   }
 
-  // getUsers() {
-  //   return this.getAll();
-  // }
-
   getUsers(skip, limit, query) {
     if (!skip && !limit) {
       return this.db[this.table].orderBy('lastUpdate').reverse().toArray();
