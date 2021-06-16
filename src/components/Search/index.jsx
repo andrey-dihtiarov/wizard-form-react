@@ -22,12 +22,7 @@ const Search = ({ className, searchQuery, ...rest }) => {
     history.push({ search: params.toString() });
   }, [debouncedQuery, history]);
 
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setQuery(value);
-  };
+  const onChange = ({ target: { value } }) => setQuery(value);
 
   return (
     <div className={className}>
