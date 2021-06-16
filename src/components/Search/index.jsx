@@ -38,10 +38,12 @@ const Search = ({ className, searchQuery, ...rest }) => {
 
 Search.propTypes = {
   className: PropTypes.string,
+  searchQuery: PropTypes.string,
 };
 
 Search.defaultProps = {
   className: '',
+  searchQuery: '',
 };
 
 export default Search;
