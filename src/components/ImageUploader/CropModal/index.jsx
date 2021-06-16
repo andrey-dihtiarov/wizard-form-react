@@ -12,6 +12,7 @@ const CropModal = ({ updateImageFile, image, isVisible }) => {
     width: 1,
     height: 1,
   });
+  const { x, y, width: cropWidth, height: cropHeight } = croppedAreaPixelsState;
 
   const canvasRef = useRef(null);
   const ctx = canvasRef.current ? canvasRef.current.getContext('2d') : null;
@@ -21,8 +22,6 @@ const CropModal = ({ updateImageFile, image, isVisible }) => {
   }, []);
 
   const getCroppedImage = useCallback(() => {
-    const { x, y, width: cropWidth, height: cropHeight } = croppedAreaPixelsState;
-
     const {
       current: { width, height },
     } = canvasRef;
@@ -34,7 +33,7 @@ const CropModal = ({ updateImageFile, image, isVisible }) => {
     ctx.drawImage(img, x, y, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
     return canvasRef.current.toDataURL('image/jpeg');
-  }, [image, croppedAreaPixelsState, ctx]);
+  }, [image, ctx, x, y, cropWidth, cropHeight]);
 
   const onCropSubmit = useCallback(() => {
     const croppedImg = getCroppedImage();
@@ -46,11 +45,7 @@ const CropModal = ({ updateImageFile, image, isVisible }) => {
       <div className={styles.buttonWrapper}>
         <FlatButton type="button" onClick={onCropSubmit} title="Crop" />
       </div>
-      <canvas
-        ref={canvasRef}
-        width={croppedAreaPixelsState.width}
-        height={croppedAreaPixelsState.height}
-      />
+      <canvas ref={canvasRef} width={cropWidth} height={cropHeight} />
       <Cropper
         image={image}
         crop={crop}
