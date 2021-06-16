@@ -5,8 +5,8 @@ import FlatButton from '../buttons/FlatButton';
 
 import styles from './styles.module.scss';
 
-const Pagination = ({ onNavigation, total, skip, limit: limitByPage, query }) => {
-  const [numberOfEntriesToSkip, setNumberOfEntriesToSkip] = useState(skip);
+const Pagination = ({ onNavigation, total, limit: limitByPage, query }) => {
+  const [numberOfEntriesToSkip, setNumberOfEntriesToSkip] = useState(0);
 
   const nextPage = () => {
     setNumberOfEntriesToSkip((data) => data + limitByPage);
@@ -45,13 +45,11 @@ const Pagination = ({ onNavigation, total, skip, limit: limitByPage, query }) =>
 Pagination.propTypes = {
   onNavigation: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
-  skip: PropTypes.number,
   limit: PropTypes.number,
   query: PropTypes.string,
 };
 
 Pagination.defaultProps = {
-  skip: 0,
   limit: 5,
   query: '',
 };

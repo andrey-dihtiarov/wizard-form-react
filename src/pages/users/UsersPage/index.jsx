@@ -54,7 +54,6 @@ const UsersPage = () => {
         <Pagination
           onNavigation={onNavigation}
           total={totalUsers}
-          skip={0}
           limit={LIMIT_USERS_ON_PAGE}
           query={searchQuery}
         />
