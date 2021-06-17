@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { ICONS } from '../../constants';
 
 import IconButton from '../buttons/IconButton';
 
-import styles from './styles.module.scss';
 import InputContainer from '../inputs/InputContainer';
+import CropModal from './CropModal';
+
+import styles from './styles.module.scss';
 
 export function ImageUploader({
   label,
@@ -16,37 +18,57 @@ export function ImageUploader({
   form: { errors, setFieldValue, setFieldTouched },
   ...props
 }) {
+  const [image, setImage] = useState();
+
+  const [isCropperVisible, setIsCropperVisible] = useState(false);
+
   const fileInputEl = useRef();
   const { name } = field;
 
   function onFileChangePopup() {
-    if (fileInputEl && fileInputEl.current && fileInputEl.current.click()) {
-      fileInputEl.current.click();
+    const { current } = fileInputEl;
+    if (current && current.click()) {
+      current.click();
     }
   }
 
-  async function readFile(file) {
+  async function toBase64(file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        resolve(e.target.result);
-      };
+      reader.onloadend = (e) => resolve(e.target.result);
       reader.readAsDataURL(file);
     });
   }
 
-  async function onFileChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const img = await readFile(file);
-      setFieldValue(name, img);
-      setFieldTouched(name, true, true);
+  const onFileChange = useCallback(
+    (event) => {
+      const [firstFile] = event.target.files;
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        toBase64(firstFile).then((img) => setImage(img));
+        setFieldValue(name, firstFile);
+        setFieldTouched(name, true, true);
+        setIsCropperVisible(true);
+      };
+
+      reader.readAsDataURL(firstFile);
+    },
+    [name, setFieldTouched, setFieldValue],
+  );
+
+  const updateCroppedImageFile = useCallback(
+    (file) => {
       if (errors[name]) {
+        setIsCropperVisible(false);
         return;
       }
-      onChange(img);
-    }
-  }
+      setFieldValue(name, file);
+      setIsCropperVisible(false);
+      onChange(file);
+    },
+    [errors, name, onChange, setFieldValue],
+  );
 
   return (
     <InputContainer className={className} field={field}>
@@ -61,9 +83,19 @@ export function ImageUploader({
         accept=".jpg,.jpeg,.png,gif,.svg"
         value=""
       />
-      <IconButton type="button" icon={ICONS.add} onClick={onFileChangePopup}>
+      <IconButton
+        type="button"
+        icon={ICONS.add}
+        onClick={onFileChangePopup}
+        className={styles.addButton}
+      >
         {label}
       </IconButton>
+      <CropModal
+        image={image}
+        updateImageFile={updateCroppedImageFile}
+        isVisible={isCropperVisible}
+      />
     </InputContainer>
   );
 }

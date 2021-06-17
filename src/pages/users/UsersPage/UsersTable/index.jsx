@@ -1,15 +1,18 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import UserRow from '../UserRow';
 
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
+import Loader from '../../../../components/Loader';
 
 import styles from './styles.module.scss';
 
 const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const tableRef = useRef(null);
+  const { isLoading } = useSelector((state) => state.user);
 
   const onRowChange = (index) => () => setSelectedRow(index);
 
@@ -22,6 +25,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
     onUserDelete(id);
   };
 
+  // TODO rowspan
   return (
     <table ref={tableRef} className={styles.table}>
       <thead className={styles.header}>
@@ -35,18 +39,32 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
           <th className={`${styles.cell} ${styles.cellButtons}`} />
         </tr>
       </thead>
+
       <tbody className={styles.body}>
-        {users.map((user, index) => (
-          <UserRow
-            key={user.id}
-            user={user}
-            index={index}
-            onUserDelete={onUserRemove}
-            onRowChange={onRowChange}
-            selectedRow={selectedRow}
-            onUserEdit={onUserEdit}
-          />
-        ))}
+        {isLoading ? (
+          <tr className={styles.wrapper}>
+            <td>
+              <Loader />
+            </td>
+          </tr>
+        ) : (
+          users.map((user, index) => (
+            <UserRow
+              key={user.id}
+              user={user}
+              index={index}
+              onUserDelete={onUserRemove}
+              onRowChange={onRowChange}
+              selectedRow={selectedRow}
+              onUserEdit={onUserEdit}
+            />
+          ))
+        )}
+        {!users.length && !isLoading && (
+          <tr className={styles.wrapper}>
+            <td className={styles.empty}>No Users Found</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

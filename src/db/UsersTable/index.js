@@ -3,14 +3,15 @@ import Database from '../index';
 class UsersTable extends Database {
   constructor() {
     super('users');
+    this.table = this.db[this.table];
   }
 
   getByUserName(name) {
-    return this.db[this.table].where({ userName: name }).first();
+    return this.table.where({ userName: name }).first();
   }
 
   getByEmail(userEmail) {
-    return this.db[this.table].where({ email: userEmail }).first();
+    return this.table.where({ email: userEmail }).first();
   }
 
   isEmailExists(user) {
@@ -36,7 +37,7 @@ class UsersTable extends Database {
   }
 
   isUserExists(userId) {
-    return this.db[this.table]
+    return this.table
       .where({ id: userId })
       .first()
       .then((data) => data)
@@ -79,8 +80,52 @@ class UsersTable extends Database {
       .catch((e) => ({ error: { field: 'id', message: e.message } }));
   }
 
-  getUsers() {
-    return this.getAll();
+  getUsers(params) {
+    const { skip, limit, query } = params;
+    if (!skip && !limit) {
+      return this.table.orderBy('lastUpdate').reverse().toArray();
+    }
+    if (query) {
+      const testRegex = new RegExp(query, 'i');
+
+      return this.table
+        .orderBy('lastUpdate')
+        .reverse()
+        .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+        .offset(skip)
+        .limit(limit)
+        .toArray()
+        .then((users) =>
+          this.table
+            .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+            .count()
+            .then((total) => [users, total]),
+        );
+    }
+
+    return this.table
+      .orderBy('lastUpdate')
+      .reverse()
+      .offset(skip)
+      .limit(limit)
+      .toArray()
+      .then((users) => this.table.count().then((total) => [users, total]));
+  }
+
+  insertUsers(data) {
+    return this.insert(data);
+  }
+
+  clearUsersTable() {
+    return this.clearTable();
+  }
+
+  getUsersByQuery(query) {
+    const lcQuery = query.toLowerCase();
+    const testRegex = new RegExp(lcQuery, 'i');
+    return this.table
+      .filter((user) => testRegex.test(user.firstName) || testRegex.test(user.lastName))
+      .toArray();
   }
 }
 export default new UsersTable();

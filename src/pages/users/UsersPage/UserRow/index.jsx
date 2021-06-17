@@ -12,7 +12,7 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
   const isSelected = index === selectedRow;
   const { id, avatar, firstName, lastName, userName, company, phoneNumbers, email, lastUpdate } =
     user;
-  const [firstPhone] = phoneNumbers;
+  const [firstPhone] = phoneNumbers || [];
   return (
     <tr className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
       <td>

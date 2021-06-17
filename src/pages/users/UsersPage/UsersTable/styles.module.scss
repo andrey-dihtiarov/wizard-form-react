@@ -3,6 +3,7 @@
 .table {
   min-width: 100%;
   border-spacing: 0;
+  position: relative;
 }
 
 .header {
@@ -41,5 +42,24 @@
 }
 
 .body tr:nth-child(odd) {
+  background-color: $ghost-white;
+}
+
+.wrapper {
+  min-height: 440px;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  display: flex;
   background-color: $alice-blue;
+}
+
+.empty {
+  font-size: 32px;
+  color: $horizon;
+  position: absolute;
+  width: 300px;
+  top: 50%;
+  left: calc(50% - 150px);
+  font-weight: bold;
 }
