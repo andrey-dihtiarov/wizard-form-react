@@ -13,8 +13,8 @@ import FormikForm from '../../FormikForm';
 
 import styles from './styles.module.scss';
 
-const selectboxList = Object.entries(LANGUAGES_LIST).map(([key, value]) => ({
-  value: key,
+const selectboxList = Object.entries(LANGUAGES_LIST).map(([, value]) => ({
+  value,
   label: value,
 }));
 

@@ -6,12 +6,13 @@ import { updateUser, fetchUser } from '../../../store/user';
 
 import PageLayout from '../../../components/layouts/PageLayout';
 import UserStepWizard from '../../../components/UserStepWizard';
+import Loader from '../../../components/Loader';
 
 const EditUserPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const user = useSelector((state) => state.user.user);
+  const { user, isLoading } = useSelector((state) => state.user);
 
   const onFinish = (values) => dispatch(updateUser(values, id));
 
@@ -21,6 +22,7 @@ const EditUserPage = () => {
 
   return (
     <PageLayout title="Edit User Page">
+      {isLoading && <Loader />}
       {user && <UserStepWizard data={user} onFinish={onFinish} isEditing />}
     </PageLayout>
   );

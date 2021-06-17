@@ -7,7 +7,10 @@ const tempFormDataIndex = '';
 
 const db = new Dexie(dbName);
 
-db.version(dbVersion).stores({ tempFormData: tempFormDataIndex, users: 'id, email, userName' });
+db.version(dbVersion).stores({
+  tempFormData: tempFormDataIndex,
+  users: 'id, email, userName, firstName, lastName, lastUpdate',
+});
 
 class Database {
   constructor(table) {
@@ -46,6 +49,10 @@ class Database {
 
   delete(id) {
     this.db[this.table].delete(id);
+  }
+
+  insert(data) {
+    this.db[this.table].bulkAdd(data);
   }
 
   clearTable() {

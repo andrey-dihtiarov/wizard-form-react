@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
 import { setError } from './form';
+import { generateFakeUsers } from '../utils/accountGenerator';
 
 import UsersTable from '../db/UsersTable';
 
@@ -22,9 +23,9 @@ export const addUser = createAsyncThunk(
   },
 );
 
-export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
-  const data = await UsersTable.getUsers();
-  return data;
+export const fetchUsers = createAsyncThunk('user/fetchUsers', async ({ skip, limit, query }) => {
+  const [data, total] = await UsersTable.getUsers({ skip, limit, query });
+  return { data, total };
 });
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (id, { rejectWithValue }) => {
@@ -71,21 +72,44 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id, { rejec
   }
 });
 
+export const generateUsers = createAsyncThunk('user/generateUsers', async ({ skip, limit }) => {
+  await UsersTable.clearUsersTable();
+  const users = await generateFakeUsers();
+  await UsersTable.insertUsers(users);
+  const [data, total] = await UsersTable.getUsers({ skip, limit });
+  return { data, total };
+});
+
 const user = createSlice({
   name: 'user',
   initialState: {
     users: [],
     user: null,
+    totalUsers: 0,
+    isLoading: false,
   },
   extraReducers: {
     [addUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
-    [fetchUsers.fulfilled]: (state, action) => ({ ...state, users: action.payload }),
-    [fetchUser.fulfilled]: (state, action) => ({ ...state, user: action.payload }),
+
+    [fetchUsers.pending]: (state) => ({ ...state, isLoading: true }),
+    [fetchUsers.fulfilled]: (state, action) => {
+      const { data, total } = action.payload;
+      return { ...state, users: data, totalUsers: parseInt(total, 10), isLoading: false };
+    },
+    [fetchUsers.rejected]: (state) => ({ ...state, isLoading: false }),
+
+    [fetchUser.pending]: (state) => ({ ...state, isLoading: true }),
+    [fetchUser.fulfilled]: (state, action) => ({
+      ...state,
+      user: action.payload,
+      isLoading: false,
+    }),
     [fetchUser.rejected]: (state, action) => {
       const { message } = action.payload;
       toast.error(message);
-      return { ...state };
+      return { ...state, isLoading: false };
     },
+
     [updateUser.fulfilled]: (state, action) => {
       const { id } = action.payload;
       const newUsers = [...state.users].map((u) => (u.id === id ? action.payload : user));
@@ -97,18 +121,31 @@ const user = createSlice({
       toast.error(message);
       return { ...state };
     },
+
     [deleteUser.fulfilled]: (state, action) => {
-      const { id } = action.payload;
+      const id = action.payload;
       const { id: userId } = state.user || {};
       const filteredUsers = state.users.filter((u) => u.id !== id);
       toast.success('User deleted successfully');
-      return { ...state, user: userId === id ? null : state.user, users: filteredUsers };
+      return {
+        ...state,
+        user: userId === id ? null : state.user,
+        users: filteredUsers,
+        totalUsers: state.totalUsers - 1,
+      };
     },
     [deleteUser.rejected]: (state, action) => {
       const { message } = action.payload;
       toast.error(message || 'Something went wrong');
       return { ...state };
     },
+
+    [generateUsers.pending]: (state) => ({ ...state, isLoading: true }),
+    [generateUsers.fulfilled]: (state, action) => {
+      const { data, total } = action.payload;
+      return { ...state, users: data, totalUsers: parseInt(total, 10), isLoading: false };
+    },
+    [generateUsers.rejected]: (state) => ({ ...state, isLoading: false }),
   },
 });
 
