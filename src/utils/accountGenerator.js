@@ -3,7 +3,7 @@ import faker from 'faker';
 import { HOBBIES, LANGUAGES_LIST, SKILLS } from '../constants';
 
 const getRandomDate = (start, end) =>
-  new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toISOString();
 
 export const getListValues = (list) => Object.entries(list).map(([, value]) => value);
 
@@ -39,7 +39,7 @@ export const getUser = async () => {
     repeatPassword: randomPassword,
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    birthDate: getRandomDate(new Date(1930, 1, 1), new Date(2000, 1, 1)).toISOString(),
+    birthDate: getRandomDate(new Date(1930, 1, 1), new Date(2000, 1, 1)),
     email: faker.internet.email(),
     address: `${faker.address.city()}, ${faker.address.streetAddress()}`,
     gender: faker.random.arrayElement(['Male', 'Female']),
@@ -52,7 +52,7 @@ export const getUser = async () => {
     skills: faker.random.arrayElements(SKILLS, 3),
     information: faker.lorem.sentence(),
     myHobbies: faker.random.arrayElements(HOBBIES),
-    lastUpdate: getRandomDate(new Date(2021, 1, 1), new Date()).toISOString(),
+    lastUpdate: getRandomDate(new Date(2021, 1, 1), new Date()),
   }));
 };
 

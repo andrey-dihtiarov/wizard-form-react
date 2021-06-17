@@ -25,6 +25,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
     onUserDelete(id);
   };
 
+  // TODO rowspan
   return (
     <table ref={tableRef} className={styles.table}>
       <thead className={styles.header}>
@@ -38,6 +39,7 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
           <th className={`${styles.cell} ${styles.cellButtons}`} />
         </tr>
       </thead>
+
       <tbody className={styles.body}>
         {isLoading ? (
           <tr className={styles.wrapper}>

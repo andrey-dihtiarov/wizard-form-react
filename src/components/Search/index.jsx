@@ -10,17 +10,17 @@ const Search = ({ className, searchQuery, ...rest }) => {
   const [query, setQuery] = useState(searchQuery);
   const history = useHistory();
 
-  const debouncedQuery = useDebounce(query, 500);
+  const debouncedSearchQueryValue = useDebounce(query, 500);
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (debouncedQuery) {
-      params.append('search', debouncedQuery);
+    if (debouncedSearchQueryValue) {
+      params.append('search', debouncedSearchQueryValue);
     } else {
       params.delete('search');
     }
     history.push({ search: params.toString() });
-  }, [debouncedQuery, history]);
+  }, [debouncedSearchQueryValue, history]);
 
   const onChange = ({ target: { value } }) => setQuery(value);
 
