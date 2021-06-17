@@ -9,7 +9,12 @@
 }
 
 .layoutInner {
-  width: $container-width;
+  width: $bp-laptop;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: $bp-tablet) {
+    width: 100%;
+    padding: 3px;
+  }
 }

@@ -20,4 +20,9 @@
     background-color: $royal-blue;
     color: $white;
   }
+
+  @media screen and (max-width: $bp-mobile-l) {
+    font-size: 14px;
+    line-height: 44px;
+  }
 }

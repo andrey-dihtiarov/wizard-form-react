@@ -6,6 +6,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: $bp-mobile-l) {
+    padding: 0 10px;
+  }
 }
 
 .nav {
@@ -20,6 +24,10 @@
     &Active {
       color: $white;
     }
+  }
+
+  @media screen and (max-width: $bp-mobile-l) {
+    justify-content: flex-end;
   }
 }
 

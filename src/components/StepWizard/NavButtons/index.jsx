@@ -4,7 +4,9 @@ import FlatButton from '../../buttons/FlatButton';
 import styles from './styles.module.scss';
 
 const NavButtons = ({ isFirst, isLast, onBack, isEditing }) => (
-  <div className={styles.wrapper}>
+  <div
+    className={`${styles.wrapper} ${(isFirst || isLast || isEditing) && styles.wrapperOneButton}`}
+  >
     {!isFirst && !isEditing && (
       <FlatButton type="button" variant="cancel" onClick={onBack} title="Back" />
     )}

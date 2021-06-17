@@ -10,4 +10,12 @@
     position: relative;
     top: 5px;
   }
+
+  @media screen and (max-width: $bp-mobile-l) {
+    top: -56px;
+
+    & svg {
+      top: 3px;
+    }
+  }
 }
