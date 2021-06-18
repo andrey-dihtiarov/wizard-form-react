@@ -111,10 +111,8 @@ const user = createSlice({
     },
 
     [updateUser.fulfilled]: (state, action) => {
-      const { id } = action.payload;
-      const newUsers = [...state.users].map((u) => (u.id === id ? action.payload : user));
       toast.success('User is updated successfully');
-      return { ...state, user: action.payload, users: newUsers };
+      return { ...state, user: action.payload };
     },
     [updateUser.rejected]: (state, action) => {
       const { message } = action.payload;
