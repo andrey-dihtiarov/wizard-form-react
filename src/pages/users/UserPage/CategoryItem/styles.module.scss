@@ -16,6 +16,10 @@
   width: 220px;
   margin-left: 80px;
   color: $bermuda-grey;
+
+  @media screen and (max-width: $bp-mobile-l) {
+    margin-left: 0;
+  }
 }
 
 .title,

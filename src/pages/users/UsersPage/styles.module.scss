@@ -4,6 +4,10 @@
   display: flex;
   justify-content: space-between;
   margin: 30px auto;
+
+  @media screen and (max-width: $bp-mobile-l) {
+    flex-direction: column-reverse;
+  }
 }
 
 .search {
