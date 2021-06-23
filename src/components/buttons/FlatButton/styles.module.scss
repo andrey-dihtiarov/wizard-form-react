@@ -1,27 +1,38 @@
 @import '../../../assets/scss/variables';
 
 .button {
-  padding: 12px 24px;
+  padding: 8px 18px;
   font-size: 14px;
   border: none;
   color: $white;
   min-width: 100px;
   cursor: pointer;
+  border-radius: 0;
 
   &:disabled {
     opacity: 0.3;
     pointer-events: none;
+    color: $white;
   }
 }
 
 .primary {
   background-color: $royal-blue;
+  &:hover {
+    background-color: $maya-blue;
+  }
 }
 
 .cancel {
   background-color: $spindle;
+  &:hover {
+    background-color: $pattens-blue;
+  }
 }
 
 .success {
   background-color: $turquoise;
+  &:hover {
+    background-color: $medium-spring-green;
+  }
 }
