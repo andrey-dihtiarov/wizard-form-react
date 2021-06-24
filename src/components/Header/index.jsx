@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { PersonAdd, PeopleAlt } from '@material-ui/icons';
 
-import { ICONS, ROUTES } from '../../constants';
-
-import LinkButton from '../buttons/LinkButton';
+import { ROUTES } from '../../constants';
 
 import styles from './styles.module.scss';
 
@@ -13,23 +13,25 @@ const Header = () => (
         Remake
       </Link>
       <div className={styles.nav}>
-        <LinkButton
+        <Button
+          component={NavLink}
+          startIcon={<PersonAdd />}
           to={ROUTES.newUser}
-          icon={ICONS.user}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}
         >
           Add new user
-        </LinkButton>
-        <LinkButton
+        </Button>
+        <Button
+          component={NavLink}
+          startIcon={<PeopleAlt />}
           to={ROUTES.users}
-          icon={ICONS.userFriends}
           className={styles.navButton}
           activeClassName={styles.navButtonActive}
           exact
         >
           List of users
-        </LinkButton>
+        </Button>
       </div>
     </div>
   </div>

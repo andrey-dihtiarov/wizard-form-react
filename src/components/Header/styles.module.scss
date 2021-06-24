@@ -18,6 +18,9 @@
   justify-content: space-between;
 
   &Button {
+    color: $spindle;
+    text-transform: none;
+
     &:hover {
       color: $white;
     }
@@ -41,7 +44,8 @@
 .logo {
   color: $white;
   font-weight: bolder;
-  font-style: italic;
-  font-size: 18px;
+  //font-style: italic;
+  font-size: 19px;
   cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
