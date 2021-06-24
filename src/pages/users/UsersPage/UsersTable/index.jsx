@@ -1,6 +1,14 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  // TableContainer,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
 
 import UserRow from '../UserRow';
 
@@ -8,6 +16,8 @@ import { useOnClickOutside } from '../../../../hooks/useOnClickOutside';
 import Loader from '../../../../components/Loader';
 
 import styles from './styles.module.scss';
+
+const HEADERS = ['', 'name', 'company', 'contacts', 'last update', '', ''];
 
 const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -27,26 +37,22 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
 
   // TODO rowspan
   return (
-    <table ref={tableRef} className={styles.table}>
-      <thead className={styles.header}>
-        <tr className={styles.row}>
-          <th className={`${styles.cell} ${styles.cellAvatar}`} />
-          <th className={styles.cell}>name</th>
-          <th className={styles.cell}>company</th>
-          <th className={`${styles.cell} ${styles.cellContacts}`}>contacts</th>
-          <th className={styles.cell}>last update</th>
-          <th className={`${styles.cell} ${styles.cellButtons}`} />
-          <th className={`${styles.cell} ${styles.cellButtons}`} />
-        </tr>
-      </thead>
+    <Table ref={tableRef} className={styles.table}>
+      <TableHead className={styles.header}>
+        <TableRow>
+          {HEADERS.map((title) => (
+            <TableCell>{title}</TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
 
-      <tbody className={styles.body}>
+      <TableBody className={styles.body}>
         {isLoading ? (
-          <tr className={styles.wrapper}>
-            <td>
+          <TableRow className={styles.wrapper}>
+            <TableCell>
               <Loader />
-            </td>
-          </tr>
+            </TableCell>
+          </TableRow>
         ) : (
           users.map((user, index) => (
             <UserRow
@@ -61,12 +67,12 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
           ))
         )}
         {!users.length && !isLoading && (
-          <tr className={styles.wrapper}>
-            <td className={styles.empty}>No Users Found</td>
-          </tr>
+          <TableRow className={styles.wrapper}>
+            <TableCell className={styles.empty}>No Users Found</TableCell>
+          </TableRow>
         )}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 

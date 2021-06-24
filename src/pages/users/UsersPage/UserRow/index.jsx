@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-import { IconButton, Button } from '@material-ui/core';
+import { IconButton, Button, TableRow, TableCell } from '@material-ui/core';
 import { Edit, Clear } from '@material-ui/icons';
 
 import Avatar from '../../../../components/Avatar';
@@ -13,29 +13,29 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
     user;
   const [firstPhone] = phoneNumbers || [];
   return (
-    <tr className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
-      <td>
+    <TableRow className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
+      <TableCell>
         <Avatar className={styles.avatar} image={avatar} />
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         {`${firstName} ${lastName}`}
         <div className={styles.username}>{userName}</div>
-      </td>
-      <td>{company}</td>
-      <td>{firstPhone || email}</td>
-      <td>{formatDistanceToNow(Date.parse(lastUpdate))} ago</td>
-      <td>
+      </TableCell>
+      <TableCell>{company}</TableCell>
+      <TableCell>{firstPhone || email}</TableCell>
+      <TableCell>{formatDistanceToNow(Date.parse(lastUpdate))} ago</TableCell>
+      <TableCell>
         <IconButton disabled={isSelected} onClick={onUserEdit(id)} className={styles.edit}>
           <Edit />
         </IconButton>
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <IconButton disabled={isSelected} onClick={onRowChange(index)} className={styles.delete}>
           <Clear />
         </IconButton>
-      </td>
+      </TableCell>
       {isSelected && (
-        <td>
+        <TableCell>
           <Button
             size="small"
             startIcon={<Clear />}
@@ -44,9 +44,9 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
           >
             delete
           </Button>
-        </td>
+        </TableCell>
       )}
-    </tr>
+    </TableRow>
   );
 };
 
