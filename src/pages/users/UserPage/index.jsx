@@ -13,7 +13,7 @@ import PageLayout from '../../../components/layouts/PageLayout';
 import styles from './styles.module.scss';
 import Loader from '../../../components/Loader';
 
-const UsersPage = () => {
+const UserPage = () => {
   const { id } = useParams();
   const { user, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -44,4 +44,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default UserPage;
