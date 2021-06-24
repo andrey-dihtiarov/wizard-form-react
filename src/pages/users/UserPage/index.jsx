@@ -14,11 +14,6 @@ import Loader from '../../../components/Loader';
 
 import styles from './styles.module.scss';
 
-const ICON_STYLES = {
-  width: 36,
-  height: 36,
-};
-
 const UserPage = () => {
   const { id } = useParams();
   const { user, isLoading } = useSelector((state) => state.user);
@@ -38,7 +33,7 @@ const UserPage = () => {
             component={NavLink}
             to={ROUTES.users}
             className={styles.button}
-            startIcon={<ChevronLeft style={ICON_STYLES} />}
+            startIcon={<ChevronLeft />}
           >
             User List
           </Button>

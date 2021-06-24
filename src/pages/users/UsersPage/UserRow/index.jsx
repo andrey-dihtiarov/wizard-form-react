@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-
-import { ICONS } from '../../../../constants';
+import { IconButton, Button } from '@material-ui/core';
+import { Edit, Clear } from '@material-ui/icons';
 
 import Avatar from '../../../../components/Avatar';
-import IconButton from '../../../../components/buttons/IconButton';
 
 import styles from './styles.module.scss';
 
@@ -26,37 +25,25 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
       <td>{firstPhone || email}</td>
       <td>{formatDistanceToNow(Date.parse(lastUpdate))} ago</td>
       <td>
-        <IconButton
-          onClick={onUserEdit(id)}
-          icon={ICONS.pen}
-          width={12}
-          height={12}
-          disabled={isSelected}
-          className={styles.edit}
-        />
+        <IconButton disabled={isSelected} onClick={onUserEdit(id)} className={styles.edit}>
+          <Edit />
+        </IconButton>
       </td>
       <td>
-        <IconButton
-          onClick={onRowChange(index)}
-          icon={ICONS.times}
-          disabled={isSelected}
-          className={styles.delete}
-          width={12}
-          height={12}
-        />
+        <IconButton disabled={isSelected} onClick={onRowChange(index)} className={styles.delete}>
+          <Clear />
+        </IconButton>
       </td>
       {isSelected && (
         <td>
-          <IconButton
-            icon={ICONS.times}
-            width={12}
-            height={12}
-            type="button"
+          <Button
+            size="small"
+            startIcon={<Clear />}
             className={styles.deleteConfirm}
             onClick={onUserDelete(id)}
           >
             delete
-          </IconButton>
+          </Button>
         </td>
       )}
     </tr>

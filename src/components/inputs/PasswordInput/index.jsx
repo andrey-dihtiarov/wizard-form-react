@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { ICONS } from '../../../constants';
+import { IconButton } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 import InputContainer from '../InputContainer';
-import IconButton from '../../buttons/IconButton';
 
 import styles from './styles.module.scss';
 
@@ -26,12 +25,15 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
           {...field}
           {...props}
         />
-        <IconButton
-          type="button"
-          onClick={changePasswordVisibility}
-          className={styles.icon}
-          icon={isPasswordShown ? ICONS.eye : ICONS.eyeSlash}
-        />
+        {/*<IconButton*/}
+        {/*  type="button"*/}
+        {/*  onClick={changePasswordVisibility}*/}
+        {/*  className={styles.icon}*/}
+        {/*  icon={isPasswordShown ? ICONS.eye : ICONS.eyeSlash}*/}
+        {/*/>*/}
+        <IconButton size="small" onClick={changePasswordVisibility} className={styles.icon}>
+          {isPasswordShown ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+        </IconButton>
       </div>
     </InputContainer>
   );

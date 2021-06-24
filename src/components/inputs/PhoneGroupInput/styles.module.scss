@@ -1,3 +1,5 @@
+@import '../../../assets/scss/variables';
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -12,5 +14,12 @@
 .minusButton {
   position: absolute;
   right: -40px;
-  top: 18px;
+  top: 22px;
+  color: $spindle;
+}
+
+.addButton {
+  color: $spindle;
+  text-transform: none;
+  font-weight: bold;
 }

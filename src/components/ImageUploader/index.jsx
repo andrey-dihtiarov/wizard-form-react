@@ -1,9 +1,7 @@
 import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
-import { ICONS } from '../../constants';
-
-import IconButton from '../buttons/IconButton';
+import { Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 import InputContainer from '../inputs/InputContainer';
 import CropModal from './CropModal';
@@ -83,14 +81,9 @@ export function ImageUploader({
         accept=".jpg,.jpeg,.png,gif,.svg"
         value=""
       />
-      <IconButton
-        type="button"
-        icon={ICONS.add}
-        onClick={onFileChangePopup}
-        className={styles.addButton}
-      >
+      <Button onClick={onFileChangePopup} className={styles.addButton} startIcon={<Add />}>
         {label}
-      </IconButton>
+      </Button>
       <CropModal
         image={image}
         updateImageFile={updateCroppedImageFile}

@@ -31,20 +31,21 @@
     opacity: 0.3;
     cursor: default;
   }
+  color: $spindle;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .deleteConfirm {
   position: absolute;
-  top: 36px;
-  right: -80px;
+  top: 32px;
+  right: -86px;
   color: $red;
-  padding: 0;
+  //padding: 0;
   background-color: $white;
   cursor: pointer;
-  & svg {
-    position: relative;
-    top: 3px;
-  }
 }
 
 .username {

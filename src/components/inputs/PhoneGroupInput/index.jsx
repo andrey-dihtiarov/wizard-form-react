@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Field, useField } from 'formik';
 import PropTypes from 'prop-types';
-
-import { ICONS } from '../../../constants';
+import { Button, IconButton } from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
 
 import FaxInput from '../FaxInput';
-import IconButton from '../../buttons/IconButton';
 
 import styles from './styles.module.scss';
 
@@ -32,18 +31,19 @@ const PhoneGroupInput = ({ maxNumbers }) => {
           />
           {phoneNumbersCount > 1 && (
             <IconButton
-              type="button"
-              icon={ICONS.minus}
+              size="small"
               onClick={onPhoneNumberRemove(index)}
               className={styles.minusButton}
-            />
+            >
+              <Remove />
+            </IconButton>
           )}
         </div>
       ))}
       {phoneNumbersCount < maxNumbers && (
-        <IconButton type="button" icon={ICONS.add} onClick={onPhoneNumberAdd}>
+        <Button startIcon={<Add />} onClick={onPhoneNumberAdd} className={styles.addButton}>
           add phone number
-        </IconButton>
+        </Button>
       )}
     </div>
   );
