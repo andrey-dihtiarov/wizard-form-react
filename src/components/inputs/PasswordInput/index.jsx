@@ -25,12 +25,6 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
           {...field}
           {...props}
         />
-        {/*<IconButton*/}
-        {/*  type="button"*/}
-        {/*  onClick={changePasswordVisibility}*/}
-        {/*  className={styles.icon}*/}
-        {/*  icon={isPasswordShown ? ICONS.eye : ICONS.eyeSlash}*/}
-        {/*/>*/}
         <IconButton size="small" onClick={changePasswordVisibility} className={styles.icon}>
           {isPasswordShown ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
         </IconButton>
