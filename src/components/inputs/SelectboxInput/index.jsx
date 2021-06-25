@@ -1,10 +1,17 @@
-import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+import { Select, MenuItem, Chip } from '@material-ui/core';
 
 import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 300,
+    },
+  },
+};
 
 const SelectboxInput = ({
   form: { touched, errors, setFieldValue, setFieldTouched },
@@ -16,31 +23,59 @@ const SelectboxInput = ({
   const { name, value } = field;
   const isError = !!(touched[name] && errors[name]);
 
-  const setValue = useCallback(() => {
-    if (isMulti) return valuesList.filter((opt) => value.indexOf(opt.value) >= 0);
-    return valuesList.find((opt) => opt.value === value);
-  }, [isMulti, value, valuesList]);
-
-  const onValueChange = (valList) =>
-    setFieldValue(name, isMulti ? valList.map(({ value: val }) => val) : valList.value);
+  const onValueChange = ({ target: { value: val } }) => setFieldValue(name, val);
 
   const onBlur = () => setFieldTouched(name, true);
 
   return (
     <InputContainer field={field} label={label}>
-      <Select
-        label={label}
-        options={valuesList}
-        required
-        name={name}
-        {...field}
-        value={setValue()}
-        onChange={onValueChange}
-        onBlur={onBlur}
-        classNamePrefix={isError ? styles.selectError : styles.select}
-        className={isError ? styles.selectError : styles.select}
-        isMulti={isMulti}
-      />
+      {isMulti ? (
+        <Select
+          multiple
+          value={value}
+          onChange={onValueChange}
+          onBlur={onBlur}
+          disableUnderline
+          className={`${styles.selectbox} ${isError ? styles.selectboxError : ''}`}
+          MenuProps={MenuProps}
+          renderValue={(selected) => (
+            <div className={styles.chips}>
+              {selected.map((item) => (
+                <Chip
+                  key={item}
+                  label={item}
+                  size="small"
+                  className={styles.chip}
+                  onMouseDown={(e) => e.stopPropagation()}
+                />
+              ))}
+            </div>
+          )}
+        >
+          {valuesList.map(({ value: itemVal, label: labelVal }) => (
+            <MenuItem value={itemVal} key={labelVal}>
+              {itemVal}
+            </MenuItem>
+          ))}
+        </Select>
+      ) : (
+        <Select
+          value={value}
+          onChange={onValueChange}
+          onBlur={onBlur}
+          className={`${styles.selectbox} ${isError ? styles.selectboxError : ''}`}
+          MenuProps={MenuProps}
+          disableUnderline
+        >
+          {Object.values(
+            valuesList.map(({ value: itemVal, label: labelVal }) => (
+              <MenuItem value={itemVal} key={labelVal}>
+                {itemVal}
+              </MenuItem>
+            )),
+          )}
+        </Select>
+      )}
     </InputContainer>
   );
 };
