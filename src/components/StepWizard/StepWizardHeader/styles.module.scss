@@ -15,6 +15,7 @@
   line-height: 60px;
   background-color: $spindle;
   color: $san-juan;
+  text-transform: none;
 
   &[disabled] {
     opacity: 0.3;
