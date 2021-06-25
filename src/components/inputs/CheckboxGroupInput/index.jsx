@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
+import { FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
 
 import InputContainer from '../InputContainer';
-
-import styles from './styles.module.scss';
 
 const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, field, values }) => {
   const { name, value } = field;
@@ -20,23 +19,23 @@ const CheckboxGroupInput = ({ form: { setFieldValue, setFieldTouched }, label, f
   };
   return (
     <InputContainer field={field} label={label}>
-      <ul>
+      <FormGroup>
         {values.map((item, index) => (
-          <li key={item} className={styles.checkboxWrapper}>
-            <label htmlFor={`${name}_${index}`}>
-              <input
-                type="checkbox"
-                id={`${name}_${index}`}
-                name={`${name}_${index}`}
+          <FormControlLabel
+            control={
+              <Checkbox
                 checked={field.value.includes(item)}
-                value={item}
                 onChange={onInputChange}
+                name={`${name}_${index}`}
+                value={item}
+                color="primary"
               />
-              {item}
-            </label>
-          </li>
+            }
+            label={item}
+            key={item}
+          />
         ))}
-      </ul>
+      </FormGroup>
     </InputContainer>
   );
 };
