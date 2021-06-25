@@ -17,7 +17,7 @@ import Loader from '../../../../components/Loader';
 
 import styles from './styles.module.scss';
 
-const HEADERS = ['', 'name', 'company', 'contacts', 'last update', '', ''];
+const HEADERS = ['name', 'company', 'contacts', 'last update'];
 
 const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -40,9 +40,12 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
     <Table ref={tableRef} className={styles.table}>
       <TableHead className={styles.header}>
         <TableRow>
+          <TableCell />
           {HEADERS.map((title) => (
-            <TableCell>{title}</TableCell>
+            <TableCell key={title}>{title}</TableCell>
           ))}
+          <TableCell />
+          <TableCell />
         </TableRow>
       </TableHead>
 
