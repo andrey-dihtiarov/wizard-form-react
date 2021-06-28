@@ -14,7 +14,7 @@ const StepWizardHeader = ({ steps }) => {
   };
 
   useEffect(() => {
-    if (value !== activeTab) {
+    if (activeTab >= 0 && value !== activeTab) {
       setValue(activeTab);
     }
   }, [activeTab, value]);
