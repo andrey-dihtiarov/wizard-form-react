@@ -1,9 +1,16 @@
-import DatePicker from 'react-datepicker';
+import { useState } from 'react';
+import 'date-fns';
 import PropTypes from 'prop-types';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import InputContainer from '../InputContainer';
 
 import styles from './styles.module.scss';
+
+const INPUT_PROPS = {
+  disableUnderline: true,
+};
 
 const DateInput = ({
   field,
@@ -12,35 +19,40 @@ const DateInput = ({
   ...rest
 }) => {
   const { name, value } = field;
+  const [selectedDate, setSelectedDate] = useState((value && new Date(value)) || null);
   const isError = !!(touched[name] && errors[name]);
 
   // TODO remove setFieldTouched
   const onDateChange = (val) => {
-    setFieldTouched(name, true, true);
-    setFieldValue(name, val && val.toISOString());
+    if (Date.parse(val)) {
+      setFieldTouched(name, true, true);
+      setFieldValue(name, val && val.toISOString());
+      setSelectedDate(val);
+    }
   };
 
   const onDateBlur = () => setFieldTouched(name, true, true);
 
   return (
     <InputContainer label={label} field={field}>
-      <DatePicker
-        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
-        wrapperClassName={styles.wrapper}
-        wrapp
-        // TODO check select prop
-        selected={(value && new Date(value)) || null}
-        onChange={onDateChange}
-        // TODO check format and remove placeholder
-        placeholderText="DD/MM/YYYY"
-        dateFormat="dd/MM/yyyy"
-        name={name}
-        showYearDropdown
-        maxDate={new Date()}
-        autoComplete="off"
-        onBlur={onDateBlur}
-        {...rest}
-      />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          disableToolbar
+          className={`${styles.field} ${isError ? styles.fieldError : ''}`}
+          variant="inline"
+          format="dd/MM/yyyy"
+          margin="normal"
+          inputValue={undefined}
+          value={selectedDate}
+          onChange={onDateChange}
+          onBlur={onDateBlur}
+          invalidDateMessage={false}
+          InputProps={INPUT_PROPS}
+          disableFuture
+          emptyLabel=""
+          {...rest}
+        />
+      </MuiPickersUtilsProvider>
     </InputContainer>
   );
 };
