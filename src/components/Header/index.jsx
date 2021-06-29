@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, AppBar } from '@material-ui/core';
 import { PersonAdd, PeopleAlt } from '@material-ui/icons';
 
 import { ROUTES } from '../../constants';
@@ -7,7 +7,7 @@ import { ROUTES } from '../../constants';
 import styles from './styles.module.scss';
 
 const Header = () => (
-  <div className={styles.header}>
+  <AppBar position="static" className={styles.header}>
     <div className={styles.headerInner}>
       <Link to={ROUTES.home} className={styles.logo}>
         Remake
@@ -34,7 +34,7 @@ const Header = () => (
         </Button>
       </div>
     </div>
-  </div>
+  </AppBar>
 );
 
 export default Header;

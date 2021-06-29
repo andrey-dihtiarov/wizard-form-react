@@ -1,14 +1,7 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  // TableContainer,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
+import { Table, TableBody, TableCell, Typography, TableHead, TableRow } from '@material-ui/core';
 
 import UserRow from '../UserRow';
 
@@ -42,7 +35,9 @@ const UsersTable = ({ users, onUserEdit, onUserDelete }) => {
         <TableRow>
           <TableCell />
           {HEADERS.map((title) => (
-            <TableCell key={title}>{title}</TableCell>
+            <TableCell key={title}>
+              <Typography>{title}</Typography>
+            </TableCell>
           ))}
           <TableCell />
           <TableCell />

@@ -5,11 +5,7 @@ import { InputBase } from '@material-ui/core';
 import styles from './styles.module.scss';
 
 const Field = forwardRef(({ isError, className, ...rest }, ref) => (
-  <InputBase
-    className={`${styles.field} ${isError ? styles.fieldError : ''} ${className}`}
-    inputRef={ref}
-    {...rest}
-  />
+  <InputBase error={isError} classes={styles} inputRef={ref} {...rest} />
 ));
 
 Field.propTypes = {
