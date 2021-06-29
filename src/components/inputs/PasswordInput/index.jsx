@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { ICONS } from '../../../constants';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 import InputContainer from '../InputContainer';
-import IconButton from '../../buttons/IconButton';
+import Field from '../../Field';
 
 import styles from './styles.module.scss';
 
-const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) => {
+const PasswordInput = ({ field, form: { touched, errors }, label, ...rest }) => {
   const [isPasswordShown, setPasswordShown] = useState(false);
 
   const { name } = field;
@@ -19,19 +19,23 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...props }) =>
   return (
     <InputContainer label={label} field={field}>
       <div className={styles.wrapper}>
-        <input
-          className={`${styles.field} ${isError ? styles.fieldError : ''}`}
-          type={isPasswordShown ? 'text' : 'password'}
-          value={field.value || ''}
+        <Field
           {...field}
-          {...props}
+          {...rest}
+          isError={isError}
+          type={isPasswordShown ? 'text' : 'password'}
         />
-        <IconButton
-          type="button"
-          onClick={changePasswordVisibility}
-          className={styles.icon}
-          icon={isPasswordShown ? ICONS.eye : ICONS.eyeSlash}
-        />
+        <IconButton size="small" onClick={changePasswordVisibility} className={styles.icon}>
+          {isPasswordShown ? (
+            <Tooltip title="Hide Password">
+              <VisibilityOff fontSize="small" />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Show Password">
+              <Visibility fontSize="small" />
+            </Tooltip>
+          )}
+        </IconButton>
       </div>
     </InputContainer>
   );

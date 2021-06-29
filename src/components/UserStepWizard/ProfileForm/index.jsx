@@ -51,7 +51,7 @@ const ProfileForm = ({ onBack, onNext, isFirst, isLast, isEditing, data }) => {
           <div className={styles.fieldsWrapper}>
             <Field name="email" label="Email" component={TextInput} />
             <Field name="address" label="Address" component={AddressInput} />
-            <RadioGroupInput name="gender" values={GENDER_INPUT_VALUES} />
+            <Field name="gender" values={GENDER_INPUT_VALUES} component={RadioGroupInput} />
           </div>
         </div>
         <NavButtons isFirst={isFirst} isLast={isLast} onBack={onBack} isEditing={isEditing} />

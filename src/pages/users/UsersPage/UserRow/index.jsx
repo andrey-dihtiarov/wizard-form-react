@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-
-import { ICONS } from '../../../../constants';
+import { IconButton, Button, TableRow, TableCell, Tooltip } from '@material-ui/core';
+import { Edit, Clear } from '@material-ui/icons';
 
 import Avatar from '../../../../components/Avatar';
-import IconButton from '../../../../components/buttons/IconButton';
 
 import styles from './styles.module.scss';
 
@@ -14,52 +13,44 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
     user;
   const [firstPhone] = phoneNumbers || [];
   return (
-    <tr className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
-      <td>
+    <TableRow className={`${styles.row} ${isSelected ? styles.rowSelected : ''}`}>
+      <TableCell>
         <Avatar className={styles.avatar} image={avatar} />
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         {`${firstName} ${lastName}`}
         <div className={styles.username}>{userName}</div>
-      </td>
-      <td>{company}</td>
-      <td>{firstPhone || email}</td>
-      <td>{formatDistanceToNow(Date.parse(lastUpdate))} ago</td>
-      <td>
-        <IconButton
-          onClick={onUserEdit(id)}
-          icon={ICONS.pen}
-          width={12}
-          height={12}
-          disabled={isSelected}
-          className={styles.edit}
-        />
-      </td>
-      <td>
-        <IconButton
-          onClick={onRowChange(index)}
-          icon={ICONS.times}
-          disabled={isSelected}
-          className={styles.delete}
-          width={12}
-          height={12}
-        />
-      </td>
+      </TableCell>
+      <TableCell>{company}</TableCell>
+      <TableCell>{firstPhone || email}</TableCell>
+      <TableCell>{formatDistanceToNow(Date.parse(lastUpdate))} ago</TableCell>
+      <TableCell>
+        <Tooltip title={`Edit ${userName}'s Profile`}>
+          <IconButton disabled={isSelected} onClick={onUserEdit(id)} className={styles.edit}>
+            <Edit />
+          </IconButton>
+        </Tooltip>
+      </TableCell>
+      <TableCell>
+        <Tooltip title={`Delete ${userName}'s Profile`}>
+          <IconButton disabled={isSelected} onClick={onRowChange(index)} className={styles.delete}>
+            <Clear />
+          </IconButton>
+        </Tooltip>
+      </TableCell>
       {isSelected && (
-        <td>
-          <IconButton
-            icon={ICONS.times}
-            width={12}
-            height={12}
-            type="button"
+        <TableCell>
+          <Button
+            size="small"
+            startIcon={<Clear />}
             className={styles.deleteConfirm}
             onClick={onUserDelete(id)}
           >
             delete
-          </IconButton>
-        </td>
+          </Button>
+        </TableCell>
       )}
-    </tr>
+    </TableRow>
   );
 };
 

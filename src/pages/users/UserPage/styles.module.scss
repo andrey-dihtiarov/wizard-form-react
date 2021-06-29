@@ -5,17 +5,12 @@
   font-weight: bold;
   position: relative;
   top: -60px;
+  left: -434px;
+  text-transform: none;
+  color: $spindle;
 
-  & svg {
-    position: relative;
-    top: 5px;
-  }
-
-  @media screen and (max-width: $bp-mobile-l) {
-    top: -56px;
-
-    & svg {
-      top: 3px;
-    }
+  svg {
+    width: 36px;
+    height: 36px;
   }
 }

@@ -12,18 +12,6 @@ export const ROUTES = Object.freeze({
   },
 });
 
-export const ICONS = Object.freeze({
-  eye: 'eye',
-  eyeSlash: 'eye-slash',
-  user: 'user',
-  add: 'add',
-  userFriends: 'user-friends',
-  minus: 'minus',
-  pen: 'pen',
-  times: 'times',
-  chevronLeft: 'chevron-left',
-});
-
 export const GENDER_INPUT_VALUES = Object.freeze(['Male', 'Female']);
 
 export const MEGABYTE = 1024 * 1024;

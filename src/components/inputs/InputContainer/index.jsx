@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
+import { Typography } from '@material-ui/core';
 
 import styles from './styles.module.scss';
 
 const InputContainer = ({ field: { name }, label, children, className }) => (
   <div className={`${styles.block} ${className}`}>
     <label htmlFor={name} className={styles.label}>
-      {label}
+      <Typography>{label}</Typography>
     </label>
     {children}
     <div className={styles.errorMessage}>

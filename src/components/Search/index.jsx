@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
+import Field from '../Field';
+
 import useDebounce from '../../hooks/useDebounce';
 
 import styles from './styles.module.scss';
@@ -26,7 +28,7 @@ const Search = ({ className, searchQuery, ...rest }) => {
 
   return (
     <div className={className}>
-      <input className={styles.search} onChange={onChange} value={query} {...rest} />
+      <Field className={styles.search} onChange={onChange} value={query} {...rest} />
     </div>
   );
 };

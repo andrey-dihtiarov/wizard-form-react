@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { ChevronLeft } from '@material-ui/icons';
 
 import { fetchUser } from '../../../store/user';
 
-import { ICONS, ROUTES } from '../../../constants';
+import { ROUTES } from '../../../constants';
 
 import UserProfile from './UserProfile';
-import LinkButton from '../../../components/buttons/LinkButton';
 import PageLayout from '../../../components/layouts/PageLayout';
-
-import styles from './styles.module.scss';
 import Loader from '../../../components/Loader';
 
-const UsersPage = () => {
+import styles from './styles.module.scss';
+
+const UserPage = () => {
   const { id } = useParams();
   const { user, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -28,15 +29,14 @@ const UsersPage = () => {
       {isLoading && <Loader />}
       {user && (
         <>
-          <LinkButton
+          <Button
+            component={NavLink}
             to={ROUTES.users}
             className={styles.button}
-            width={24}
-            height={24}
-            icon={ICONS.chevronLeft}
+            startIcon={<ChevronLeft />}
           >
-            User List
-          </LinkButton>
+            Users List
+          </Button>
           <UserProfile user={user} />
         </>
       )}
@@ -44,4 +44,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default UserPage;

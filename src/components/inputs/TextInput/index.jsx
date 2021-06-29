@@ -1,20 +1,14 @@
 import PropTypes from 'prop-types';
 
 import InputContainer from '../InputContainer';
+import Field from '../../Field';
 
-import styles from './styles.module.scss';
-
-const TextInput = ({ field, form: { touched, errors }, label, ...props }) => {
+const TextInput = ({ field, form: { touched, errors }, label, ...rest }) => {
   const { name } = field;
   const isError = !!(touched[name] && errors[name]);
   return (
     <InputContainer label={label} field={field}>
-      <input
-        className={`${styles.field} ${isError ? styles.fieldError : ''}`}
-        type="text"
-        {...field}
-        {...props}
-      />
+      <Field {...field} {...rest} isError={isError} />
     </InputContainer>
   );
 };
