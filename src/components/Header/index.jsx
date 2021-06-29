@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { Button, AppBar } from '@material-ui/core';
+import { Button, AppBar, Tooltip } from '@material-ui/core';
 import { PersonAdd, PeopleAlt } from '@material-ui/icons';
 
 import { ROUTES } from '../../constants';
@@ -9,9 +9,11 @@ import styles from './styles.module.scss';
 const Header = () => (
   <AppBar position="static" className={styles.header}>
     <div className={styles.headerInner}>
-      <Link to={ROUTES.home} className={styles.logo}>
-        Remake
-      </Link>
+      <Tooltip title="Home Page">
+        <Link to={ROUTES.home} className={styles.logo}>
+          Remake
+        </Link>
+      </Tooltip>
       <div className={styles.nav}>
         <Button
           component={NavLink}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 import InputContainer from '../InputContainer';
@@ -26,7 +26,15 @@ const PasswordInput = ({ field, form: { touched, errors }, label, ...rest }) => 
           type={isPasswordShown ? 'text' : 'password'}
         />
         <IconButton size="small" onClick={changePasswordVisibility} className={styles.icon}>
-          {isPasswordShown ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+          {isPasswordShown ? (
+            <Tooltip title="Hide Password">
+              <VisibilityOff fontSize="small" />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Show Password">
+              <Visibility fontSize="small" />
+            </Tooltip>
+          )}
         </IconButton>
       </div>
     </InputContainer>

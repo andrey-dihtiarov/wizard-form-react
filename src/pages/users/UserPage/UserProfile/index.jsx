@@ -40,12 +40,20 @@ const UserProfile = ({ user }) => {
         <Avatar image={avatar} />
       </div>
       <div className={styles.inner}>
-        <CategoryBlock title="Account" onTitleClick={onTitleClick('account')}>
+        <CategoryBlock
+          title="Account"
+          onTitleClick={onTitleClick('account')}
+          tooltipTitle="Edit Account Info"
+        >
           <CategoryItem title="User name" value={userName} />
           <CategoryItem title="Password" value="" />
         </CategoryBlock>
 
-        <CategoryBlock title="Profile" onTitleClick={onTitleClick('profile')}>
+        <CategoryBlock
+          title="Profile"
+          onTitleClick={onTitleClick('profile')}
+          tooltipTitle="Edit Profile Info"
+        >
           <CategoryItem title="First name" value={firstName} />
           <CategoryItem title="Last name" value={lastName} />
           <CategoryItem title="Birth date" value={format(Date.parse(birthDate), 'dd/MM/yyyy')} />
@@ -54,7 +62,11 @@ const UserProfile = ({ user }) => {
           <CategoryItem title="Gender" value={gender} />
         </CategoryBlock>
 
-        <CategoryBlock title="Contacts" onTitleClick={onTitleClick('contacts')}>
+        <CategoryBlock
+          title="Contacts"
+          onTitleClick={onTitleClick('contacts')}
+          tooltipTitle="Edit Contacts Info"
+        >
           <CategoryItem title="Company" value={company} />
           <CategoryItem title="Github Link" value={githubLink} />
           <CategoryItem title="Facebook Link" value={facebookLink} />
@@ -65,7 +77,11 @@ const UserProfile = ({ user }) => {
           ))}
         </CategoryBlock>
 
-        <CategoryBlock title="Capabilities" onTitleClick={onTitleClick('capabilities')}>
+        <CategoryBlock
+          title="Capabilities"
+          onTitleClick={onTitleClick('capabilities')}
+          tooltipTitle="Edit Capabilities Info"
+        >
           <CategoryItem title="Skills" value={skills.join(', ')} />
           <CategoryItem title="Hobbies" value={myHobbies.join(', ')} />
         </CategoryBlock>

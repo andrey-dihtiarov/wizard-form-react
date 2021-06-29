@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-import { IconButton, Button, TableRow, TableCell } from '@material-ui/core';
+import { IconButton, Button, TableRow, TableCell, Tooltip } from '@material-ui/core';
 import { Edit, Clear } from '@material-ui/icons';
 
 import Avatar from '../../../../components/Avatar';
@@ -25,14 +25,18 @@ const UserRow = ({ user, index, selectedRow, onRowChange, onUserEdit, onUserDele
       <TableCell>{firstPhone || email}</TableCell>
       <TableCell>{formatDistanceToNow(Date.parse(lastUpdate))} ago</TableCell>
       <TableCell>
-        <IconButton disabled={isSelected} onClick={onUserEdit(id)} className={styles.edit}>
-          <Edit />
-        </IconButton>
+        <Tooltip title={`Edit ${userName}'s Profile`}>
+          <IconButton disabled={isSelected} onClick={onUserEdit(id)} className={styles.edit}>
+            <Edit />
+          </IconButton>
+        </Tooltip>
       </TableCell>
       <TableCell>
-        <IconButton disabled={isSelected} onClick={onRowChange(index)} className={styles.delete}>
-          <Clear />
-        </IconButton>
+        <Tooltip title={`Delete ${userName}'s Profile`}>
+          <IconButton disabled={isSelected} onClick={onRowChange(index)} className={styles.delete}>
+            <Clear />
+          </IconButton>
+        </Tooltip>
       </TableCell>
       {isSelected && (
         <TableCell>

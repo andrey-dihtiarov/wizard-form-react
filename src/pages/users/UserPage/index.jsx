@@ -35,7 +35,7 @@ const UserPage = () => {
             className={styles.button}
             startIcon={<ChevronLeft />}
           >
-            User List
+            Users List
           </Button>
           <UserProfile user={user} />
         </>
